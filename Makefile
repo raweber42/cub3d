@@ -9,12 +9,20 @@ LIBFT_DIR = libft/
 LIBFT_EXEC = libft.a
 OS = $(shell uname)
 CC = gcc
-MINILIBX_MAC = minilibx_macos/libmlx.a
-
+# MINILIBX_MAC = minilibx_macos/libmlx.a
+# MINILIBX_LINUX = minilibx_linux/libmlx.a
 CFLAGS = -Wall -Werror -Wextra -g
 GREEN = \033[0;32m
 RED = \033[0;31m
 UNDO_COL = \033[0m
+MLX_EXEC = libmlx.a
+
+ifeq ($(OS), Darwin)
+	MINILBX = minilibx_macos/
+endif
+ifeq ($(OS), Linux)
+	MINILBX = minilibx_linux/
+endif
 
 # place all source files here
 SRC = 	$(SRC_DIR)main.c \
@@ -38,9 +46,9 @@ $(NAME): $(OBJ)
 	@echo "$(RED)Compiling libft...$(UNDO_COL)"
 	$(MAKE) -C libft
 	@echo "$(RED)Compiling minilibx...$(UNDO_COL)"
-	$(MAKE) -C minilibx_macos
+	$(MAKE) -C $(MINILBX)
 	@echo "$(RED)Compiling $(NAME)...$(UNDO_COL)"
-	$(CC) $(CFLAGS) $^ $(LIBFT_DIR)$(LIBFT_EXEC) -framework OpenGL -framework AppKit -o $@
+	$(CC) $(CFLAGS) $^ $(LIBFT_DIR)$(LIBFT_EXEC) $(MINILBX)$(MLX_EXEC) -framework OpenGL -framework AppKit -o $@
 	@echo "$(GREEN)SUCCESSFULLY CREATED CUB3D!$(UNDO_COL)"
 
 # removes all object files and the /obj directory and cleans libft
