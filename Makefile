@@ -9,8 +9,6 @@ LIBFT_DIR = libft/
 LIBFT_EXEC = libft.a
 OS = $(shell uname)
 CC = gcc
-# MINILIBX_MAC = minilibx_macos/libmlx.a
-# MINILIBX_LINUX = minilibx_linux/libmlx.a
 CFLAGS = -Wall -Werror -Wextra -g
 GREEN = \033[0;32m
 RED = \033[0;31m
@@ -38,16 +36,15 @@ OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 all: $(NAME) #credit <- INSERT LATER
 
-# creates subdirectory /obj
-# makes sure to make a /obj dir before compiling .o files
+# creates subdirectory /obj and subdirectories
 $(OBJ): $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# compiles all object files and builds executable file 'minishell' -> ADJUST READLINE FOR LINUX!
+# compiles all object files and builds executable file 'cub3d'
 $(NAME): $(OBJ)
 	@echo "$(RED)Compiling libft...$(UNDO_COL)"
-	$(MAKE) -C libft
+	$(MAKE) -C $(LIBFT_DIR)
 	@echo "$(RED)Compiling minilibx...$(UNDO_COL)"
 	$(MAKE) -C $(MINILBX)
 	@echo "$(RED)Compiling $(NAME)...$(UNDO_COL)"
@@ -61,13 +58,13 @@ endif
 
 # removes all object files and the /obj directory and cleans libft
 clean:
-	$(MAKE) clean -C libft
+	$(MAKE) clean -C $(LIBFT_DIR)
 	rm -r $(OBJ_DIR)
 	@echo "$(RED)Finished clean$(UNDO_COL)"
 
 # calls 'clean' and removes the executable
 fclean: clean
-	$(MAKE) fclean -C libft
+	$(MAKE) fclean -C $(LIBFT_DIR)
 	rm -f $(NAME)
 	@echo "$(RED)Finished fclean$(UNDO_COL)"
 
