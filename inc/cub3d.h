@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/21 13:05:05 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/21 17:13:23 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ typedef struct s_cub {
 	int		y_offset;
 	int		height;
 	int		width;
-	int		**z_matrix;
-	int		**color_matrix;
+
 
 	int		iso_x;
 	int		iso_y;
@@ -74,6 +73,10 @@ typedef struct s_mlx {
 
 
 
+// main.c
+void	init_data(t_cub *data);
+void	init_mlx(t_mlx *mlx_data);
+
 
 // my_put_pixel.c
 void	my_mlx_pixel_put(t_mlx *mlx_data, int x, int y, int color);
@@ -83,5 +86,9 @@ int	deal_key(int key, t_cub *data);
 
 // destroy.c
 int	destroy(t_cub *data);
+
+// raycasting.c
+int	raycasting(t_cub *data);
+
 
 #endif

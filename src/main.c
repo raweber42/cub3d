@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/21 13:02:55 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/21 17:18:39 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init_data(t_cub *data)
 {
 	data->mlx_data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
+	// error checking here!
 	data->mlx_data->mlx_ptr = NULL;
 	data->mlx_data->mlx_img = NULL;
 	data->mlx_data->win_ptr = NULL;
@@ -51,6 +52,7 @@ int	main(void)
 	init_mlx(data->mlx_data);
 	// GAME LOOP GOES HERE
 
+	raycasting(data);
 	// HEEEEEERREEEEEEE DESTROYING ON SUNDAY
 	
 	mlx_hook(data->mlx_data->win_ptr, 2, 0, &deal_key, data);

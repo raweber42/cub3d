@@ -2,6 +2,10 @@ To Do:
 > structs umstrukturieren und überflüssiges Zeug rausschmeißen
 
 
+
+
+
+
 ######
 Raytracing:
 > We use DDA algo to find which squares of the map our ray hits, and stop the algorithm once a square that is a wall is hit.
