@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/20 17:45:04 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/21 13:05:05 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,17 @@ typedef struct s_mlx {
 	int		endian;
 	char	*mlx_img_addr;
 }				t_mlx;
+
+
+
+
+// my_put_pixel.c
+void	my_mlx_pixel_put(t_mlx *mlx_data, int x, int y, int color);
+
+// events.c
+int	deal_key(int key, t_cub *data);
+
+// destroy.c
+int	destroy(t_cub *data);
 
 #endif

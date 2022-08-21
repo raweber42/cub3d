@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/20 18:30:45 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/21 13:02:55 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(void)
 
 	// HEEEEEERREEEEEEE DESTROYING ON SUNDAY
 	
-	// mlx_hook(data->mlx_data->win_ptr, 2, 0, &deal_key, data);
-	// mlx_hook(data->mlx_data->win_ptr, 17, 0, &destroy, data);
+	mlx_hook(data->mlx_data->win_ptr, 2, 0, &deal_key, data);
+	mlx_hook(data->mlx_data->win_ptr, 17, 0, &destroy, data);
 	mlx_loop(data->mlx_data->mlx_ptr);
 }
