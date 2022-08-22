@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/22 09:04:32 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/22 11:00:48 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include <stdio.h>
+# include <unistd.h>
 
 typedef struct s_cub {
 	// old fdf struct
