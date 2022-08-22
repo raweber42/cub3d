@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/22 10:53:48 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/22 13:59:19 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	rotating_view(t_cub *data, float direction)
 	temp = data->dir.x;
 	data->dir.x = data->dir.x * cos(direction) - data->dir.y * sin(direction);
 	data->dir.y = temp * sin(direction) + data->dir.y * cos(direction);
-	// temp = data->perp_dir.x;
-	// data->perp_dir.x = data->perp_dir.x * cos(-0.05) - data->perp_dir.y * sin(-0.05);
-	// data->perp_dir.y = temp * sin(-0.05) + data->perp_dir.y * cos(-0.05);
+	temp = data->perp_dir.x;
+	data->perp_dir.x = data->perp_dir.x * cos(direction) - data->perp_dir.y * sin(direction);
+	data->perp_dir.y = temp * sin(direction) + data->perp_dir.y * cos(direction);
 	temp = data->plane.x;
 	data->plane.x = data->plane.x * cos(direction) - data->plane.y * sin(direction);
 	data->plane.y = temp * sin(direction) + data->plane.y * cos(direction);
@@ -40,13 +40,13 @@ int	deal_key(int key, t_cub *data)
 		return (0);
 	}
 	// rotate left
-	if (key == Key_LEFT)
+	if (key == Key_RIGHT)
 	{
 		rotating_view(data, -0.05);
 		raycasting(data);
 	}
 	// rotate right
-	if (key == Key_RIGHT)
+	if (key == Key_LEFT)
 	{
 		rotating_view(data, 0.05);
 		raycasting(data);
@@ -73,16 +73,24 @@ int	deal_key(int key, t_cub *data)
 	{
 		if ((int)(data->pos.y + data->dir.y) < screenHeight)
 		{
-			data->pos.y += data->dir.y;
-			raycasting(data);
+			if (worldMap[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y + data->perp_dir.y)] != 1) // 0 or 1 ??
+			{
+				data->pos.x += data->perp_dir.x;
+				data->pos.y += data->perp_dir.y;
+				raycasting(data);
+			}
 		}
 	}
 	if (key == Key_D)
 	{
 		if ((int)(data->pos.y - data->dir.y) > 0) // 0 or 1 ?
 		{
-			data->pos.y -= data->dir.y;
-			raycasting(data);
+			if (worldMap[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y - data->perp_dir.y)] != 1) // 0 or 1 ??
+			{
+				data->pos.x -= data->perp_dir.x;
+				data->pos.y -= data->perp_dir.y;
+				raycasting(data);
+			}
 		}
 	}
 	return (0);

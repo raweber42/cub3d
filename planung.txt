@@ -1,9 +1,11 @@
 To Do:
 > structs umstrukturieren und überflüssiges Zeug rausschmeißen
+> am Anfang wird nicht die ganze Map gerendert...
+>>> Problem, wenn man direkt an der wand steht
+> warum nutzt kacper `normalize_vector`?
 
-
-
-
+@Linus:
+> data->direction bitte als char eintragen
 
 
 ######
