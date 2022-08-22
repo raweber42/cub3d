@@ -28,7 +28,8 @@ SRC = 	$(SRC_DIR)main.c \
 		$(SRC_DIR)events.c \
 		$(SRC_DIR)my_put_pixel.c \
 		$(SRC_DIR)raycasting.c \
-		$(SRC_DIR)validation.c
+		$(SRC_DIR)validation.c \
+		$(SRC_DIR)matrix.c
 
 # takes all named source files and converts them to .o files in the /obj directory
 OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)

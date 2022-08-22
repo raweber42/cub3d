@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/22 11:00:48 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/22 19:39:39 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,9 @@ int	raycasting(t_cub *data);
 // validation.c
 void	error_msg(char *msg);
 void	valid_map(char *path);
+
+// matrix.c
+char	**get_matrix(char *path);
 
 
 #endif
