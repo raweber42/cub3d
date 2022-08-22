@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/22 09:19:10 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/22 10:47:50 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 
+
+# define mapWidth 24
+# define mapHeight 24
+# define screenWidth 640
+# define screenHeight 480
+
+
 enum
 {
 	Key_A = 0,
@@ -35,6 +42,18 @@ enum
 	Key_DOWN = 125,
 	Key_UP = 126
 };
+
+enum
+{
+	FORWARD,
+	BACK,
+	RIGHT,
+	LEFT
+};
+
+// delete
+extern int worldMap[24][24];
+// delete!
 
 typedef struct s_vector
 {
@@ -49,14 +68,14 @@ typedef struct s_cub {
 	t_vector	camera;
 	t_vector	ray_dir;
 	t_vector	perp_dir;
-	
+	t_vector	map_check;
+
 	double	perp_wall_dist;
-	int		map_x;
-	int		map_y;
+	// int		map_x;
+	// int		map_y;
 	int		side_hit; //was a NS or a EW wall hit?
 	
 
-	
 	int		x_offset;
 	int		y_offset;
 	int		height;
@@ -68,7 +87,6 @@ typedef struct s_cub {
 	int		iso_x1;
 	int		iso_y1;
 	struct s_mlx	*mlx_data;
-	// end old fdf struct
 }				t_cub;
 
 typedef struct s_mlx {

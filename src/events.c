@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/22 09:28:57 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/22 10:53:48 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,37 @@ int	deal_key(int key, t_cub *data)
 	}
 	if (key == Key_W)
 	{
-		data->pos.x += data->dir.x;
-		raycasting(data);
+		if (worldMap[(int)(data->pos.x + data->dir.x)][(int)(data->pos.y + data->dir.y)] != 1) // more securing?
+		{	
+			data->pos.x += data->dir.x;
+			data->pos.y += data->dir.y;
+			raycasting(data);
+		}
 	}
 	if (key == Key_S)
 	{
-		data->pos.x -= data->dir.x;
-		raycasting(data);
+		if (worldMap[(int)(data->pos.x - data->dir.x)][(int)(data->pos.y - data->dir.y)] != 1) // 0 or 1 ??
+		{
+			data->pos.x -= data->dir.x;
+			data->pos.y -= data->dir.y;
+			raycasting(data);
+		}
 	}
 	if (key == Key_A)
 	{
-		data->pos.y += data->dir.y;
-		raycasting(data);
+		if ((int)(data->pos.y + data->dir.y) < screenHeight)
+		{
+			data->pos.y += data->dir.y;
+			raycasting(data);
+		}
 	}
 	if (key == Key_D)
 	{
-		data->pos.y -= data->dir.y;
-		raycasting(data);
+		if ((int)(data->pos.y - data->dir.y) > 0) // 0 or 1 ?
+		{
+			data->pos.y -= data->dir.y;
+			raycasting(data);
+		}
 	}
-	
-
-	// raycasting(data);
 	return (0);
 }
