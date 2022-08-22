@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/22 20:46:21 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/22 20:55:00 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,14 @@ void	init_data(t_cub *data)
 	
 	// read this according to whether N, E, S, W !
 	// set_direction(data);
-	data->dir.x = -1;
+	data->dir.x = 1; // CHECK HEEEEEEEEEEEEEEEEEEREEEEE
 	data->dir.y = 0; //initial direction vector
-	data->plane.x = 0;
-	data->plane.y = 0.66; //the 2d raycaster version of camera plane
+	// data->plane.x = 0;
+	// data->plane.y = 0.66; //the 2d raycaster version of camera plane
 	data->perp_dir.x = data->dir.y;
 	data->perp_dir.y = data->dir.x * -1;
+	data->plane.x = data->perp_dir.x;
+	data->plane.y = data->perp_dir.y; //the 2d raycaster version of camera plane
 	data->perp_wall_dist = 0;
 	data->ray_dir.x = 0;
 	data->ray_dir.y = 0;
