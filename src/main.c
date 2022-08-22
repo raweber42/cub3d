@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/21 17:18:39 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/22 09:03:04 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,13 @@ void	init_mlx(t_mlx *mlx_data)
 					&mlx_data->bits_per_pxl, &mlx_data->line_len, &mlx_data->endian);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
+	(void)ac;
+	if (ac == 2)
+		valid_map(av[1]);
+	else
+		error_msg("Invalid number of arguments");
 	t_cub	*data;
 	
 	data = (t_cub *)ft_calloc(1, sizeof(t_cub));

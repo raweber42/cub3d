@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/21 17:13:23 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/22 09:04:32 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,10 @@ int	destroy(t_cub *data);
 
 // raycasting.c
 int	raycasting(t_cub *data);
+
+// validation.c
+void	error_msg(char *msg);
+void	valid_map(char *path);
 
 
 #endif
