@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/21 17:18:39 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/22 09:20:30 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,26 @@
 
 void	init_data(t_cub *data)
 {
+	data->pos.x = 7;
+	data->pos.y = 20; //x and y start position
+	data->dir.x = -1;
+	data->dir.y = 0; //initial direction vector
+	data->plane.x = 0;
+	data->plane.y = 0.66; //the 2d raycaster version of camera plane
+	data->perp_dir.x = data->dir.y;
+	data->perp_dir.y = data->dir.x * -1;
+	data->perp_wall_dist = 0;
+	data->ray_dir.x = 0;
+	data->ray_dir.y = 0;
+	data->map_x = 0;
+	data->map_y = 0;
+	data->side_hit = 0;
+	
+	// data->perp_dir.x = data->dir.y;
+	// data->perp_dir.y = data->dir.x * -1;
+	// data->plane.x = data->perp_dir.x;
+	// data->plane.y = data->perp_dir.y;
+
 	data->mlx_data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
 	// error checking here!
 	data->mlx_data->mlx_ptr = NULL;
@@ -51,9 +71,7 @@ int	main(void)
 	// PARSING/READING GOES HERE
 	init_mlx(data->mlx_data);
 	// GAME LOOP GOES HERE
-
 	raycasting(data);
-	// HEEEEEERREEEEEEE DESTROYING ON SUNDAY
 	
 	mlx_hook(data->mlx_data->win_ptr, 2, 0, &deal_key, data);
 	mlx_hook(data->mlx_data->win_ptr, 17, 0, &destroy, data);

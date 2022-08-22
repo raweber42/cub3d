@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/21 17:33:02 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/22 09:06:52 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,18 @@ int worldMap[mapWidth][mapHeight]=
 //The variables time and oldTime will be used to store the time of the current and the previous frame, the time difference between these two can be used to determinate how much you should move when a certain key is pressed (to move a constant speed no matter how long the calculation of the frames takes), and for the FPS counter.
 int	raycasting(t_cub *data)
 {
-	double posX = 22, posY = 12;  //x and y start position
-	double dirX = -1, dirY = 0; //initial direction vector
-	double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
+	int	x;
+
+	x = 0;
+	if (data->mlx_data->mlx_img)
+	{
+		mlx_destroy_image(data->mlx_data->mlx_ptr, data->mlx_data->mlx_img);
+		data->mlx_data->mlx_img = mlx_new_image(data->mlx_data->mlx_ptr, \
+				data->mlx_data->win_width, data->mlx_data->win_height);
+	}
+	// double posX = 7, posY = 20;  //x and y start position
+	// double dirX = -1, dirY = 0; //initial direction vector
+	// double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
 
 	// double time = 0; //time of current frame
 	// double oldTime = 0; //time of previous frame
@@ -70,16 +79,16 @@ int	raycasting(t_cub *data)
 
 	// while (1)
 	// {
-		for (int x = 0; x < screenWidth; x++)
+		while (x < screenWidth)
 		{
 			//calculate ray position and direction
 			double cameraX = 2 * x / (double)screenWidth - 1; //x-coordinate in camera space
-			double rayDirX = dirX + planeX * cameraX;
-			double rayDirY = dirY + planeY * cameraX;
+			double rayDirX = data->dir.x + data->plane.x * cameraX;
+			double rayDirY = data->dir.y + data->plane.y * cameraX;
 
 			//which box of the map we're in
-			int mapX = (int)posX;
-			int mapY = (int)posY;
+			int mapX = (int)data->pos.x;
+			int mapY = (int)data->pos.y;
 
 			//length of ray from current position to next x or y-side
 			double sideDistX;
@@ -88,35 +97,34 @@ int	raycasting(t_cub *data)
 			//length of ray from one x or y-side to next x or y-side
 			double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
 			double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
-			double perpWallDist;
 
 			//what direction to step in x or y-direction (either +1 or -1)
 			int stepX;
 			int stepY;
+			int	hit;
 
-			int hit = 0; //was there a wall hit?
-			int side; //was a NS or a EW wall hit?
+			hit = 0; //was there a wall hit?
 
 			//calculate step and initial sideDist
 			if (rayDirX < 0)
 			{
 				stepX = -1;
-				sideDistX = (posX - mapX) * deltaDistX;
+				sideDistX = (data->pos.x - mapX) * deltaDistX;
 			}
 			else
 			{
 				stepX = 1;
-				sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+				sideDistX = (mapX + 1.0 - data->pos.x) * deltaDistX;
 			}
 			if (rayDirY < 0)
 			{
 				stepY = -1;
-				sideDistY = (posY - mapY) * deltaDistY;
+				sideDistY = (data->pos.y - mapY) * deltaDistY;
 			}
 			else
 			{
 				stepY = 1;
-				sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+				sideDistY = (mapY + 1.0 - data->pos.y) * deltaDistY;
 			}
 
 
@@ -126,35 +134,36 @@ int	raycasting(t_cub *data)
 				//jump to next map square, either in x-direction, or in y-direction
 				if (sideDistX < sideDistY)
 				{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
+					sideDistX += deltaDistX;
+					mapX += stepX;
+					data->side_hit = 0;
 				}
 				else
 				{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
+					sideDistY += deltaDistY;
+					mapY += stepY;
+					data->side_hit = 1;
 				}
 				//Check if ray has hit a wall
-				if (worldMap[mapX][mapY] > 0) hit = 1;
+				if (worldMap[mapX][mapY] > 0)
+					hit = 1;
 			}
 			//Calculate distance projected on camera direction (Euclidean distance would give fisheye effect!)
-      		if (side == 0)
-				perpWallDist = (sideDistX - deltaDistX);
+      		if (data->side_hit == 0)
+				data->perp_wall_dist = (sideDistX - deltaDistX);
      		else
-				perpWallDist = (sideDistY - deltaDistY);
+				data->perp_wall_dist = (sideDistY - deltaDistY);
 
 
 			//Calculate height of line to draw on screen
-			int lineHeight = (int)(screenHeight / perpWallDist);
+			int lineHeight = (int)(screenHeight / data->perp_wall_dist);
 
 			//calculate lowest and highest pixel to fill in current stripe
 			int drawStart = -lineHeight / 2 + screenHeight / 2;
-			if(drawStart < 0)
+			if (drawStart < 0)
 				drawStart = 0;
 			int drawEnd = lineHeight / 2 + screenHeight / 2;
-			if(drawEnd >= screenHeight)
+			if (drawEnd >= screenHeight)
 				drawEnd = screenHeight - 1;
 			
 			//choose wall color
@@ -169,22 +178,23 @@ int	raycasting(t_cub *data)
 			}
 
 			//give x and y sides different brightness
-			if (side == 1) {color = color / 2;}
+			if (data->side_hit == 1)
+				color = color / 2;
 
 			//draw the pixels of the stripe as a vertical line
 			while (drawStart < drawEnd)
 				my_mlx_pixel_put(data->mlx_data, x, drawStart++, color);
-			printf("screenWidth: %d\n",screenWidth);
+			x++;
 			// COMMENTED OUt: verLine(x, drawStart, drawEnd, color);
 		}
 		mlx_put_image_to_window(data->mlx_data->mlx_ptr, data->mlx_data->win_ptr, data->mlx_data->mlx_img, 0, 0);
-		printf("Finished raycasting\n");
+		printf("Finished raycasting iteration\n");
 
 		//timing for input and FPS counter
-				// oldTime = time;
-				// time = getTicks();
-				// double frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
-				// printf("%ll", 1.0 / frameTime); //FPS counter
+		// oldTime = time;
+		// time = getTicks();
+		// double frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
+		// printf("%ll", 1.0 / frameTime); //FPS counter
 		// redraw();
 		// cls();
 

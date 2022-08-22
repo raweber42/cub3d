@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/21 17:13:23 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/22 09:19:10 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,40 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 
+enum
+{
+	Key_A = 0,
+	Key_S = 1,
+	Key_D = 2,
+	Key_W = 13,
+	Key_ESC = 53,
+	Key_LEFT = 123,
+	Key_RIGHT = 124,
+	Key_DOWN = 125,
+	Key_UP = 126
+};
+
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+}				t_vector;
+
 typedef struct s_cub {
-	// old fdf struct
-	// char	*argv;
-	// void	*mlx_ptr;
-	// void	*win_ptr;
-	// void	*mlx_img;
-	// int		win_width;
-	// int		win_height;
-	// float	zoom;
-	// float	height_zoom;
-	// int		default_color;
-	// float	angle;
-	// int		bits_per_pxl;
-	// int		line_len;
-	// int		endian;
-	// char	*mlx_img_addr;
+	t_vector	pos;
+	t_vector	dir;
+	t_vector	plane;
+	t_vector	camera;
+	t_vector	ray_dir;
+	t_vector	perp_dir;
+	
+	double	perp_wall_dist;
+	int		map_x;
+	int		map_y;
+	int		side_hit; //was a NS or a EW wall hit?
+	
+
+	
 	int		x_offset;
 	int		y_offset;
 	int		height;
