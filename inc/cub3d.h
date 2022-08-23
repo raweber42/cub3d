@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/23 10:36:20 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/23 12:06:38 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_cub {
 	t_vector	pos;
 	t_vector	dir;
 	t_vector	plane;
-	// t_vector	camera;
 	t_vector	ray_dir;
 	t_vector	perp_dir;
 	t_vector	map_check;
@@ -75,7 +74,6 @@ typedef struct s_cub {
 	t_vector	side_dist;
 	t_vector	delta_dist;
 	// HERE
-	int			cameraX;
 	char		orientation;
 
 	double	perp_wall_dist;
@@ -121,6 +119,11 @@ int	destroy(t_cub *data);
 
 // raycasting.c
 int	raycasting(t_cub *data);
+
+// helpers.c
+int	get_color(t_cub *data, int mapX, int mapY); // REPLACE WITH XPM FILES!
+void	mlx_image_check(t_cub *data);
+
 
 
 #endif
