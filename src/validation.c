@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/22 19:42:30 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/23 14:02:47 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,11 @@ void	valid_map(char *path)
 	char		**matrix;
 
 	matrix = get_matrix(path);
+
+	// ralf
+	int	i = 0;
+	int	j = 0;
+	// ralf
+	
 	exit(0);
 }
