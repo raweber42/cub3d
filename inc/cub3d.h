@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/22 20:35:34 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/23 10:36:20 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,20 @@ typedef struct s_cub {
 	t_vector	pos;
 	t_vector	dir;
 	t_vector	plane;
-	t_vector	camera;
+	// t_vector	camera;
 	t_vector	ray_dir;
 	t_vector	perp_dir;
 	t_vector	map_check;
+	// HERE
+	int			mapX;
+	int			mapY;
+	t_vector	side_dist;
+	t_vector	delta_dist;
+	// HERE
+	int			cameraX;
 	char		orientation;
 
 	double	perp_wall_dist;
-	// int		map_x;
-	// int		map_y;
 	int		side_hit; //was a NS or a EW wall hit?
 	int		f_col;
 	int		c_col;

@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/23 08:46:58 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/23 10:45:55 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,11 @@ void	init_data(t_cub *data)
 	// read this according to whether N, E, S, W !
 	// set_direction(data);
 
+
 	data->dir.x = 1; // CHECK HEEEEEEEEEEEEEEEEEEREEEEE
+	data->dir.y = 0; //initial direction vector
 
 	
-	data->dir.y = 0; //initial direction vector
-	// data->plane.x = 0;
-	// data->plane.y = 0.66; //the 2d raycaster version of camera plane
 	data->perp_dir.x = data->dir.y;
 	data->perp_dir.y = data->dir.x * -1;
 	data->plane.x = data->perp_dir.x;
@@ -110,6 +109,14 @@ void	init_data(t_cub *data)
 	data->mlx_data->bits_per_pxl = 0;
 	data->mlx_data->line_len = 0;
 	data->mlx_data->endian = 0;
+
+
+	data->mapX = 0;
+	data->mapY = 0;
+	data->side_dist.x = 0;
+	data->side_dist.y = 0;
+	data->delta_dist.x = 0;
+	data->delta_dist.y = 0;
 }
 
 void	init_mlx(t_mlx *mlx_data)
