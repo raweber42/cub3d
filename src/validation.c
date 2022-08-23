@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/23 14:06:23 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/23 16:13:06 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,16 @@ void	valid_map(char *path)
 	// ralf
 	// int	i = 0;
 	// int	j = 0;
+	// printf("\n");
+	// while (i < mapHeight)
+	// {
+	// 	j = 0;
+	// 	while (j < mapWidth)
+	// 		printf("%c", matrix[i][j++]);
+	// 	printf("\n");
+	// 	i++;
+	// }
+	// printf("\n");
 	// ralf
 	
 	exit(0);

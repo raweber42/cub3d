@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/23 07:09:39 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/23 14:25:52 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	deal_key(int key, t_cub *data)
 			raycasting(data);
 		}
 	}
-	if (key == Key_A)
+	if (key == Key_D)
 	{
 		if ((int)(data->pos.y + data->dir.y) < screenHeight)
 		{
@@ -81,7 +81,7 @@ int	deal_key(int key, t_cub *data)
 			}
 		}
 	}
-	if (key == Key_D)
+	if (key == Key_A)
 	{
 		if ((int)(data->pos.y - data->dir.y) > 0) // 0 or 1 ?
 		{

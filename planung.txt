@@ -5,7 +5,8 @@ To Do:
 > Laufrichtung ändert sich nach dem drehen
 
 @Linus:
-> data->direction bitte als char eintragen
+> data->direction bitte als char eintragen (N, E, S oder W)
+>>> und den Buchstaben überschreiben mit einer '0'
 
 
 ######
