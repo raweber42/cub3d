@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/23 07:10:37 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/23 08:46:58 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	init_data(t_cub *data)
 	// read this according to whether N, E, S, W !
 	// set_direction(data);
 
-	
 	data->dir.x = 1; // CHECK HEEEEEEEEEEEEEEEEEEREEEEE
 
 	
