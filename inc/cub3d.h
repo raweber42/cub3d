@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/23 12:06:38 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/23 14:05:51 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include <stdio.h>
+# include <unistd.h>
 
 
 # define mapWidth 24
@@ -101,12 +102,9 @@ typedef struct s_mlx {
 	char	*mlx_img_addr;
 }				t_mlx;
 
-
-
 // main.c
 void	init_data(t_cub *data);
 void	init_mlx(t_mlx *mlx_data);
-
 
 // my_put_pixel.c
 void	my_mlx_pixel_put(t_mlx *mlx_data, int x, int y, int color);
@@ -124,6 +122,11 @@ int	raycasting(t_cub *data);
 int	get_color(t_cub *data, int mapX, int mapY); // REPLACE WITH XPM FILES!
 void	mlx_image_check(t_cub *data);
 
+// validation.c
+void	error_msg(char *msg);
+void	valid_map(char *path);
 
+// matrix.c
+char	**get_matrix(char *path);
 
 #endif

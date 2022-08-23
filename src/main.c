@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/23 10:45:55 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/23 14:07:19 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,17 @@ void	init_mlx(t_mlx *mlx_data)
 					&mlx_data->bits_per_pxl, &mlx_data->line_len, &mlx_data->endian);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
+	// LINUS
+	(void)ac;
+	(void)av;
+	// if (ac == 2)
+	// 	valid_map(av[1]);
+	// else
+	// 	error_msg("Invalid number of arguments");
+	// LINUS
+	
 	t_cub	*data;
 	
 	data = (t_cub *)ft_calloc(1, sizeof(t_cub));

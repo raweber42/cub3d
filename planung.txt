@@ -2,7 +2,7 @@ To Do:
 > structs umstrukturieren und überflüssiges Zeug rausschmeißen
 > am Anfang wird nicht die ganze Map gerendert...
 >>> Problem, wenn man direkt an der wand steht
-> warum nutzt kacper `normalize_vector`?
+> Laufrichtung ändert sich nach dem drehen
 
 @Linus:
 > data->direction bitte als char eintragen
@@ -20,3 +20,12 @@ To rotate a vector, multiply it with the rotation matrix
 
 [ cos(a) -sin(a) ]
 [ sin(a)  cos(a) ]
+
+
+#######
+Validation:
+> Leeres file
+> 1's außerhalb der Map
+> Genau einen player
+> spaces match all
+> invalide Buchstaben handeln
