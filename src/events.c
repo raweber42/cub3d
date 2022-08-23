@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/22 13:59:19 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/23 07:09:39 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	rotating_view(t_cub *data, float direction)
 }
 
 // The deal_key function handles the user input of different keys.
+// WSAD move in 4 directions, left&right arrow switch the view
 // If ESC is pressed, the whole program stops.
 int	deal_key(int key, t_cub *data)
 {
-	// put key combinations here!
 	printf("key is: %d\n", key);
 	if (key == 53)
 	{

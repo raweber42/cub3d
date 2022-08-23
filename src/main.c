@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/22 20:55:00 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/23 07:10:37 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,28 @@ int worldMap[mapWidth][mapHeight]=
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
+//  initializes view according to orientation of player
 void	init_direction(t_cub *data)
 {
 	if (data->orientation == 'N')
 	{
 		data->dir.x = 0;
-		data->dir.y = -1; //initial direction vector
+		data->dir.y = -1;
 	}
 	else if (data->orientation == 'E')
 	{
 		data->dir.x = 1;
-		data->dir.y = 0; //initial direction vector
+		data->dir.y = 0;
 	}
 	else if (data->orientation == 'S')
 	{
 		data->dir.x = 0;
-		data->dir.y = 1; //initial direction vector
+		data->dir.y = 1;
 	}
 	else if (data->orientation == 'W')
 	{
 		data->dir.x = -1;
-		data->dir.y = 0; //initial direction vector
+		data->dir.y = 0;
 	}
 	// else statement needed or is it bulletproof?
 }
@@ -72,7 +73,11 @@ void	init_data(t_cub *data)
 	
 	// read this according to whether N, E, S, W !
 	// set_direction(data);
+
+	
 	data->dir.x = 1; // CHECK HEEEEEEEEEEEEEEEEEEREEEEE
+
+	
 	data->dir.y = 0; //initial direction vector
 	// data->plane.x = 0;
 	// data->plane.y = 0.66; //the 2d raycaster version of camera plane

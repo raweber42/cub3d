@@ -6,13 +6,12 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/22 14:47:02 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/23 07:14:09 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minilibx_macos/mlx.h"
 #include "../inc/cub3d.h"
-
 
 /*
 A first few variables are declared: posX and posY represent the position vector of the player, 
@@ -25,11 +24,48 @@ Later on when rotating around with the input keys, the values of dir and plane w
 */
 
 
+// gets the color according to given color scheme
+int	get_color(t_cub *data, int mapX, int mapY)
+{
+	int	color;
+	
+	//choose wall color
+	switch(worldMap[mapX][mapY])
+	{
+		case 1:  color = 0xFF0000;  break; //red
+		case 2:  color = 0x00FF00;  break; //green
+		case 3:  color = 0x0000FF;   break; //blue
+		case 4:  color = 0xFFFFFF;  break; //white
+		default: color = 0xFFEA00; break; //yellow
+	}
+
+	//give x and y sides different brightness
+	if (data->side_hit == 1)
+		color = color / 2;
+	return (color);
+}
+
 //The variables time and oldTime will be used to store the time of the current and the previous frame, the time difference between these two can be used to determinate how much you should move when a certain key is pressed (to move a constant speed no matter how long the calculation of the frames takes), and for the FPS counter.
 int	raycasting(t_cub *data)
 {
 	int	x;
 	int	i;
+	double	cameraX;
+	double	rayDirX;
+	double	rayDirY;
+	int		mapX;
+	int		mapY;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	int		stepX;
+	int		stepY;
+	int		hit;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
+	int		color;
 
 	x = 0;
 	
@@ -43,26 +79,18 @@ int	raycasting(t_cub *data)
 	while (x < screenWidth)
 	{
 		//calculate ray position and direction
-		double cameraX = 2 * x / (double)screenWidth - 1; //x-coordinate in camera space
-		double rayDirX = data->dir.x + data->plane.x * cameraX;
-		double rayDirY = data->dir.y + data->plane.y * cameraX;
+		cameraX = 2 * x / (double)screenWidth - 1; //x-coordinate in camera space
+		rayDirX = data->dir.x + data->plane.x * cameraX;
+		rayDirY = data->dir.y + data->plane.y * cameraX;
 
 		//which box of the map we're in
-		int mapX = (int)data->pos.x;
-		int mapY = (int)data->pos.y;
-
-		//length of ray from current position to next x or y-side
-		double sideDistX;
-		double sideDistY;
+		mapX = (int)data->pos.x;
+		mapY = (int)data->pos.y;		
 
 		//length of ray from one x or y-side to next x or y-side
-		double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
-		double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
-
+		deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
+		deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
 		//what direction to step in x or y-direction (either +1 or -1)
-		int stepX;
-		int stepY;
-		int	hit;
 
 		hit = 0; //was there a wall hit?
 
@@ -87,8 +115,6 @@ int	raycasting(t_cub *data)
 			stepY = 1;
 			sideDistY = (mapY + 1.0 - data->pos.y) * deltaDistY;
 		}
-
-
 		//perform DDA
 		while (hit == 0)
 		{
@@ -117,31 +143,16 @@ int	raycasting(t_cub *data)
 
 
 		//Calculate height of line to draw on screen
-		int lineHeight = (int)(screenHeight / data->perp_wall_dist);
+		lineHeight = (int)(screenHeight / data->perp_wall_dist);
 
 		//calculate lowest and highest pixel to fill in current stripe
-		int drawStart = -lineHeight / 2 + screenHeight / 2;
+		drawStart = -lineHeight / 2 + screenHeight / 2;
 		if (drawStart < 0)
 			drawStart = 0;
-		int drawEnd = lineHeight / 2 + screenHeight / 2;
+		drawEnd = lineHeight / 2 + screenHeight / 2;
 		if (drawEnd >= screenHeight)
 			drawEnd = screenHeight - 1;
-		
-		//choose wall color
-		int color;
-		switch(worldMap[mapX][mapY])
-		{
-			case 1:  color = 0xFF0000;  break; //red
-			case 2:  color = 0x00FF00;  break; //green
-			case 3:  color = 0x0000FF;   break; //blue
-			case 4:  color = 0xFFFFFF;  break; //white
-			default: color = 0xFFEA00; break; //yellow
-		}
-
-		//give x and y sides different brightness
-		if (data->side_hit == 1)
-			color = color / 2;
-
+		color = get_color(data, mapX, mapY);
 		//draw the pixels of the stripe as a vertical line
 		i = 0;
 		while (i < drawStart)
