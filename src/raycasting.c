@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 18:42:12 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 19:01:29 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	draw_pixels(t_cub *data, int x)
 	int	line_height;
 	int	draw_start;
 	int	draw_end;
+	int	color;
 
 	line_height = (int)(screenHeight / data->perp_wall_dist);
 	draw_start = -line_height / 2 + screenHeight / 2;
@@ -118,14 +119,22 @@ void	draw_pixels(t_cub *data, int x)
 	for (int y = draw_start; y < draw_end; y++)
 	{
 		int texY = (int)texPos;// & (TEXHEIGHT - 1); // needed?
-		
 		texPos += step;
+		if (data->side_hit == 0 && data->ray_dir.x > 0)
+			color = rgba_to_int(*(data->s_wall->matrix[texY][texX]));
+		else if (data->side_hit == 0 && data->ray_dir.x < 0)
+			color = rgba_to_int(*(data->n_wall->matrix[texY][texX]));
+		else if (data->side_hit == 1 && data->ray_dir.y < 0)
+			color = rgba_to_int(*(data->w_wall->matrix[texY][texX]));
+		else if (data->side_hit == 1 && data->ray_dir.y > 0)
+			color = rgba_to_int(*(data->e_wall->matrix[texY][texX]));
+		
 		// printf("texY: %d\n", texY);
 		// printf("texY: %d\n", line_height);
 		//HERE GOES WALL COLOR DETERMINATION
 		// printf("current color: %d\n", rgba_to_int(*(data->n_wall->matrix[texY][texX])));
 		// for (int z = 0; z < line_height/TEXHEIGHT; z++)
-		my_mlx_pixel_put(data->mlx_data, x, y, rgba_to_int(*(data->n_wall->matrix[texY][texX])));
+		my_mlx_pixel_put(data->mlx_data, x, y, color);
 	}
 
 

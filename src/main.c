@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 19:05:12 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/24 20:34:12 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ int	init_data(t_cub *data)
 	data->mlx_data->endian = 0;
 
 	data->n_path = "textures/eagle.xpm";
-	data->s_path = "textures/eagle.xpm";
-	data->e_path = "textures/eagle.xpm";
-	data->w_path = "textures/eagle.xpm";
+	data->s_path = "textures/greystone.xpm";
+	data->e_path = "textures/mossy.xpm";
+	data->w_path = "textures/redbrick.xpm";
 	data->n_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
 	if (!data->n_wall)
 		return (1);
