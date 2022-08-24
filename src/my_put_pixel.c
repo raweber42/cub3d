@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 14:46:25 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/21 13:00:10 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 11:14:58 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ void	my_mlx_pixel_put(t_mlx *mlx_data, int x, int y, int color)
 		dst = mlx_data->mlx_img_addr + (y * mlx_data->line_len \
 								+ x * (mlx_data->bits_per_pxl / 8));
 		*(unsigned int *) dst = color;
-	}
+	} // can the if clause be removed?
 }

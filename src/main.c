@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/23 16:12:22 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 10:38:17 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,13 @@ void	set_view_direction(t_cub *data)
 	// else statement needed or is it bulletproof?
 }
 
-void	init_data(t_cub *data)
+int	init_data(t_cub *data)
 {
 	data->pos.x = 3;
 	data->pos.y = 7; //x and y start position
-	
-	// read this according to whether N, E, S, W !
-	
+
 	data->orientation = 'S'; // -->> LINUS SETS THIS!
 	set_view_direction(data);
-
-
-	// data->dir.x = 1; // CHECK HEEEEEEEEEEEEEEEEEEREEEEE
-	// data->dir.y = 0; //initial direction vector
-
 	
 	data->perp_dir.x = data->dir.y;
 	data->perp_dir.y = data->dir.x * -1;
@@ -96,22 +89,6 @@ void	init_data(t_cub *data)
 	
 	data->perp_dir.x = data->dir.y;
 	data->perp_dir.y = data->dir.x * -1;
-	// data->plane.x = data->perp_dir.x;
-	// data->plane.y = data->perp_dir.y;
-
-	data->mlx_data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
-	// error checking here!
-	data->mlx_data->mlx_ptr = NULL;
-	data->mlx_data->mlx_img = NULL;
-	data->mlx_data->win_ptr = NULL;
-	data->mlx_data->mlx_img_addr = NULL;
-	data->mlx_data->win_width = 1000;
-	data->mlx_data->win_height = 1000;
-	data->mlx_data->angle = 0.9;
-	data->mlx_data->bits_per_pxl = 0;
-	data->mlx_data->line_len = 0;
-	data->mlx_data->endian = 0;
-
 
 	data->mapX = 0;
 	data->mapY = 0;
@@ -119,6 +96,38 @@ void	init_data(t_cub *data)
 	data->side_dist.y = 0;
 	data->delta_dist.x = 0;
 	data->delta_dist.y = 0;
+
+
+	data->mlx_data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
+	if (!data->mlx_data)
+		return (1);
+	data->mlx_data->mlx_ptr = NULL;
+	data->mlx_data->mlx_img = NULL;
+	data->mlx_data->win_ptr = NULL;
+	data->mlx_data->mlx_img_addr = NULL;
+	data->mlx_data->win_width = 1000;
+	data->mlx_data->win_height = 1000;
+	data->mlx_data->bits_per_pxl = 0;
+	data->mlx_data->line_len = 0;
+	data->mlx_data->endian = 0;
+
+	data->n_path = "textures/bluestone.xpm";
+	data->s_path = "textures/bluestone.xpm";
+	data->e_path = "textures/bluestone.xpm";
+	data->w_path = "textures/bluestone.xpm";
+	data->n_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
+	if (!data->n_wall)
+		return (1);
+	data->s_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
+	if (!data->s_wall)
+		return (1);
+	data->e_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
+	if (!data->e_wall)
+		return (1);
+	data->w_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
+	if (!data->w_wall)
+		return (1);
+	return (0);
 }
 
 void	init_mlx(t_mlx *mlx_data)
@@ -148,9 +157,9 @@ int	main(int ac, char **av)
 	
 	data = (t_cub *)ft_calloc(1, sizeof(t_cub));
 	if (!data)
-		return (0);
-	// error checking goes here!
-	init_data(data);
+		return (1); // error message here?
+	if (init_data(data))
+		return (1); // error message here?
 	// PARSING/READING GOES HERE
 	init_mlx(data->mlx_data);
 	// GAME LOOP GOES HERE
@@ -159,4 +168,5 @@ int	main(int ac, char **av)
 	mlx_hook(data->mlx_data->win_ptr, 2, 0, &deal_key, data);
 	mlx_hook(data->mlx_data->win_ptr, 17, 0, &destroy, data);
 	mlx_loop(data->mlx_data->mlx_ptr);
+	return (0);
 }

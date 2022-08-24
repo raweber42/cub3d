@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 12:05:16 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/23 12:06:33 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 07:24:05 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	get_color(t_cub *data, int mapX, int mapY) // REPLACE WITH XPM FILES!
 
 // checks, if there exists an mlx image already and destroys it and
 // generates a new one if so
-void	mlx_image_check(t_cub *data)
+void	mlx_image_reload(t_cub *data)
 {
 	if (data->mlx_data->mlx_img)
 	{

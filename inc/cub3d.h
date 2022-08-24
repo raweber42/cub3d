@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/23 14:05:51 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 10:27:21 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 
 # define mapWidth 24
 # define mapHeight 24
+# define TEXWIDTH 64
+# define TEXHEIGHT 64
 # define screenWidth 1000
 # define screenHeight 1000
 
@@ -56,11 +58,37 @@ enum
 extern int worldMap[24][24];
 // delete!
 
+typedef struct s_mlx {
+	// old fdf struct
+	char	*argv;
+	void	*mlx_ptr;
+	void	*win_ptr;
+	void	*mlx_img;
+	int		win_width;
+	int		win_height;
+
+	int		bits_per_pxl;
+	int		line_len;
+	int		endian;
+	char	*mlx_img_addr;
+}				t_mlx;
+
 typedef struct s_vector
 {
 	double	x;
 	double	y;
 }				t_vector;
+
+typedef struct s_texture
+{
+	void	*mlx_img;
+	char	*mlx_img_addr;
+	int		bits_per_pxl;
+	int		line_len;
+	int		height;
+	int		endian;
+	int		**matrix; // maybe change to t_color as Jorit has it // put 2 stars instead of three
+}		t_texture;
 
 typedef struct s_cub {
 	t_vector	pos;
@@ -77,33 +105,23 @@ typedef struct s_cub {
 	// HERE
 	char		orientation;
 
-	double	perp_wall_dist;
-	int		side_hit; //was a NS or a EW wall hit?
-	int		f_col;
-	int		c_col;
-	struct s_mlx	*mlx_data;
+	double		perp_wall_dist;
+	int			side_hit; //was a NS or a EW wall hit?
+	int			f_col;
+	int			c_col;
+	t_mlx		*mlx_data;
+	char		*n_path;
+	char		*s_path;
+	char		*e_path;
+	char		*w_path;
+	t_texture	*n_wall;
+	t_texture	*s_wall;
+	t_texture	*e_wall;
+	t_texture	*w_wall;
 }				t_cub;
 
-typedef struct s_mlx {
-	// old fdf struct
-	char	*argv;
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*mlx_img;
-	int		win_width;
-	int		win_height;
-	float	zoom;
-	float	height_zoom;
-	int		default_color;
-	float	angle;
-	int		bits_per_pxl;
-	int		line_len;
-	int		endian;
-	char	*mlx_img_addr;
-}				t_mlx;
-
 // main.c
-void	init_data(t_cub *data);
+int		init_data(t_cub *data);
 void	init_mlx(t_mlx *mlx_data);
 
 // my_put_pixel.c
@@ -119,8 +137,8 @@ int	destroy(t_cub *data);
 int	raycasting(t_cub *data);
 
 // helpers.c
-int	get_color(t_cub *data, int mapX, int mapY); // REPLACE WITH XPM FILES!
-void	mlx_image_check(t_cub *data);
+int		get_color(t_cub *data, int mapX, int mapY); // REPLACE WITH XPM FILES!
+void	mlx_image_reload(t_cub *data);
 
 // validation.c
 void	error_msg(char *msg);
