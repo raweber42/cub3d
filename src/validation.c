@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/24 20:31:19 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/24 21:25:42 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,35 @@ static int	allowed_char(char c)
 	return (0);
 }
 
+int	valid_left(char **matrix, int i, int j)
+{
+	if (j == 0)
+		return (1);
+	else if (matrix[i][j - 1] != ' ')
+		return (0);
+	return (valid_left(matrix, i, j - 1));
+}
+
+int	valid_right(char **matrix, int i, int j)
+{
+	if (!matrix[i][j + 1])
+		return (1);
+	else if (matrix[i][j + 1] != ' ')
+		return (0);
+	return (valid_right(matrix, i, j + 1));
+}
+
+int	valid_space(char **matrix, int i, int j)
+{
+	if (matrix[i][j] == ' ')
+	{
+		if (valid_left(matrix, i, j) || valid_right(matrix, i, j))
+			return (1);
+		error_msg("Map contains spaces");
+	}
+	return (0);
+}
+
 void	tests(char **matrix)
 {
 	int	i;
@@ -38,7 +67,7 @@ void	tests(char **matrix)
 	{
 		while(matrix[i][j])
 		{
-			if (matrix[i][j] == ' ')
+			if (valid_space(matrix, i, j))
 			{
 				j++;
 				continue ;
