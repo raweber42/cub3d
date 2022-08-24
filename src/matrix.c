@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 19:37:54 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/22 19:38:11 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/24 19:42:26 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,21 +139,27 @@ char	**fill_matrix(char **matrix, char *path, int num)
 			matrix[i][j] = 0;
 			i++;
 			j = 0;
+			drag = 0;
 		}
 		else
 		{
 			matrix[i][j] = c[0];
 			j++;
+			drag = c[0];
 		}
-		drag = c[0];
 	}
+	close(fd);
 	matrix[i + 1] = NULL;
 	return (matrix);
 }
 
 char	**get_matrix(char *path)
 {
-	return (fill_matrix(get_elem\
+	char	**matrix;
+
+	matrix = (fill_matrix(get_elem\
 	(elem_cnt(path), path), path, \
 	elem_cnt(path)));
+
+	return (matrix);
 }

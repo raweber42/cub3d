@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/23 16:13:06 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 20:31:19 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,66 +20,95 @@ void	error_msg(char *msg)
 	exit(1);
 }
 
-// static int	allowed_char(char c)
-// {
-// 	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' ' || c == '\n')
-// 		return (1);
-// 	return (0);
-// }
+static int	allowed_char(char c)
+{
+	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' ')
+		return (1);
+	return (0);
+}
 
-// void	invalid_chars(int fd)
-// {
-// 	char	*line;
-// 	int		i;
-// 	int		last_len;
+void	tests(char **matrix)
+{
+	int	i;
+	int	j;
 
-// 	line = get_next_line(fd);
-// 	last_len = 0;
-// 	while (line)
-// 	{	
-// 		if (line[0] == '\n')
-// 			break;
-// 		if (last_len != 0 && !(ft_strlen(line) >= last_len - 1 && ft_strlen(line) <= last_len + 1))
-// 		{
-// 			printf("LAST LEN: %d\n", last_len);
-// 			printf("THE COMPARE LEN: %d\n", ft_strlen(line));
-// 			error_msg("Unclosed map");
-// 		}
-// 		last_len = ft_strlen(line);
-// 		i = 0;
-// 		while (line[i])
-// 		{
-// 			if (!allowed_char(line[i]))
-// 				error_msg("Map contains invalid characters");
-// 			i++;
-// 		}
-// 		free(line);
-// 		line = get_next_line(fd);
-// 	}
-// 	free(line);
-// 	close(fd);
-// }
+	i = 0;
+	j = 0;
+	while (matrix[i])
+	{
+		while(matrix[i][j])
+		{
+			if (matrix[i][j] == ' ')
+			{
+				j++;
+				continue ;
+			}
+			if (!allowed_char(matrix[i][j]))
+				error_msg("Map contains invalid character");
+			if ((i == 0 && matrix[i][j] != '1') \
+				|| (!matrix[i + 1] && matrix[i][j] != '1')
+				|| (j == 0 && matrix[i][j] != '1')
+				|| (!matrix[i][j + 1] && matrix[i][j] != '1'))
+				error_msg("Map not surrounded by ones");
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+}
+
+void	closed_map(char **matrix)
+{
+	int	i;
+	int	j;
+	int	player;
+	int	limit;
+	int	ulimit;
+
+	i = 0;
+	j = 0;
+	player = 0;
+	while (matrix[i])
+	{
+		if (i > 0)
+			limit = ft_strlen(matrix[i - 1]);
+		if (matrix[i + 1])
+			ulimit = ft_strlen(matrix[i  + 1]);
+		while(matrix[i][j])
+		{
+			if (matrix[i][j] == ' ')
+			{
+				j++;
+				continue ;
+			}
+			if (i > 0 && j >= limit && matrix[i][j] != '1')
+				error_msg("Map is not closed");
+			if (matrix[i + 1] && j >= ulimit && matrix[i][j] != '1')
+				error_msg("Map is not closed");
+			if (matrix[i][j] == 'N' || \
+				matrix[i][j] == 'E' || \
+				matrix[i][j] == 'W' || \
+				matrix[i][j] == 'S')
+			{
+				if (player == 1)
+					error_msg("This is not coop");
+				player = 1;
+			}
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	if (player == 0)
+		error_msg("You are not that lonley");
+}
 
 void	valid_map(char *path)
 {
-	char		**matrix;
+	char	**matrix;
 
 	matrix = get_matrix(path);
-
-	// ralf
-	// int	i = 0;
-	// int	j = 0;
-	// printf("\n");
-	// while (i < mapHeight)
-	// {
-	// 	j = 0;
-	// 	while (j < mapWidth)
-	// 		printf("%c", matrix[i][j++]);
-	// 	printf("\n");
-	// 	i++;
-	// }
-	// printf("\n");
-	// ralf
-	
+	tests(matrix);
+	closed_map(matrix);
 	exit(0);
 }
