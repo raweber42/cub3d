@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 12:05:16 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 13:11:27 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 21:47:36 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	get_color(t_cub *data, int mapX, int mapY) // REPLACE WITH XPM FILES!
 	int	color;
 
 	//choose wall color
-	switch(worldMap[mapX][mapY])
+	switch(data->world_map[mapX][mapY])
 	{
 		case 1:  color = 0xFF0000;  break; //red
 		case 2:  color = 0x00FF00;  break; //green

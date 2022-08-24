@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 19:01:29 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 21:47:16 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ void	handle_rays_and_dda(t_cub *data, int x)
 			data->mapY += step_y;
 			data->side_hit = 1;
 		}
-		if (worldMap[data->mapX][data->mapY] == 1) // walls always '1'?
+		if (data->world_map[data->mapX][data->mapY] == 1) // walls always '1'?
 			hit = 1;
 	}
 }

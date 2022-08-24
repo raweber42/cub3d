@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 19:37:54 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/24 19:42:26 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/24 22:03:58 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,13 +153,49 @@ char	**fill_matrix(char **matrix, char *path, int num)
 	return (matrix);
 }
 
-char	**get_matrix(char *path)
+void	substitute_player(char **matrix, t_cub *chubby_cubby)
+{
+	int	i;
+	int	j;
+	int	player;
+
+	i = 0;
+	j = 0;
+	player = 0;
+	while (matrix[i])
+	{
+		while (matrix[i][j])
+		{
+			if (matrix[i][j] == 'N' || \
+				matrix[i][j] == 'E' || \
+				matrix[i][j] == 'W' || \
+				matrix[i][j] == 'S')
+			{
+				chubby_cubby->orientation = matrix[i][j];
+				chubby_cubby->pos.x = i;
+				chubby_cubby->pos.y = j;
+				matrix[i][j] = '0';
+				if (player == 1)
+					error_msg("This is not coop");
+				player = 1;
+			}
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	if (player == 0)
+		error_msg("You are not that lonley");
+}
+
+char	**get_matrix(char *path, t_cub *chubby_cubby)
 {
 	char	**matrix;
 
 	matrix = (fill_matrix(get_elem\
 	(elem_cnt(path), path), path, \
 	elem_cnt(path)));
+	substitute_player(matrix, chubby_cubby);
 
 	return (matrix);
 }

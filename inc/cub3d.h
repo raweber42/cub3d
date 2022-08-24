@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 18:50:27 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/24 21:56:59 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_cub {
 	t_vector	ray_dir;
 	t_vector	perp_dir;
 	t_vector	map_check;
+	char		**world_map;
 	// HERE
 	int			mapX;
 	int			mapY;
@@ -155,9 +156,9 @@ int		rgba_to_int(t_color colors);
 
 // validation.c
 void	error_msg(char *msg);
-void	valid_map(char *path);
+void	valid_map(char *path, t_cub *chubby_cubby);
 
 // matrix.c
-char	**get_matrix(char *path);
+char	**get_matrix(char *path, t_cub *chubby_cubby);
 
 #endif

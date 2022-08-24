@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/23 14:25:52 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 21:48:02 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	deal_key(int key, t_cub *data)
 	}
 	if (key == Key_W)
 	{
-		if (worldMap[(int)(data->pos.x + data->dir.x)][(int)(data->pos.y + data->dir.y)] != 1) // more securing?
+		if (data->world_map[(int)(data->pos.x + data->dir.x)][(int)(data->pos.y + data->dir.y)] != 1) // more securing?
 		{	
 			data->pos.x += data->dir.x;
 			data->pos.y += data->dir.y;
@@ -62,7 +62,7 @@ int	deal_key(int key, t_cub *data)
 	}
 	if (key == Key_S)
 	{
-		if (worldMap[(int)(data->pos.x - data->dir.x)][(int)(data->pos.y - data->dir.y)] != 1) // 0 or 1 ??
+		if (data->world_map[(int)(data->pos.x - data->dir.x)][(int)(data->pos.y - data->dir.y)] != 1) // 0 or 1 ??
 		{
 			data->pos.x -= data->dir.x;
 			data->pos.y -= data->dir.y;
@@ -73,7 +73,7 @@ int	deal_key(int key, t_cub *data)
 	{
 		if ((int)(data->pos.y + data->dir.y) < screenHeight)
 		{
-			if (worldMap[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y + data->perp_dir.y)] != 1) // 0 or 1 ??
+			if (data->world_map[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y + data->perp_dir.y)] != 1) // 0 or 1 ??
 			{
 				data->pos.x += data->perp_dir.x;
 				data->pos.y += data->perp_dir.y;
@@ -85,7 +85,7 @@ int	deal_key(int key, t_cub *data)
 	{
 		if ((int)(data->pos.y - data->dir.y) > 0) // 0 or 1 ?
 		{
-			if (worldMap[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y - data->perp_dir.y)] != 1) // 0 or 1 ??
+			if (data->world_map[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y - data->perp_dir.y)] != 1) // 0 or 1 ??
 			{
 				data->pos.x -= data->perp_dir.x;
 				data->pos.y -= data->perp_dir.y;

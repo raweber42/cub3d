@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/24 21:25:42 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/24 22:01:19 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,11 @@ void	closed_map(char **matrix)
 {
 	int	i;
 	int	j;
-	int	player;
 	int	limit;
 	int	ulimit;
 
 	i = 0;
 	j = 0;
-	player = 0;
 	while (matrix[i])
 	{
 		if (i > 0)
@@ -114,30 +112,19 @@ void	closed_map(char **matrix)
 				error_msg("Map is not closed");
 			if (matrix[i + 1] && j >= ulimit && matrix[i][j] != '1')
 				error_msg("Map is not closed");
-			if (matrix[i][j] == 'N' || \
-				matrix[i][j] == 'E' || \
-				matrix[i][j] == 'W' || \
-				matrix[i][j] == 'S')
-			{
-				if (player == 1)
-					error_msg("This is not coop");
-				player = 1;
-			}
 			j++;
 		}
 		j = 0;
 		i++;
 	}
-	if (player == 0)
-		error_msg("You are not that lonley");
 }
 
-void	valid_map(char *path)
+void	valid_map(char *path, t_cub *chubby_cubby)
 {
 	char	**matrix;
 
-	matrix = get_matrix(path);
+	matrix = get_matrix(path, chubby_cubby);
 	tests(matrix);
 	closed_map(matrix);
-	exit(0);
+	chubby_cubby->world_map = matrix;
 }
