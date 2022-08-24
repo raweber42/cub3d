@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 12:05:16 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 07:24:05 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 13:11:27 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ int	get_color(t_cub *data, int mapX, int mapY) // REPLACE WITH XPM FILES!
 	if (data->side_hit == 1)
 		color = color / 2;
 	return (color);
+}
+
+int	rgba_to_int(t_color colors)
+{
+	return (colors.alpha << 24 | colors.red << 16 | colors.green << 8 | colors.blue);
 }
 
 // checks, if there exists an mlx image already and destroys it and

@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 10:27:21 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 13:14:23 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,16 @@ typedef struct s_vector
 	double	y;
 }				t_vector;
 
+//JORIT
+typedef struct s_color
+{
+	unsigned char	blue;
+	unsigned char	green;
+	unsigned char	red;
+	unsigned char	alpha;
+}	t_color;
+//JORIT
+
 typedef struct s_texture
 {
 	void	*mlx_img;
@@ -87,7 +97,7 @@ typedef struct s_texture
 	int		line_len;
 	int		height;
 	int		endian;
-	int		**matrix; // maybe change to t_color as Jorit has it // put 2 stars instead of three
+	t_color	***matrix; // maybe change to t_color as Jorit has it // put 2 stars instead of three
 }		t_texture;
 
 typedef struct s_cub {
@@ -139,6 +149,7 @@ int	raycasting(t_cub *data);
 // helpers.c
 int		get_color(t_cub *data, int mapX, int mapY); // REPLACE WITH XPM FILES!
 void	mlx_image_reload(t_cub *data);
+int		rgba_to_int(t_color colors);
 
 // validation.c
 void	error_msg(char *msg);

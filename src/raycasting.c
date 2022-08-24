@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 11:29:48 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 15:45:37 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,27 @@ void	load_xpm_files(t_cub *data)
 	get_tex_img_address(data);
 }
 
-int	set_color(t_texture *x_wall, int y, int x)
+// int	set_color(t_texture *x_wall, int y, int x)
+// {
+// 	int	color;
+
+// 	color = *(x_wall->mlx_img_addr + (y * x_wall->line_len + x * (x_wall->bits_per_pxl / 8)));
+// 	printf("value of endian is: %d\n", x_wall->endian);
+// 	return (color); // too simple?
+// }
+
+// JORIT VERSION
+static t_color	*set_color(t_texture *tex, int x, int y)
 {
-	int	color;
+	int	*pos;
 
-	color = *(x_wall->mlx_img_addr + (y * x_wall->line_len + x * (x_wall->bits_per_pxl / 8)));
-	printf("data type of mlx_img_addr is: %lu\n", typeof(x_wall->mlx_img));
-	return (color); // too simple?
+	pos = (int *)tex->mlx_img_addr + (y * tex->line_len + x * (tex->bits_per_pxl / 8));
+	// printf("size_line is: %d\n", tex->line_len);
+	return ((t_color *)pos);
 }
+// JORIT VERSION
 
-int	**init_color_matrix(t_texture *x_wall) // could be void type too
+t_color	***init_color_matrix(t_texture *x_wall) // could be void type too
 {
 	int	i;
 	int	j;
@@ -106,8 +117,9 @@ void	draw_pixels(t_cub *data, int x)
 	else
 		wallX = data->pos.x + data->perp_wall_dist * data->ray_dir.x;
 	wallX -= floor(wallX);
+
 	// calculate x coordinate of texture
-	int	texX = (int)wallX * (double)TEXWIDTH;
+	int	texX = (int)(wallX * (double)TEXWIDTH);
 	if (data->side_hit == 0 && data->ray_dir.x > 0)
 		texX = TEXWIDTH - texX - 1;
 	if (data->side_hit == 1 && data->ray_dir.y < 0)
@@ -119,8 +131,10 @@ void	draw_pixels(t_cub *data, int x)
 	{
 		int texY = (int)texPos & (TEXHEIGHT - 1);
 		texPos += step;
-		uint32_t	color =  data->n_wall->mlx_img_addr[TEXHEIGHT * texY + texX];
-		my_mlx_pixel_put(data->mlx_data, texX, y, color);
+		// uint32_t	color =  data->n_wall->mlx_img_addr[TEXHEIGHT * texY + texX];
+		// buffer[y][x] = color;
+		// printf("current color: %d\n", rgba_to_int(*(data->n_wall->matrix[texY][texX])));
+		my_mlx_pixel_put(data->mlx_data, x, y, rgba_to_int(*(data->n_wall->matrix[texY][texX])));
 	}
 
 
