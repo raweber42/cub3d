@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 10:38:17 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 16:51:23 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,16 @@ int	init_data(t_cub *data)
 	data->mlx_data->mlx_img = NULL;
 	data->mlx_data->win_ptr = NULL;
 	data->mlx_data->mlx_img_addr = NULL;
-	data->mlx_data->win_width = 1000;
-	data->mlx_data->win_height = 1000;
+	data->mlx_data->win_width = screenWidth;
+	data->mlx_data->win_height = screenHeight;
 	data->mlx_data->bits_per_pxl = 0;
 	data->mlx_data->line_len = 0;
 	data->mlx_data->endian = 0;
 
-	data->n_path = "textures/bluestone.xpm";
-	data->s_path = "textures/bluestone.xpm";
-	data->e_path = "textures/bluestone.xpm";
-	data->w_path = "textures/bluestone.xpm";
+	data->n_path = "textures/eagle.xpm";
+	data->s_path = "textures/eagle.xpm";
+	data->e_path = "textures/eagle.xpm";
+	data->w_path = "textures/eagle.xpm";
 	data->n_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
 	if (!data->n_wall)
 		return (1);
@@ -127,6 +127,27 @@ int	init_data(t_cub *data)
 	data->w_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
 	if (!data->w_wall)
 		return (1);
+	data->n_wall->mlx_img = NULL;
+	data->n_wall->mlx_img_addr = NULL;
+	data->n_wall->bits_per_pxl = 0;
+	data->n_wall->line_len = 0;
+	data->n_wall->endian = 0;
+	data->s_wall->mlx_img = NULL;
+	data->s_wall->mlx_img_addr = NULL;
+	data->s_wall->bits_per_pxl = 0;
+	data->s_wall->line_len = 0;
+	data->s_wall->endian = 0;
+	data->e_wall->mlx_img = NULL;
+	data->e_wall->mlx_img_addr = NULL;
+	data->e_wall->bits_per_pxl = 0;
+	data->e_wall->line_len = 0;
+	data->e_wall->endian = 0;
+	data->w_wall->mlx_img = NULL;
+	data->w_wall->mlx_img_addr = NULL;
+	data->w_wall->bits_per_pxl = 0;
+	data->w_wall->line_len = 0;
+	data->w_wall->endian = 0;
+	
 	return (0);
 }
 

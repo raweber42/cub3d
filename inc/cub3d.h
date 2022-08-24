@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 13:14:23 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 16:51:32 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ void	init_mlx(t_mlx *mlx_data);
 
 // my_put_pixel.c
 void	my_mlx_pixel_put(t_mlx *mlx_data, int x, int y, int color);
+void	my_mlx_pixel_put_2(t_texture *x_wall, int x, int y, int color);
+
 
 // events.c
 int	deal_key(int key, t_cub *data);

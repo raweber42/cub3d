@@ -1,8 +1,7 @@
 To Do:
 > structs umstrukturieren und überflüssiges Zeug rausschmeißen
-> am Anfang wird nicht die ganze Map gerendert...
 >>> Problem, wenn man direkt an der wand steht
-> Laufrichtung ändert sich nach dem drehen
+> wenn man gegen die wand läuft (direkt nur 'D' drücken, dann hängt es sich auf)
 
 @Linus:
 > data->direction bitte als char eintragen (N, E, S oder W)

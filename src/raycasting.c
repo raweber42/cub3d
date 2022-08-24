@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 15:45:37 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/24 18:42:12 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,38 +39,26 @@ void	load_xpm_files(t_cub *data)
 	get_tex_img_address(data);
 }
 
-// int	set_color(t_texture *x_wall, int y, int x)
-// {
-// 	int	color;
-
-// 	color = *(x_wall->mlx_img_addr + (y * x_wall->line_len + x * (x_wall->bits_per_pxl / 8)));
-// 	printf("value of endian is: %d\n", x_wall->endian);
-// 	return (color); // too simple?
-// }
-
-// JORIT VERSION
-static t_color	*set_color(t_texture *tex, int x, int y)
+static t_color	*set_color(t_texture *tex, int y, int x)
 {
 	int	*pos;
 
-	pos = (int *)tex->mlx_img_addr + (y * tex->line_len + x * (tex->bits_per_pxl / 8));
-	// printf("size_line is: %d\n", tex->line_len);
+	pos = (int *)tex->mlx_img_addr + (y * tex->line_len / 4 + x * (tex->bits_per_pxl / 32));
 	return ((t_color *)pos);
 }
-// JORIT VERSION
 
 t_color	***init_color_matrix(t_texture *x_wall) // could be void type too
 {
 	int	i;
 	int	j;
 
-	x_wall->matrix = ft_calloc(TEXHEIGHT, sizeof(int **));
+	x_wall->matrix = ft_calloc(TEXHEIGHT, sizeof(t_color **));
 	if (!x_wall->matrix)
 		return (NULL);
 	i = 0;
 	while (i < TEXHEIGHT)
 	{
-		x_wall->matrix[i] = ft_calloc(TEXWIDTH, sizeof(int *));
+		x_wall->matrix[i] = ft_calloc(TEXWIDTH, sizeof(t_color *));
 		j = 0;
 		while (j < TEXWIDTH)
 		{
@@ -125,15 +113,18 @@ void	draw_pixels(t_cub *data, int x)
 	if (data->side_hit == 1 && data->ray_dir.y < 0)
 		texX = TEXWIDTH - texX - 1;
 	// last step
-	double	step = 1.0 * TEXHEIGHT / line_height;
-	double	texPos = (draw_start - mapHeight / 2 + line_height / 2) * step;  // is mapheight right?
+	double	step = (double) TEXHEIGHT / (double) line_height; // check line_height
+	double	texPos = (draw_start - screenHeight / 2 + line_height / 2) * step;  // is mapheight right?
 	for (int y = draw_start; y < draw_end; y++)
 	{
-		int texY = (int)texPos & (TEXHEIGHT - 1);
+		int texY = (int)texPos;// & (TEXHEIGHT - 1); // needed?
+		
 		texPos += step;
-		// uint32_t	color =  data->n_wall->mlx_img_addr[TEXHEIGHT * texY + texX];
-		// buffer[y][x] = color;
+		// printf("texY: %d\n", texY);
+		// printf("texY: %d\n", line_height);
+		//HERE GOES WALL COLOR DETERMINATION
 		// printf("current color: %d\n", rgba_to_int(*(data->n_wall->matrix[texY][texX])));
+		// for (int z = 0; z < line_height/TEXHEIGHT; z++)
 		my_mlx_pixel_put(data->mlx_data, x, y, rgba_to_int(*(data->n_wall->matrix[texY][texX])));
 	}
 
