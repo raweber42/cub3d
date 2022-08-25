@@ -57,7 +57,7 @@ ifeq ($(OS), Darwin)
 	$(CC) $(CFLAGS) $^ $(LIBFT_DIR)$(LIBFT_EXEC) $(MINILBX)$(MLX_EXEC) -framework OpenGL -framework AppKit -o $@
 endif
 ifeq ($(OS), Linux)
-	$(CC) $(OBJS) -L/usr/lib minilibx-linux/libmlx.a libft/libft.a -lXext -lX11 -lm -lz -o $(NAME)
+	$(CC) $(CFLAGS) $^ -L/usr/lib minilibx_linux/libmlx.a libft/libft.a -lXext -lX11 -lm -lz -o $@
 endif
 	@echo "$(GREEN)SUCCESSFULLY CREATED CUB3D!$(UNDO_COL)"
 
