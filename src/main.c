@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/25 11:34:25 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/25 16:19:06 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,11 @@ void	init_mlx(t_mlx *mlx)
 					&mlx->bits_per_pxl, &mlx->line_len, &mlx->endian);
 }
 
-// starts and runs the whole cub3d application
+/*
+starts and runs the whole cub3d application
+for mac: mlx_hook(data->mlx_data->win_ptr, 2, (1L << 0), &deal_key, data);
+for linux: mlx_key_hook(data->mlx_data->win_ptr, &deal_key, data);
+*/
 int	main(int ac, char **av)
 {
 	// LINUS########################
@@ -156,7 +160,6 @@ int	main(int ac, char **av)
 	// PARSING/READING GOES HERE
 	raycasting(data);
 	mlx_hook(data->mlx_data->win_ptr, 2, (1L << 0), &deal_key, data);
-	// mlx_key_hook(data->mlx_data->win_ptr, &deal_key, data);
 	mlx_hook(data->mlx_data->win_ptr, 17, 0, &destroy, data);
 	mlx_loop(data->mlx_data->mlx_ptr);
 	return (0);

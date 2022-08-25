@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/25 12:09:18 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/25 17:57:28 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ void	draw_pixels(t_cub *data, int x)
 	int	draw_end;
 	int	color;
 
-	// if (data->perp_wall_dist == 0)
-	// 	data->perp_wall_dist = 0.000001;
 	line_height = (int)(screenHeight / data->perp_wall_dist);
-	printf("line_height: %d\n", line_height);
+	if (data->perp_wall_dist == 0)
+		line_height = (double) screenHeight;
+	// printf("line_height: %d\n", line_height);
 	draw_start = -line_height / 2 + screenHeight / 2;
 	if (draw_start < 0)
 		draw_start = 0;
 	draw_end = line_height / 2 + screenHeight / 2;
 	if (draw_end >= screenHeight)
 		draw_end = screenHeight - 1;
-	// printf("drawend = %d\nperp_wall_dist = %f\nline_height = %d\n", draw_end, data->perp_wall_dist, line_height);
+	printf("drawend = %d\nperp_wall_dist = %f\nline_height = %d\n\n", draw_end, data->perp_wall_dist, line_height);
 	// sleep(1);
 	// FROM HERE ON IT DIFFERS!
 	// calculate X coordinate where wall was hit
@@ -180,9 +180,10 @@ int	raycasting(t_cub *data)
 			data->perp_wall_dist = (data->side_dist.x - data->delta_dist.x);
 		else
 			data->perp_wall_dist = (data->side_dist.y - data->delta_dist.y);
-		// if (!data->perp_wall_dist) // HERE!
-		// 	return (0);
+		
 		draw_pixels(data, x++);
+		// if (!data->perp_wall_dist) // HERE!
+		// 	break ;
 	}
 	mlx_put_image_to_window(data->mlx_data->mlx_ptr, data->mlx_data->win_ptr,
 		data->mlx_data->mlx_img, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/25 11:53:33 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/25 18:35:01 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ void	deal_key_2(int key, t_cub *data)
 		data->pos.y -= data->dir.y;
 		raycasting(data);
 	}
-	if (key == Key_D && (int)(data->pos.y + data->dir.y) < screenHeight)
+	if (key == Key_D && (int)(data->pos.y + data->dir.y) < screenHeight && (int)(data->pos.y + data->dir.y) > 0)
 	{
 		// printf("perp wall dist: %f\n", data->perp_wall_dist);
-		if (worldMap[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y + data->perp_dir.y)] != 1) // 0 or 1 ??
+		if (worldMap[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y + data->perp_dir.y)] == 0) // 0 or 1 ??
 		{
 			data->pos.x += data->perp_dir.x;
 			data->pos.y += data->perp_dir.y;
