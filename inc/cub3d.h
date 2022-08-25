@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 18:50:27 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/25 10:41:53 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,22 +136,30 @@ void	init_mlx(t_mlx *mlx_data);
 
 // my_put_pixel.c
 void	my_mlx_pixel_put(t_mlx *mlx_data, int x, int y, int color);
-void	my_mlx_pixel_put_2(t_texture *x_wall, int x, int y, int color);
-
 
 // events.c
-int	deal_key(int key, t_cub *data);
+int		deal_key(int key, t_cub *data);
+void	deal_key_2(int key, t_cub *data);
 
 // destroy.c
-int	destroy(t_cub *data);
+int	destroy(t_cub *data, char *str);
+void	destroy_wall(t_texture *wall);
 
 // raycasting.c
 int	raycasting(t_cub *data);
 
+// raycast_helpers.c
+void	get_tex_img_address(t_cub *data);
+void	load_xpm_files(t_cub *data);
+t_color	*set_color(t_texture *tex, int y, int x);
+t_color	***init_color_matrix(t_texture *x_wall);
+void	handle_textures(t_cub *data);
+
 // helpers.c
-int		get_color(t_cub *data, int mapX, int mapY); // REPLACE WITH XPM FILES!
-void	mlx_image_reload(t_cub *data);
+int		allocate_walls(t_cub *data);
+void	set_view_direction(t_cub *data);
 int		rgba_to_int(t_color colors);
+void	mlx_image_reload(t_cub *data);
 
 // validation.c
 void	error_msg(char *msg);

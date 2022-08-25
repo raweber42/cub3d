@@ -6,35 +6,59 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 12:05:16 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 13:11:27 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/25 10:28:04 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-// gets the color according to given color scheme
-int	get_color(t_cub *data, int mapX, int mapY) // REPLACE WITH XPM FILES!
+// helper for allocating the wall (=texture) structs
+int	allocate_walls(t_cub *data)
 {
-	int	color;
-
-	//choose wall color
-	switch(worldMap[mapX][mapY])
-	{
-		case 1:  color = 0xFF0000;  break; //red
-		case 2:  color = 0x00FF00;  break; //green
-		case 3:  color = 0x0000FF;   break; //blue
-		case 4:  color = 0xFFFFFF;  break; //white
-		default: color = 0xFFEA00; break; //yellow
-	}
-	//give x and y sides different brightness
-	if (data->side_hit == 1)
-		color = color / 2;
-	return (color);
+	data->n_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
+	if (!data->n_wall)
+		return (1);
+	data->s_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
+	if (!data->s_wall)
+		return (1);
+	data->e_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
+	if (!data->e_wall)
+		return (1);
+	data->w_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
+	if (!data->w_wall)
+		return (1);
+	return (0);
 }
 
-int	rgba_to_int(t_color colors)
+//  initializes view according to orientation of player
+void	set_view_direction(t_cub *data)
 {
-	return (colors.alpha << 24 | colors.red << 16 | colors.green << 8 | colors.blue);
+	if (data->orientation == 'W')
+	{
+		data->dir.x = 0;
+		data->dir.y = -1;
+	}
+	else if (data->orientation == 'S')
+	{
+		data->dir.x = 1;
+		data->dir.y = 0;
+	}
+	else if (data->orientation == 'E')
+	{
+		data->dir.x = 0;
+		data->dir.y = 1;
+	}
+	else
+	{
+		data->dir.x = -1;
+		data->dir.y = 0;
+	}
+}
+
+// converts the four RGBA values to a single integer using bitshifting
+int	rgba_to_int(t_color col)
+{
+	return (col.alpha << 24 | col.red << 16 | col.green << 8 | col.blue);
 }
 
 // checks, if there exists an mlx image already and destroys it and

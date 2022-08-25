@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/23 14:25:52 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/25 10:25:13 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,77 +21,69 @@ void	rotating_view(t_cub *data, float direction)
 	data->dir.x = data->dir.x * cos(direction) - data->dir.y * sin(direction);
 	data->dir.y = temp * sin(direction) + data->dir.y * cos(direction);
 	temp = data->perp_dir.x;
-	data->perp_dir.x = data->perp_dir.x * cos(direction) - data->perp_dir.y * sin(direction);
-	data->perp_dir.y = temp * sin(direction) + data->perp_dir.y * cos(direction);
+	data->perp_dir.x = data->perp_dir.x * cos(direction) \
+		- data->perp_dir.y * sin(direction);
+	data->perp_dir.y = temp * sin(direction) \
+		+ data->perp_dir.y * cos(direction);
 	temp = data->plane.x;
-	data->plane.x = data->plane.x * cos(direction) - data->plane.y * sin(direction);
+	data->plane.x = data->plane.x * cos(direction) - data->plane.y \
+		* sin(direction);
 	data->plane.y = temp * sin(direction) + data->plane.y * cos(direction);
 }
 
 // The deal_key function handles the user input of different keys.
-// WSAD move in 4 directions, left&right arrow switch the view
+// WSAD move in 4 directions, left&right arrow switch the view left/right
 // If ESC is pressed, the whole program stops.
 int	deal_key(int key, t_cub *data)
 {
 	printf("key is: %d\n", key);
 	if (key == 53)
-	{
-		destroy(data);
-		return (0);
-	}
-	// rotate left
+		destroy(data, NULL);
 	if (key == Key_RIGHT)
 	{
 		rotating_view(data, -0.05);
 		raycasting(data);
 	}
-	// rotate right
 	if (key == Key_LEFT)
 	{
 		rotating_view(data, 0.05);
 		raycasting(data);
 	}
-	if (key == Key_W)
+	if (key == Key_W && worldMap[(int)(data->pos.x + data->dir.x)][(int)(data->pos.y + data->dir.y)] != 1) // 0 or 1 ??
 	{
-		if (worldMap[(int)(data->pos.x + data->dir.x)][(int)(data->pos.y + data->dir.y)] != 1) // more securing?
-		{	
-			data->pos.x += data->dir.x;
-			data->pos.y += data->dir.y;
-			raycasting(data);
-		}
+		data->pos.x += data->dir.x;
+		data->pos.y += data->dir.y;
+		raycasting(data);
 	}
-	if (key == Key_S)
-	{
-		if (worldMap[(int)(data->pos.x - data->dir.x)][(int)(data->pos.y - data->dir.y)] != 1) // 0 or 1 ??
-		{
-			data->pos.x -= data->dir.x;
-			data->pos.y -= data->dir.y;
-			raycasting(data);
-		}
-	}
-	if (key == Key_D)
-	{
-		if ((int)(data->pos.y + data->dir.y) < screenHeight)
-		{
-			if (worldMap[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y + data->perp_dir.y)] != 1) // 0 or 1 ??
-			{
-				data->pos.x += data->perp_dir.x;
-				data->pos.y += data->perp_dir.y;
-				raycasting(data);
-			}
-		}
-	}
-	if (key == Key_A)
-	{
-		if ((int)(data->pos.y - data->dir.y) > 0) // 0 or 1 ?
-		{
-			if (worldMap[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y - data->perp_dir.y)] != 1) // 0 or 1 ??
-			{
-				data->pos.x -= data->perp_dir.x;
-				data->pos.y -= data->perp_dir.y;
-				raycasting(data);
-			}
-		}
-	}
+	deal_key_2(key, data);
 	return (0);
+}
+
+void	deal_key_2(int key, t_cub *data)
+{
+	if (key == Key_S && worldMap[(int)(data->pos.x - data->dir.x)][(int)(data->pos.y - data->dir.y)] != 1) // 0 or 1 ??
+	{
+		data->pos.x -= data->dir.x;
+		data->pos.y -= data->dir.y;
+		raycasting(data);
+	}
+	if (key == Key_D && (int)(data->pos.y + data->dir.y) < screenHeight)
+	{
+		// printf("perp wall dist: %f\n", data->perp_wall_dist);
+		if (worldMap[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y + data->perp_dir.y)] != 1) // 0 or 1 ??
+		{
+			data->pos.x += data->perp_dir.x;
+			data->pos.y += data->perp_dir.y;
+			raycasting(data);
+		}
+	}
+	if (key == Key_A && (int)(data->pos.y - data->dir.y) > 0)
+	{
+		if (worldMap[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y - data->perp_dir.y)] != 1) // 0 or 1 ??
+		{
+			data->pos.x -= data->perp_dir.x;
+			data->pos.y -= data->perp_dir.y;
+			raycasting(data);
+		}
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 20:34:12 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/25 10:01:48 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,92 +40,10 @@ int worldMap[mapWidth][mapHeight]=
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-//  initializes view according to orientation of player
-void	set_view_direction(t_cub *data)
+// initializes the wall structs and sets all variables to zero
+int	init_walls(t_cub *data)
 {
-	if (data->orientation == 'W')
-	{
-		data->dir.x = 0;
-		data->dir.y = -1;
-	}
-	else if (data->orientation == 'S')
-	{
-		data->dir.x = 1;
-		data->dir.y = 0;
-	}
-	else if (data->orientation == 'E')
-	{
-		data->dir.x = 0;
-		data->dir.y = 1;
-	}
-	else if (data->orientation == 'N')
-	{
-		data->dir.x = -1;
-		data->dir.y = 0;
-	}
-	// else statement needed or is it bulletproof?
-}
-
-int	init_data(t_cub *data)
-{
-	data->pos.x = 3;
-	data->pos.y = 7; //x and y start position
-
-	data->orientation = 'S'; // -->> LINUS SETS THIS!
-	set_view_direction(data);
-	
-	data->perp_dir.x = data->dir.y;
-	data->perp_dir.y = data->dir.x * -1;
-	data->plane.x = data->perp_dir.x;
-	data->plane.y = data->perp_dir.y; //the 2d raycaster version of camera plane
-	data->perp_wall_dist = 0;
-	data->ray_dir.x = 0;
-	data->ray_dir.y = 0;
-	data->map_check.x = 0;
-	data->map_check.y = 0;
-	data->side_hit = 0;
-	data->f_col = 0x33cc33;
-	data->c_col = 0x9999ff;
-	
-	data->perp_dir.x = data->dir.y;
-	data->perp_dir.y = data->dir.x * -1;
-
-	data->mapX = 0;
-	data->mapY = 0;
-	data->side_dist.x = 0;
-	data->side_dist.y = 0;
-	data->delta_dist.x = 0;
-	data->delta_dist.y = 0;
-
-
-	data->mlx_data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
-	if (!data->mlx_data)
-		return (1);
-	data->mlx_data->mlx_ptr = NULL;
-	data->mlx_data->mlx_img = NULL;
-	data->mlx_data->win_ptr = NULL;
-	data->mlx_data->mlx_img_addr = NULL;
-	data->mlx_data->win_width = screenWidth;
-	data->mlx_data->win_height = screenHeight;
-	data->mlx_data->bits_per_pxl = 0;
-	data->mlx_data->line_len = 0;
-	data->mlx_data->endian = 0;
-
-	data->n_path = "textures/eagle.xpm";
-	data->s_path = "textures/greystone.xpm";
-	data->e_path = "textures/mossy.xpm";
-	data->w_path = "textures/redbrick.xpm";
-	data->n_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
-	if (!data->n_wall)
-		return (1);
-	data->s_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
-	if (!data->s_wall)
-		return (1);
-	data->e_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
-	if (!data->e_wall)
-		return (1);
-	data->w_wall = (t_texture *)ft_calloc(1, sizeof(t_texture));
-	if (!data->w_wall)
+	if (allocate_walls(data))
 		return (1);
 	data->n_wall->mlx_img = NULL;
 	data->n_wall->mlx_img_addr = NULL;
@@ -147,46 +65,96 @@ int	init_data(t_cub *data)
 	data->w_wall->bits_per_pxl = 0;
 	data->w_wall->line_len = 0;
 	data->w_wall->endian = 0;
-	
 	return (0);
 }
 
-void	init_mlx(t_mlx *mlx_data)
+// initializes all ray data and sets floor/ceiling color
+void	init_ray_data(t_cub *data)
 {
-	mlx_data->mlx_ptr = mlx_init();
-	mlx_data->win_ptr = mlx_new_window(mlx_data->mlx_ptr, \
-					mlx_data->win_width, mlx_data->win_height, "Cub3d");
-	mlx_data->mlx_img = mlx_new_image(mlx_data->mlx_ptr, \
-					mlx_data->win_width, mlx_data->win_height);
-	mlx_data->mlx_img_addr = mlx_get_data_addr(mlx_data->mlx_img, \
-					&mlx_data->bits_per_pxl, &mlx_data->line_len, &mlx_data->endian);
+	data->perp_dir.x = data->dir.y;
+	data->perp_dir.y = data->dir.x * -1;
+	data->plane.x = data->perp_dir.x;
+	data->plane.y = data->perp_dir.y;
+	data->perp_wall_dist = 0;
+	data->ray_dir.x = 0;
+	data->ray_dir.y = 0;
+	data->map_check.x = 0;
+	data->map_check.y = 0;
+	data->side_hit = 0;
+	data->f_col = 0x413030;
+	data->c_col = 0x000066;
+	data->perp_dir.x = data->dir.y;
+	data->perp_dir.y = data->dir.x * -1;
+	data->mapX = 0;
+	data->mapY = 0;
+	data->side_dist.x = 0;
+	data->side_dist.y = 0;
+	data->delta_dist.x = 0;
+	data->delta_dist.y = 0;
 }
 
+// initializes main struct, player position, view, ray data and textures
+int	init_data(t_cub *data)
+{
+	data->pos.x = 3;
+	data->pos.y = 7; // -->> LINUS SETS THIS!
+	data->orientation = 'S'; // -->> LINUS SETS THIS!
+	set_view_direction(data);
+	init_ray_data(data);
+	data->mlx_data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
+	if (!data->mlx_data)
+		return (1);
+	init_mlx(data->mlx_data);
+	data->n_path = "textures/eagle.xpm";
+	data->s_path = "textures/greystone.xpm";
+	data->e_path = "textures/mossy.xpm";
+	data->w_path = "textures/redbrick.xpm";
+	init_walls(data);
+	return (0);
+}
+
+// initializes the required mlx data
+void	init_mlx(t_mlx *mlx)
+{
+	mlx->mlx_ptr = NULL;
+	mlx->mlx_img = NULL;
+	mlx->win_ptr = NULL;
+	mlx->mlx_img_addr = NULL;
+	mlx->win_width = screenWidth;
+	mlx->win_height = screenHeight;
+	mlx->bits_per_pxl = 0;
+	mlx->line_len = 0;
+	mlx->endian = 0;
+	mlx->mlx_ptr = mlx_init();
+	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, \
+					mlx->win_width, mlx->win_height, "Cub3d");
+	mlx->mlx_img = mlx_new_image(mlx->mlx_ptr, \
+					mlx->win_width, mlx->win_height);
+	mlx->mlx_img_addr = mlx_get_data_addr(mlx->mlx_img, \
+					&mlx->bits_per_pxl, &mlx->line_len, &mlx->endian);
+}
+
+// starts and runs the whole cub3d application
 int	main(int ac, char **av)
 {
 	// LINUS########################
 	(void)ac;
 	(void)av;
-	valid_map(av[1]);
+	// valid_map(av[1]);
 	
 	// if (ac == 2)
 	// 	valid_map(av[1]);
 	// else
 	// 	error_msg("Invalid number of arguments");
 	// LINUS########################
-	
+
 	t_cub	*data;
-	
+
 	data = (t_cub *)ft_calloc(1, sizeof(t_cub));
-	if (!data)
-		return (1); // error message here?
-	if (init_data(data))
+	if (!data || init_data(data))
 		return (1); // error message here?
 	// PARSING/READING GOES HERE
-	init_mlx(data->mlx_data);
-	// GAME LOOP GOES HERE
 	raycasting(data);
-	
 	mlx_hook(data->mlx_data->win_ptr, 2, 0, &deal_key, data);
 	mlx_hook(data->mlx_data->win_ptr, 17, 0, &destroy, data);
 	mlx_loop(data->mlx_data->mlx_ptr);

@@ -31,6 +31,7 @@ SRC = 	$(SRC_DIR)main.c \
 		$(SRC_DIR)helpers.c \
 		$(SRC_DIR)validation.c \
 		$(SRC_DIR)matrix.c \
+		$(SRC_DIR)raycast_helpers.c \
 
 # takes all named source files and converts them to .o files in the /obj directory
 OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)

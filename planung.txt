@@ -2,10 +2,12 @@ To Do:
 > structs umstrukturieren und überflüssiges Zeug rausschmeißen
 >>> Problem, wenn man direkt an der wand steht
 > wenn man gegen die wand läuft (direkt nur 'D' drücken, dann hängt es sich auf)
+> free worldMap
 
 @Linus:
 > data->direction bitte als char eintragen (N, E, S oder W)
 >>> und den Buchstaben überschreiben mit einer '0'
+> alles free'n, was du allocatest und nicht in's struct weitergibst
 
 
 ######

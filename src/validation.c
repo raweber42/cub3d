@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/24 20:31:19 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/25 09:45:11 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	error_msg(char *msg)
+void	error_msg(char *msg) // sicherstellen, dass immer gefreed wird, falls nötig!
 {
 	ft_putstr_fd("Error: ", 2);
 	ft_putstr_fd(msg, 2);
