@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 18:18:46 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/25 10:46:05 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/25 18:36:45 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	destroy(t_cub *data, char *str)
 	destroy_wall(data->s_wall);
 	destroy_wall(data->e_wall);
 	destroy_wall(data->w_wall);
-
 	//#####################	
 	// put more stuff here! (worldmap etc)
 	//#####################

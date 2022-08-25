@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/25 18:35:01 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/25 18:41:57 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	deal_key(int key, t_cub *data)
 		rotating_view(data, 0.05);
 		raycasting(data);
 	}
-	if (key == Key_W && worldMap[(int)(data->pos.x + data->dir.x)][(int)(data->pos.y + data->dir.y)] != 1) // 0 or 1 ??
+	if (key == Key_W && worldMap[(int)(data->pos.x + data->dir.x)] \
+		[(int)(data->pos.y + data->dir.y)] == 0)
 	{
 		data->pos.x += data->dir.x;
 		data->pos.y += data->dir.y;
@@ -61,29 +62,28 @@ int	deal_key(int key, t_cub *data)
 
 void	deal_key_2(int key, t_cub *data)
 {
-	if (key == Key_S && worldMap[(int)(data->pos.x - data->dir.x)][(int)(data->pos.y - data->dir.y)] != 1) // 0 or 1 ??
+	if (key == Key_S && worldMap[(int)(data->pos.x - data->dir.x)] \
+		[(int)(data->pos.y - data->dir.y)] == 0)
 	{
 		data->pos.x -= data->dir.x;
 		data->pos.y -= data->dir.y;
 		raycasting(data);
 	}
-	if (key == Key_D && (int)(data->pos.y + data->dir.y) < screenHeight && (int)(data->pos.y + data->dir.y) > 0)
+	if (key == Key_D && (int)(data->pos.y + data->dir.y) < screenHeight \
+		&& (int)(data->pos.y + data->dir.y) > 0 && \
+		worldMap[(int)(data->pos.x + data->perp_dir.x)] \
+		[(int)(data->pos.y + data->perp_dir.y)] == 0)
 	{
-		// printf("perp wall dist: %f\n", data->perp_wall_dist);
-		if (worldMap[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y + data->perp_dir.y)] == 0) // 0 or 1 ??
-		{
-			data->pos.x += data->perp_dir.x;
-			data->pos.y += data->perp_dir.y;
-			raycasting(data);
-		}
+		data->pos.x += data->perp_dir.x;
+		data->pos.y += data->perp_dir.y;
+		raycasting(data);
 	}
-	if (key == Key_A && (int)(data->pos.y - data->dir.y) > 0)
+	if (key == Key_A && (int)(data->pos.y - data->dir.y) > 0 && \
+		worldMap[(int)(data->pos.x + data->perp_dir.x)] \
+		[(int)(data->pos.y - data->perp_dir.y)] == 0)
 	{
-		if (worldMap[(int)(data->pos.x + data->perp_dir.x)][(int)(data->pos.y - data->perp_dir.y)] != 1) // 0 or 1 ??
-		{
-			data->pos.x -= data->perp_dir.x;
-			data->pos.y -= data->perp_dir.y;
-			raycasting(data);
-		}
+		data->pos.x -= data->perp_dir.x;
+		data->pos.y -= data->perp_dir.y;
+		raycasting(data);
 	}
 }
