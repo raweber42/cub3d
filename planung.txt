@@ -3,6 +3,7 @@ To Do:
 >>> Problem, wenn man direkt an der wand steht
 > wenn man gegen die wand läuft (direkt nur 'D' drücken, dann hängt es sich auf)
 > free worldMap
+> mouseclick to close window
 
 @Linus:
 > data->direction bitte als char eintragen (N, E, S oder W)

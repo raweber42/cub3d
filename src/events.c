@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/25 10:25:13 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/25 11:53:33 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	rotating_view(t_cub *data, float direction)
 int	deal_key(int key, t_cub *data)
 {
 	printf("key is: %d\n", key);
-	if (key == 53)
+	if (key == Key_ESC)
 		destroy(data, NULL);
 	if (key == Key_RIGHT)
 	{

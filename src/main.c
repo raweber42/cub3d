@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/25 10:01:48 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/25 11:34:25 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,8 @@ int	main(int ac, char **av)
 		return (1); // error message here?
 	// PARSING/READING GOES HERE
 	raycasting(data);
-	mlx_hook(data->mlx_data->win_ptr, 2, 0, &deal_key, data);
+	mlx_hook(data->mlx_data->win_ptr, 2, (1L << 0), &deal_key, data);
+	// mlx_key_hook(data->mlx_data->win_ptr, &deal_key, data);
 	mlx_hook(data->mlx_data->win_ptr, 17, 0, &destroy, data);
 	mlx_loop(data->mlx_data->mlx_ptr);
 	return (0);

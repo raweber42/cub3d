@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/25 10:41:53 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/25 11:54:57 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,34 @@
 # define screenWidth 1000
 # define screenHeight 1000
 
+#if defined(__linux__)
+	enum
+	{
+		Key_A = 97,
+		Key_S = 115,
+		Key_D = 100,
+		Key_W = 119,
+		Key_ESC = 65307,
+		Key_LEFT = 65361,
+		Key_RIGHT = 65363,
+		Key_DOWN = 125,
+		Key_UP = 126
+	};
+#else
+	enum
+	{
+		Key_A = 0,
+		Key_S = 1,
+		Key_D = 2,
+		Key_W = 13,
+		Key_ESC = 53,
+		Key_LEFT = 123,
+		Key_RIGHT = 124,
+		Key_DOWN = 125,
+		Key_UP = 126
+	};
+#endif
 
-enum
-{
-	Key_A = 0,
-	Key_S = 1,
-	Key_D = 2,
-	Key_W = 13,
-	Key_ESC = 53,
-	Key_LEFT = 123,
-	Key_RIGHT = 124,
-	Key_DOWN = 125,
-	Key_UP = 126
-};
 
 enum
 {
