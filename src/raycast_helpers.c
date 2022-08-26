@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 10:23:20 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/26 10:47:34 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/26 13:53:48 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_color	*set_color(t_texture *tex, int y, int x)
 	return ((t_color *)pos);
 }
 
+// allocates and fills the color matrix for a given texture
 t_color	***init_color_matrix(t_texture *x_wall)
 {
 	int	i;
@@ -87,6 +88,7 @@ t_color	***init_color_matrix(t_texture *x_wall)
 	return (x_wall->matrix);
 }
 
+// handler for textures that calls subfunctions
 void	handle_textures(t_cub *data)
 {
 	load_xpm_files(data);

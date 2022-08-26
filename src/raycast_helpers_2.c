@@ -6,12 +6,13 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:07:13 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/26 12:11:52 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/26 13:51:58 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
+// calculates the x start and end values needed for drawing
 void	calculate_draw_range(t_cub *data, int *draw_start, int *draw_end)
 {
 	data->line_height = (int)(screenHeight / data->perp_wall_dist);
@@ -25,6 +26,7 @@ void	calculate_draw_range(t_cub *data, int *draw_start, int *draw_end)
 		*draw_end = screenHeight - 1;
 }
 
+// helper to colorize floor and ceiling
 void	draw_floor_and_ceiling(t_cub *data, int x)
 {
 	while (data->draw_start >= 0)
@@ -33,10 +35,10 @@ void	draw_floor_and_ceiling(t_cub *data, int x)
 		my_mlx_pixel_put(data->mlx_data, x, data->draw_end++, data->f_col);
 }
 
+// colorizes all pixels of the current mlx_image.
 void	put_all_pixels(t_cub *data, int tex_x, int x)
 {
 	double	tex_pos;
-	int		tex_y;
 	int		color;
 	double	step;
 	int		y;
@@ -48,17 +50,16 @@ void	put_all_pixels(t_cub *data, int tex_x, int x)
 		data->line_height / 2) * step;
 	while (y < data->draw_end)
 	{
-		tex_y = (int)tex_pos;
-		tex_pos += step;
 		if (data->side_hit == 0 && data->ray_dir.x > 0)
-			color = rgba_to_int(*(data->s_wall->matrix[tex_y][tex_x]));
+			color = rgba_to_int(*(data->s_wall->matrix[(int)tex_pos][tex_x]));
 		else if (data->side_hit == 0 && data->ray_dir.x < 0)
-			color = rgba_to_int(*(data->n_wall->matrix[tex_y][tex_x]));
+			color = rgba_to_int(*(data->n_wall->matrix[(int)tex_pos][tex_x]));
 		else if (data->side_hit == 1 && data->ray_dir.y < 0)
-			color = rgba_to_int(*(data->w_wall->matrix[tex_y][tex_x]));
+			color = rgba_to_int(*(data->w_wall->matrix[(int)tex_pos][tex_x]));
 		else if (data->side_hit == 1 && data->ray_dir.y > 0)
-			color = rgba_to_int(*(data->e_wall->matrix[tex_y][tex_x]));
+			color = rgba_to_int(*(data->e_wall->matrix[(int)tex_pos][tex_x]));
 		my_mlx_pixel_put(data->mlx_data, x, y++, color);
+		tex_pos += step;
 	}
 	draw_floor_and_ceiling(data, x);
 }

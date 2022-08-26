@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/26 12:08:57 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/26 13:52:38 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	draw_pixels(t_cub *data, int x)
 	put_all_pixels(data, tex_x, x);
 }
 
+// helper for calculating the steps taken by the player
 void	set_step_xy(t_cub *data, int *step_x, int *step_y)
 {
 	if (data->ray_dir.x < 0)
@@ -108,6 +109,7 @@ void	handle_rays_and_dda(t_cub *data, int x)
 	}
 }
 
+// main function for raycasting
 int	raycasting(t_cub *data)
 {
 	int	x;
