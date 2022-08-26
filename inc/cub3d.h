@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/26 10:05:28 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/26 12:09:31 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ typedef struct s_cub {
 	int			mapY;
 	t_vector	side_dist;
 	t_vector	delta_dist;
+	int			line_height;
 	// HERE
 	char		orientation;
 
@@ -131,6 +132,8 @@ typedef struct s_cub {
 	int			side_hit;
 	int			f_col;
 	int			c_col;
+	int			draw_start;
+	int			draw_end;
 	t_mlx		*mlx_data;
 	char		*n_path;
 	char		*s_path;
@@ -166,6 +169,12 @@ void	load_xpm_files(t_cub *data);
 t_color	*set_color(t_texture *tex, int y, int x);
 t_color	***init_color_matrix(t_texture *x_wall);
 void	handle_textures(t_cub *data);
+
+// raycast_helpers_2.c
+void	calculate_draw_range(t_cub *data, int *draw_start, int *draw_end);
+void	put_all_pixels(t_cub *data, int tex_x, int x);
+
+
 
 // helpers.c
 int		allocate_walls(t_cub *data);

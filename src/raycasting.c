@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/26 09:35:12 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/26 12:08:57 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,78 +16,20 @@
 // and fills bottom and top with floor- and ceiling-color
 void	draw_pixels(t_cub *data, int x)
 {
-	int	i;
-	int	line_height;
-	int	draw_start;
-	int	draw_end;
-	int	color;
+	double	wall_x;
+	int		tex_x;
 
-	line_height = (int)(screenHeight / data->perp_wall_dist);
-	if (data->perp_wall_dist == 0)
-		line_height = (double) screenHeight;
-	// printf("line_height: %d\n", line_height);
-	draw_start = -line_height / 2 + screenHeight / 2;
-	if (draw_start < 0)
-		draw_start = 0;
-	draw_end = line_height / 2 + screenHeight / 2;
-	if (draw_end >= screenHeight)
-		draw_end = screenHeight - 1;
-	// printf("drawend = %d\nperp_wall_dist = %f\nline_height = %d\n\n", draw_end, data->perp_wall_dist, line_height);
-	// sleep(1);
-	// FROM HERE ON IT DIFFERS!
-	// calculate X coordinate where wall was hit
-	double	wallX;
 	if (data->side_hit == 0)
-		wallX = data->pos.y + data->perp_wall_dist * data->ray_dir.y;
+		wall_x = data->pos.y + data->perp_wall_dist * data->ray_dir.y;
 	else
-		wallX = data->pos.x + data->perp_wall_dist * data->ray_dir.x;
-	wallX -= floor(wallX);
-
-	// calculate x coordinate of texture
-	int	texX = (int)(wallX * (double)TEXWIDTH);
+		wall_x = data->pos.x + data->perp_wall_dist * data->ray_dir.x;
+	wall_x -= floor(wall_x);
+	tex_x = (int)(wall_x * (double)TEXWIDTH);
 	if (data->side_hit == 0 && data->ray_dir.x > 0)
-		texX = TEXWIDTH - texX - 1;
+		tex_x = TEXWIDTH - tex_x - 1;
 	if (data->side_hit == 1 && data->ray_dir.y < 0)
-		texX = TEXWIDTH - texX - 1;
-	// last step
-	double	step = (double) TEXHEIGHT / (double) line_height; // check line_height
-	double	texPos = (draw_start - screenHeight / 2 + line_height / 2) * step;  // is mapheight right?
-	for (int y = draw_start; y < draw_end; y++)
-	{
-		int texY = (int)texPos;// & (TEXHEIGHT - 1); // needed?
-		texPos += step;
-		if (data->side_hit == 0 && data->ray_dir.x > 0)
-			color = rgba_to_int(*(data->s_wall->matrix[texY][texX]));
-		else if (data->side_hit == 0 && data->ray_dir.x < 0)
-			color = rgba_to_int(*(data->n_wall->matrix[texY][texX]));
-		else if (data->side_hit == 1 && data->ray_dir.y < 0)
-			color = rgba_to_int(*(data->w_wall->matrix[texY][texX]));
-		else if (data->side_hit == 1 && data->ray_dir.y > 0)
-			color = rgba_to_int(*(data->e_wall->matrix[texY][texX]));
-		
-		// printf("texY: %d\n", texY);
-		// printf("texY: %d\n", line_height);
-		// printf("current color: %d\n", rgba_to_int(*(data->n_wall->matrix[texY][texX])));
-		// for (int z = 0; z < line_height/TEXHEIGHT; z++)
-		my_mlx_pixel_put(data->mlx_data, x, y, color);
-	}
-
-
-		
-	// color = get_color(data, data->mapX, data->mapY); // only for untextured
-
-
-
-	i = 0;
-	while (i < draw_start)
-		my_mlx_pixel_put(data->mlx_data, x, i++, data->c_col);
-	// while (i < draw_end)
-	// 	my_mlx_pixel_put(data->mlx_data, x, i++, color);
-	i = draw_end;
-	while (i < screenHeight)
-	{	
-		my_mlx_pixel_put(data->mlx_data, x, i++, data->f_col);
-	}
+		tex_x = TEXWIDTH - tex_x - 1;
+	put_all_pixels(data, tex_x, x);
 }
 
 void	set_step_xy(t_cub *data, int *step_x, int *step_y)
@@ -180,10 +122,7 @@ int	raycasting(t_cub *data)
 			data->perp_wall_dist = (data->side_dist.x - data->delta_dist.x);
 		else
 			data->perp_wall_dist = (data->side_dist.y - data->delta_dist.y);
-		
 		draw_pixels(data, x++);
-		// if (!data->perp_wall_dist) // HERE!
-		// 	break ;
 	}
 	mlx_put_image_to_window(data->mlx_data->mlx_ptr, data->mlx_data->win_ptr,
 		data->mlx_data->mlx_img, 0, 0);
