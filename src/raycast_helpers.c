@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 10:23:20 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/26 10:05:05 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/26 10:47:34 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ t_color	***init_color_matrix(t_texture *x_wall)
 		}
 		i++;
 	}
-	// jorit sets height here
 	return (x_wall->matrix);
 }
 

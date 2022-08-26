@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 18:18:46 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/26 10:15:02 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/26 10:46:06 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,19 @@ int	destroy(t_cub *data, char *str)
 	destroy_wall(data->s_wall);
 	destroy_wall(data->e_wall);
 	destroy_wall(data->w_wall);
-	//#####################	
-	// put more stuff here! (worldmap etc)
-	//#####################
 	exit(0);
 }
 
 void	destroy_wall(t_texture *wall)
 {
 	int	i;
-	// int	j;
 
 	i = 0;
 	if (wall && wall->matrix)
 	{
-		while (i < TEXHEIGHT && wall->matrix[i]) //wall->matrix[i]
-		{
-			// j = 0;
-			// while (wall->matrix[i] && wall->matrix[i][j] && j < TEXWIDTH)
-			// 	free(wall->matrix[i][j++]);
+		while (i < TEXHEIGHT && wall->matrix[i])
 			free(wall->matrix[i++]);
-		}
 		if (wall->matrix)
 			free(wall->matrix);
 	}
-	// if (wall)
-	// 	free(wall);
 }
