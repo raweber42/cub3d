@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/25 18:41:57 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/26 09:35:24 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	rotating_view(t_cub *data, float direction)
 // If ESC is pressed, the whole program stops.
 int	deal_key(int key, t_cub *data)
 {
-	printf("key is: %d\n", key);
+	// printf("key is: %d\n", key);
 	if (key == Key_ESC)
 		destroy(data, NULL);
 	if (key == Key_RIGHT)

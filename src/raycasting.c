@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/25 18:43:07 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/26 09:35:12 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	draw_pixels(t_cub *data, int x)
 	draw_end = line_height / 2 + screenHeight / 2;
 	if (draw_end >= screenHeight)
 		draw_end = screenHeight - 1;
-	printf("drawend = %d\nperp_wall_dist = %f\nline_height = %d\n\n", draw_end, data->perp_wall_dist, line_height);
+	// printf("drawend = %d\nperp_wall_dist = %f\nline_height = %d\n\n", draw_end, data->perp_wall_dist, line_height);
 	// sleep(1);
 	// FROM HERE ON IT DIFFERS!
 	// calculate X coordinate where wall was hit

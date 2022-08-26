@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/25 11:54:57 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/26 10:05:28 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ extern int worldMap[24][24];
 // delete!
 
 typedef struct s_mlx {
-	// old fdf struct
 	char	*argv;
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -94,7 +93,6 @@ typedef struct s_vector
 	double	y;
 }				t_vector;
 
-//JORIT
 typedef struct s_color
 {
 	unsigned char	blue;
@@ -102,7 +100,6 @@ typedef struct s_color
 	unsigned char	red;
 	unsigned char	alpha;
 }	t_color;
-//JORIT
 
 typedef struct s_texture
 {
@@ -112,7 +109,7 @@ typedef struct s_texture
 	int		line_len;
 	int		height;
 	int		endian;
-	t_color	***matrix; // maybe change to t_color as Jorit has it // put 2 stars instead of three
+	t_color	***matrix;
 }		t_texture;
 
 typedef struct s_cub {
@@ -131,7 +128,7 @@ typedef struct s_cub {
 	char		orientation;
 
 	double		perp_wall_dist;
-	int			side_hit; //was a NS or a EW wall hit?
+	int			side_hit;
 	int			f_col;
 	int			c_col;
 	t_mlx		*mlx_data;

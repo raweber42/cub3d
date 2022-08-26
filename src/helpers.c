@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 12:05:16 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/25 10:28:04 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/26 09:52:57 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,16 @@ void	mlx_image_reload(t_cub *data)
 		data->mlx_data->mlx_img = mlx_new_image(data->mlx_data->mlx_ptr, \
 				data->mlx_data->win_width, data->mlx_data->win_height);
 	}
+	if (data->n_wall->mlx_img)
+		mlx_destroy_image(data->mlx_data->mlx_ptr, data->n_wall->mlx_img);
+	if (data->s_wall->mlx_img)
+		mlx_destroy_image(data->mlx_data->mlx_ptr, data->s_wall->mlx_img);
+	if (data->e_wall->mlx_img)
+		mlx_destroy_image(data->mlx_data->mlx_ptr, data->e_wall->mlx_img);
+	if (data->w_wall->mlx_img)
+		mlx_destroy_image(data->mlx_data->mlx_ptr, data->w_wall->mlx_img);
+	destroy_wall(data->n_wall);
+	destroy_wall(data->s_wall);
+	destroy_wall(data->e_wall);
+	destroy_wall(data->w_wall);
 }
