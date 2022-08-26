@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/26 12:09:31 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/26 13:58:17 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,8 @@ void	deal_key_2(int key, t_cub *data);
 
 // destroy.c
 int	destroy(t_cub *data, char *str);
+int	destroy_no_msg(t_cub *data);
+
 void	destroy_wall(t_texture *wall);
 
 // raycasting.c
@@ -173,8 +175,6 @@ void	handle_textures(t_cub *data);
 // raycast_helpers_2.c
 void	calculate_draw_range(t_cub *data, int *draw_start, int *draw_end);
 void	put_all_pixels(t_cub *data, int tex_x, int x);
-
-
 
 // helpers.c
 int		allocate_walls(t_cub *data);
