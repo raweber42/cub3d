@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/23 14:25:52 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/26 18:56:27 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	rotating_view(t_cub *data, float direction)
 // If ESC is pressed, the whole program stops.
 int	deal_key(int key, t_cub *data)
 {
-	printf("key is: %d\n", key);
 	if (key == 53)
 	{
 		destroy(data);

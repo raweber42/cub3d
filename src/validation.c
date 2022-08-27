@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/24 21:25:42 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/27 10:35:55 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ int	valid_space(char **matrix, int i, int j)
 	return (0);
 }
 
-void	tests(char **matrix)
+void	tests(char **matrix, t_cub *data)
 {
 	int	i;
 	int	j;
 
+	(void)data;
 	i = 0;
 	j = 0;
 	while (matrix[i])
@@ -132,12 +133,13 @@ void	closed_map(char **matrix)
 		error_msg("You are not that lonley");
 }
 
-void	valid_map(char *path)
+void	valid_map(char *path, t_cub *data)
 {
 	char	**matrix;
 
 	matrix = get_matrix(path);
-	tests(matrix);
+	tests(matrix, data);
 	closed_map(matrix);
-	exit(0);
+	data->world_map = (char **)worldMap;
+	data->orientation = 'W';
 }

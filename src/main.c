@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/24 20:34:12 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/27 10:33:21 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,8 @@ int	init_data(t_cub *data)
 	data->pos.x = 3;
 	data->pos.y = 7; //x and y start position
 
-	data->orientation = 'S'; // -->> LINUS SETS THIS!
 	set_view_direction(data);
-	
+
 	data->perp_dir.x = data->dir.y;
 	data->perp_dir.y = data->dir.x * -1;
 	data->plane.x = data->perp_dir.x;
@@ -167,7 +166,10 @@ int	main(int ac, char **av)
 	// LINUS########################
 	(void)ac;
 	(void)av;
-	valid_map(av[1]);
+	t_cub	*data;
+
+	data = (t_cub *)ft_calloc(1, sizeof(t_cub));
+	valid_map(av[1], data);
 	
 	// if (ac == 2)
 	// 	valid_map(av[1]);
@@ -175,9 +177,6 @@ int	main(int ac, char **av)
 	// 	error_msg("Invalid number of arguments");
 	// LINUS########################
 	
-	t_cub	*data;
-	
-	data = (t_cub *)ft_calloc(1, sizeof(t_cub));
 	if (!data)
 		return (1); // error message here?
 	if (init_data(data))
