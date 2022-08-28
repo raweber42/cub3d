@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/26 13:58:17 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/28 15:23:27 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,16 +118,12 @@ typedef struct s_cub {
 	t_vector	plane;
 	t_vector	ray_dir;
 	t_vector	perp_dir;
-	t_vector	map_check;
-	// HERE
-	int			mapX;
-	int			mapY;
+	int			map_x;
+	int			map_y;
 	t_vector	side_dist;
 	t_vector	delta_dist;
 	int			line_height;
-	// HERE
 	char		orientation;
-
 	double		perp_wall_dist;
 	int			side_hit;
 	int			f_col;
@@ -157,13 +153,13 @@ int		deal_key(int key, t_cub *data);
 void	deal_key_2(int key, t_cub *data);
 
 // destroy.c
-int	destroy(t_cub *data, char *str);
-int	destroy_no_msg(t_cub *data);
+int		destroy(t_cub *data, char *str);
+int		destroy_no_msg(t_cub *data);
 
 void	destroy_wall(t_texture *wall);
 
 // raycasting.c
-int	raycasting(t_cub *data);
+int		raycasting(t_cub *data);
 
 // raycast_helpers.c
 void	get_tex_img_address(t_cub *data);

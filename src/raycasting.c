@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/26 13:52:38 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/28 15:22:36 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,23 @@ void	set_step_xy(t_cub *data, int *step_x, int *step_y)
 	if (data->ray_dir.x < 0)
 	{
 		*step_x = -1;
-		data->side_dist.x = (data->pos.x - data->mapX) * data->delta_dist.x;
+		data->side_dist.x = (data->pos.x - data->map_x) * data->delta_dist.x;
 	}
 	else
 	{
 		*step_x = 1;
-		data->side_dist.x = (data->mapX + 1.0 - data->pos.x) \
+		data->side_dist.x = (data->map_x + 1.0 - data->pos.x) \
 			* data->delta_dist.x;
 	}
 	if (data->ray_dir.y < 0)
 	{
 		*step_y = -1;
-		data->side_dist.y = (data->pos.y - data->mapY) * data->delta_dist.y;
+		data->side_dist.y = (data->pos.y - data->map_y) * data->delta_dist.y;
 	}
 	else
 	{
 		*step_y = 1;
-		data->side_dist.y = (data->mapY + 1.0 - data->pos.y) \
+		data->side_dist.y = (data->map_y + 1.0 - data->pos.y) \
 			* data->delta_dist.y;
 	}
 }
@@ -67,8 +67,8 @@ void	set_rays(t_cub *data, int x)
 	camera_x = 2 * x / (double)screenWidth - 1;
 	data->ray_dir.x = data->dir.x + data->plane.x * camera_x;
 	data->ray_dir.y = data->dir.y + data->plane.y * camera_x;
-	data->mapX = (int)data->pos.x;
-	data->mapY = (int)data->pos.y;
+	data->map_x = (int)data->pos.x;
+	data->map_y = (int)data->pos.y;
 	if (data->ray_dir.x == 0)
 		data->delta_dist.x = 1e30;
 	else
@@ -95,16 +95,16 @@ void	handle_rays_and_dda(t_cub *data, int x)
 		if (data->side_dist.x < data->side_dist.y)
 		{
 			data->side_dist.x += data->delta_dist.x;
-			data->mapX += step_x;
+			data->map_x += step_x;
 			data->side_hit = 0;
 		}
 		else
 		{
 			data->side_dist.y += data->delta_dist.y;
-			data->mapY += step_y;
+			data->map_y += step_y;
 			data->side_hit = 1;
 		}
-		if (worldMap[data->mapX][data->mapY] == 1)
+		if (worldMap[data->map_x][data->map_y] == 1)
 			hit = 1;
 	}
 }
