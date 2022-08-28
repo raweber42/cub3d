@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/28 15:20:48 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/28 15:29:10 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,10 @@ int	main(int ac, char **av)
 
 	data = (t_cub *)ft_calloc(1, sizeof(t_cub));
 	if (!data || init_data(data))
-		return (1); // error message here?
+	{
+		ft_printf("Error: Could not allocate cub3d struct");
+		return (1);
+	}
 	// PARSING/READING GOES HERE
 	raycasting(data);
 	mlx_hook(data->mlx_data->win_ptr, 2, (1L << 0), &deal_key, data);
