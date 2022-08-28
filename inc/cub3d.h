@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/28 15:23:27 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/28 15:24:27 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ typedef struct s_texture
 	char	*mlx_img_addr;
 	int		bits_per_pxl;
 	int		line_len;
-	int		height;
 	int		endian;
 	t_color	***matrix;
 }		t_texture;
