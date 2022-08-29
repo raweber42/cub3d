@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/28 15:24:27 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/29 07:57:01 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ typedef struct s_cub {
 	t_texture	*s_wall;
 	t_texture	*e_wall;
 	t_texture	*w_wall;
+	char		**world_map;
 }				t_cub;
 
 // main.c
@@ -179,7 +180,7 @@ void	mlx_image_reload(t_cub *data);
 
 // validation.c
 void	error_msg(char *msg);
-void	valid_map(char *path);
+void	valid_map(char *path, t_cub *data);
 
 // matrix.c
 char	**get_matrix(char *path);
