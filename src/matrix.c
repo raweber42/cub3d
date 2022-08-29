@@ -6,28 +6,26 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 19:37:54 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/29 10:25:05 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/29 15:21:39 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	check_textures(int pos, char *path)
+void	free_all(char **splitters)
 {
-	int	fd;
-	int	_read;
-	char	c[1];
+	int	i;
 
-	fd = open(path, O_RDONLY);
-	_read = 0;
-	while (_read <= pos && read(fd, c, 1))
-		_read++;
-	read(fd, c, 1);
-	printf("Character: %c\n", c[0]);
-	exit(0);
+	i = 0;
+	while (splitters[i])
+	{
+		free(splitters[i]);
+		i++;
+	}
+	free(splitters);
 }
 
-static int	elem_cnt(char *path)
+int	*elem_cnt(char *path)
 {
 	int		condition;
 	char	c[1];
@@ -35,8 +33,9 @@ static int	elem_cnt(char *path)
 	int		digits_per_elem;
 	int		digits;
 	int		elements;
-	int		elem_pos[3];
+	int		*elem_pos;
 
+	elem_pos = malloc(sizeof(int) * 3);
 	elements = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
@@ -89,7 +88,7 @@ static int	elem_cnt(char *path)
 		error_msg("Wrong number of elements");
 	// check_textures(elem_pos[0], path);
 	// check_colors(elem_pos[1], path);
-	return (elem_pos[2]);
+	return (elem_pos);
 }
 
 char	**create_matrix(int x, int y)
@@ -107,7 +106,7 @@ char	**create_matrix(int x, int y)
 	return (ret);
 }
 
-char	**get_elem(int num, char *path)
+char	**get_elem(int *elem, char *path)
 {
 	int		fd;
 	int		i;
@@ -119,11 +118,12 @@ char	**get_elem(int num, char *path)
 	fd = open(path, O_RDONLY);
 	i = 0;
 	drag = NULL;
-	while (i < num)
+	while (i < elem[2])
 	{
 		read(fd, c, 1);
 		i++;
 	}
+	free(elem);
 	line = get_next_line(fd);
 	max_l = 0;
 	i = 1;
@@ -144,7 +144,7 @@ char	**get_elem(int num, char *path)
 	return (create_matrix(max_l, i));
 }
 
-char	**fill_matrix(char **matrix, char *path, int num)
+char	**fill_matrix(char **matrix, char *path, int *elem)
 {
 	int		fd;
 	int		i;
@@ -155,11 +155,12 @@ char	**fill_matrix(char **matrix, char *path, int num)
 	fd = open(path, O_RDONLY);
 	i = 0;
 	drag = '\0';
-	while (i < num)
+	while (i < elem[2])
 	{
 		read(fd, c, 1);
 		i++;
 	}
+	free(elem);
 	i = 0;
 	j = 0;
 	while (read(fd, c, 1))

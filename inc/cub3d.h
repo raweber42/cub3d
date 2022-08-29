@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/29 11:47:09 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/29 16:30:29 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,5 +192,7 @@ int		surounded(char **matrix, int i, int j, int callback);
 
 // matrix.c
 char	**get_matrix(char *path);
+int		*elem_cnt(char *path);
+void	free_all(char **splitters);
 
 #endif

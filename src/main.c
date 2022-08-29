@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/29 10:18:56 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/29 16:50:09 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	init_ray_data(t_cub *data)
 	data->ray_dir.x = 0;
 	data->ray_dir.y = 0;
 	data->side_hit = 0;
-	data->f_col = 0x413030;
+	data->f_col = 0x413030;//HERE LINUS
 	data->c_col = 0x000066;
 	data->perp_dir.x = data->dir.y;
 	data->perp_dir.y = data->dir.x * -1;
@@ -103,10 +103,14 @@ int	init_data(t_cub *data)
 	if (!data->mlx_data)
 		return (1);
 	init_mlx(data->mlx_data);
-	data->n_path = "textures/eagle.xpm";
-	data->s_path = "textures/greystone.xpm";
-	data->e_path = "textures/mossy.xpm";
-	data->w_path = "textures/redbrick.xpm";
+	printf("PATH: |%s|\n", data->n_path);
+	printf("PATH: |%s|\n", data->s_path);
+	printf("PATH: |%s|\n", data->w_path);
+	printf("PATH: |%s|\n", data->e_path);
+	// data->n_path = "textures/eagle.xpm";//SET THIS
+	// data->s_path = "textures/greystone.xpm";
+	// data->e_path = "textures/mossy.xpm";
+	// data->w_path = "textures/redbrick.xpm";
 	init_walls(data);
 	return (0);
 }

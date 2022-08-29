@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/29 11:53:33 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/29 16:59:02 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,72 @@ void	closed_map(char **matrix, t_cub *data)
 		error_msg("You are not that lonley");
 }
 
+void	check_access(t_cub *data)
+{
+	if (!data->n_path)
+		error_msg("Give north texture");
+	if (!data->s_path)
+		error_msg("Give south texture");
+	if (!data->w_path)
+		error_msg("Give west texture");
+	if (!data->e_path)
+		error_msg("Give east texture");
+}
+
+void	null_textures(t_cub *data)
+{
+	data->n_path = NULL;
+	data->s_path = NULL;
+	data->w_path = NULL;
+	data->e_path = NULL;
+}
+
+void	check_textures(int *elem, char *path, t_cub *data)
+{
+	int		fd;
+	int		_read;
+	char	c[1];
+	char	*line;
+	char	**splitters;
+	int		i;
+
+	null_textures(data);
+	fd = open(path, O_RDONLY);
+	_read = 0;
+	while (_read < elem[0] && read(fd, c, 1))
+		_read++;
+	i = 0;
+	while (i < 4)
+	{
+		line = get_next_line(fd);
+		splitters = ft_split(line, ' ');
+		free(line);
+		if (!ft_strncmp("NO", splitters[0], 2))
+			data->n_path = ft_strtrim(ft_strdup(splitters[1]), "\n");
+		else if (!ft_strncmp("SO", splitters[0], 2))
+			data->s_path = ft_strtrim(ft_strdup(splitters[1]), "\n");
+		else if (!ft_strncmp("WE", splitters[0], 2))
+			data->w_path = ft_strtrim(ft_strdup(splitters[1]), "\n");
+		else if (!ft_strncmp("EA", splitters[0], 2))
+			data->e_path = ft_strtrim(ft_strdup(splitters[1]), "\n");
+		else
+			error_msg("Direction identifier expected in first block");
+		free_all(splitters);
+		i++;
+	}
+	check_access(data);
+}
+
+void	check_celling(int *elem, char *path, t_cub *data)
+{
+	int	i;
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	i = 0;
+	while (i < elem[1] && read(fd, c, 1))
+}
+
 void	valid_map(char *path, t_cub *data)
 {
 	char	**matrix;
@@ -207,5 +273,6 @@ void	valid_map(char *path, t_cub *data)
 	tests(matrix, data);
 	closed_map(matrix, data);
 	data->world_map = matrix;
-	exit(0);
+	check_textures(elem_cnt(path), path, data);
+	check_celling(elem_cnt(path), path, data);
 }
