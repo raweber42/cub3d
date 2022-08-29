@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/29 16:50:09 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/29 17:30:13 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ void	init_ray_data(t_cub *data)
 	data->ray_dir.x = 0;
 	data->ray_dir.y = 0;
 	data->side_hit = 0;
-	data->f_col = 0x413030;//HERE LINUS
-	data->c_col = 0x000066;
 	data->perp_dir.x = data->dir.y;
 	data->perp_dir.y = data->dir.x * -1;
 	data->map_x = 0;

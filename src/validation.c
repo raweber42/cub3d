@@ -6,11 +6,21 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/29 16:59:02 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/29 20:01:11 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+int	ft_strstrlen(char **strstr)
+{
+	int	i;
+
+	i = 0;
+	while (strstr[i])
+		i++;
+	return (i);
+}
 
 void	error_msg(char *msg) // sicherstellen, dass immer gefreed wird, falls nötig!
 {
@@ -199,70 +209,80 @@ void	closed_map(char **matrix, t_cub *data)
 		error_msg("You are not that lonley");
 }
 
-void	check_access(t_cub *data)
+int	rgb_to_int(unsigned char r, unsigned char g, unsigned char b)
 {
-	if (!data->n_path)
-		error_msg("Give north texture");
-	if (!data->s_path)
-		error_msg("Give south texture");
-	if (!data->w_path)
-		error_msg("Give west texture");
-	if (!data->e_path)
-		error_msg("Give east texture");
+	return (r << 16 | g << 8 | b);
 }
 
-void	null_textures(t_cub *data)
-{
-	data->n_path = NULL;
-	data->s_path = NULL;
-	data->w_path = NULL;
-	data->e_path = NULL;
-}
-
-void	check_textures(int *elem, char *path, t_cub *data)
+void	set_attributes(char *path, t_cub *data)//Leaking
 {
 	int		fd;
-	int		_read;
-	char	c[1];
 	char	*line;
 	char	**splitters;
-	int		i;
+	char	**splitters2;
 
-	null_textures(data);
 	fd = open(path, O_RDONLY);
-	_read = 0;
-	while (_read < elem[0] && read(fd, c, 1))
-		_read++;
-	i = 0;
-	while (i < 4)
+	line = get_next_line(fd);
+	while (line)
 	{
-		line = get_next_line(fd);
 		splitters = ft_split(line, ' ');
-		free(line);
-		if (!ft_strncmp("NO", splitters[0], 2))
+		if (ft_strstrlen(splitters) < 2)
+		{
+			// free(line);
+			line = get_next_line(fd);
+			// free_all(splitters);
+			continue ;
+		}
+		if (!ft_strncmp("NO", splitters[0], 3))
+		{
 			data->n_path = ft_strtrim(ft_strdup(splitters[1]), "\n");
-		else if (!ft_strncmp("SO", splitters[0], 2))
+			// free_all(splitters);
+		}
+		else if (!ft_strncmp("SO", splitters[0], 3))
+		{
 			data->s_path = ft_strtrim(ft_strdup(splitters[1]), "\n");
-		else if (!ft_strncmp("WE", splitters[0], 2))
+			// free_all(splitters);
+		}
+		else if (!ft_strncmp("WE", splitters[0], 3))
+		{
 			data->w_path = ft_strtrim(ft_strdup(splitters[1]), "\n");
-		else if (!ft_strncmp("EA", splitters[0], 2))
+			// free_all(splitters);
+		}
+		else if (!ft_strncmp("EA", splitters[0], 3))
+		{
 			data->e_path = ft_strtrim(ft_strdup(splitters[1]), "\n");
+			// free_all(splitters);
+		}
+		else if (!ft_strncmp("F", splitters[0], 2))
+		{
+			splitters2 = ft_split(ft_strtrim(line, "F "), ',');
+			if (ft_strstrlen(splitters2) < 3)
+				error_msg("You have not defined all color elements\n");
+			data->f_col = rgb_to_int((unsigned char)ft_atoi(ft_strtrim(splitters2[1], "\n ,")),//Not segfault save
+									(unsigned char)ft_atoi(ft_strtrim(splitters2[2], "\n ,")),
+									(unsigned char)ft_atoi(ft_strtrim(splitters2[3], "\n ,")));
+			// free_all(splitters);
+			// free_all(splitters2);
+		}
+		else if (!ft_strncmp("C", splitters[0], 2))
+		{
+			splitters2 = ft_split(ft_strtrim(line, "C "), ',');
+			if (ft_strstrlen(splitters2) < 3)
+				error_msg("You have not defined all color elements\n");
+			data->c_col = rgb_to_int((unsigned char)ft_atoi(ft_strtrim(splitters2[1], "\n ,")),//Not segfault save
+									(unsigned char)ft_atoi(ft_strtrim(splitters2[2], "\n ,")),
+									(unsigned char)ft_atoi(ft_strtrim(splitters2[3], "\n ,")));
+			// free_all(splitters);
+			// free_all(splitters2);
+		}
 		else
-			error_msg("Direction identifier expected in first block");
-		free_all(splitters);
-		i++;
+		{
+			free(splitters);
+			free(line);
+		}
+		// free(line);
+		line = get_next_line(fd);
 	}
-	check_access(data);
-}
-
-void	check_celling(int *elem, char *path, t_cub *data)
-{
-	int	i;
-	int	fd;
-
-	fd = open(path, O_RDONLY);
-	i = 0;
-	while (i < elem[1] && read(fd, c, 1))
 }
 
 void	valid_map(char *path, t_cub *data)
@@ -273,6 +293,5 @@ void	valid_map(char *path, t_cub *data)
 	tests(matrix, data);
 	closed_map(matrix, data);
 	data->world_map = matrix;
-	check_textures(elem_cnt(path), path, data);
-	check_celling(elem_cnt(path), path, data);
+	set_attributes(path, data);
 }
