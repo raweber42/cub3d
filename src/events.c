@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/26 14:00:39 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/29 09:56:18 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../inc/cub3d.h"
 
@@ -39,6 +40,12 @@ int	deal_key(int key, t_cub *data)
 	// printf("key is: %d\n", key);
 	if (key == Key_ESC)
 		destroy(data, NULL);
+	if (key == 53)
+	{
+		destroy(data, NULL);
+		return (0);
+	}
+	// rotate left
 	if (key == Key_RIGHT)
 	{
 		rotating_view(data, -0.05);
@@ -49,8 +56,8 @@ int	deal_key(int key, t_cub *data)
 		rotating_view(data, 0.05);
 		raycasting(data);
 	}
-	if (key == Key_W && worldMap[(int)(data->pos.x + data->dir.x)] \
-		[(int)(data->pos.y + data->dir.y)] == 0)
+	if (key == Key_W && data->world_map[(int)(data->pos.x + data->dir.x)] \
+		[(int)(data->pos.y + data->dir.y)] == 48)
 	{
 		data->pos.x += data->dir.x;
 		data->pos.y += data->dir.y;
@@ -62,8 +69,8 @@ int	deal_key(int key, t_cub *data)
 
 void	deal_key_2(int key, t_cub *data)
 {
-	if (key == Key_S && worldMap[(int)(data->pos.x - data->dir.x)] \
-		[(int)(data->pos.y - data->dir.y)] == 0)
+	if (key == Key_S && data->world_map[(int)(data->pos.x - data->dir.x)] \
+		[(int)(data->pos.y - data->dir.y)] == 48)
 	{
 		data->pos.x -= data->dir.x;
 		data->pos.y -= data->dir.y;
@@ -71,16 +78,16 @@ void	deal_key_2(int key, t_cub *data)
 	}
 	if (key == Key_D && (int)(data->pos.y + data->dir.y) < screenHeight \
 		&& (int)(data->pos.y + data->dir.y) > 0 && \
-		worldMap[(int)(data->pos.x + data->perp_dir.x)] \
-		[(int)(data->pos.y + data->perp_dir.y)] == 0)
+		data->world_map[(int)(data->pos.x + data->perp_dir.x)] \
+		[(int)(data->pos.y + data->perp_dir.y)] == 48)
 	{
 		data->pos.x += data->perp_dir.x;
 		data->pos.y += data->perp_dir.y;
 		raycasting(data);
 	}
 	if (key == Key_A && (int)(data->pos.y - data->dir.y) > 0 && \
-		worldMap[(int)(data->pos.x + data->perp_dir.x)] \
-		[(int)(data->pos.y - data->perp_dir.y)] == 0)
+		data->world_map[(int)(data->pos.x + data->perp_dir.x)] \
+		[(int)(data->pos.y - data->perp_dir.y)] == 48)
 	{
 		data->pos.x -= data->perp_dir.x;
 		data->pos.y -= data->perp_dir.y;

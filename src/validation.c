@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/25 09:45:11 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/29 10:26:29 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,54 @@ static int	allowed_char(char c)
 	return (0);
 }
 
-void	tests(char **matrix)
+int	valid_left(char **matrix, int i, int j)
+{
+	if (j == 0)
+		return (1);
+	else if (matrix[i][j - 1] != ' ')
+		return (0);
+	return (valid_left(matrix, i, j - 1));
+}
+
+int	valid_right(char **matrix, int i, int j)
+{
+	if (!matrix[i][j + 1])
+		return (1);
+	// else if (matrix[i][j + 1] == '1')
+	// 	return (1);
+	else if (matrix[i][j + 1] != ' ')
+		return (0);
+	return (valid_right(matrix, i, j + 1));
+}
+
+int	valid_space(char **matrix, int i, int j)
+{
+	// if (matrix[i][j] == ' ')
+	// {
+	// 	if (valid_left(matrix, i, j) || valid_right(matrix, i, j))
+	// 		return (1);
+	// 	printf("Position: %d, %d\n", i, j);
+	// 	error_msg("Map contains spaces");
+	// }
+	// return (0);
+	if (matrix[i][j] == ' ')
+		return (1);
+	return (0);
+}
+
+void	tests(char **matrix, t_cub *data)
 {
 	int	i;
 	int	j;
 
+	(void)data;
 	i = 0;
 	j = 0;
 	while (matrix[i])
 	{
 		while(matrix[i][j])
 		{
-			if (matrix[i][j] == ' ')
+			if (valid_space(matrix, i, j))
 			{
 				j++;
 				continue ;
@@ -57,7 +93,7 @@ void	tests(char **matrix)
 	}
 }
 
-void	closed_map(char **matrix)
+void	closed_map(char **matrix, t_cub *data)
 {
 	int	i;
 	int	j;
@@ -90,6 +126,10 @@ void	closed_map(char **matrix)
 				matrix[i][j] == 'W' || \
 				matrix[i][j] == 'S')
 			{
+				data->pos.x = i;
+				data->pos.y = j;
+				data->orientation = matrix[i][j];
+				matrix[i][j] = '0';
 				if (player == 1)
 					error_msg("This is not coop");
 				player = 1;
@@ -103,12 +143,12 @@ void	closed_map(char **matrix)
 		error_msg("You are not that lonley");
 }
 
-void	valid_map(char *path)
+void	valid_map(char *path, t_cub *data)
 {
 	char	**matrix;
 
 	matrix = get_matrix(path);
-	tests(matrix);
-	closed_map(matrix);
-	exit(0);
+	tests(matrix, data);
+	closed_map(matrix, data);
+	data->world_map = matrix;
 }

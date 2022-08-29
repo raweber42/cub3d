@@ -40,11 +40,11 @@ OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 # prevents rules from being considered as files
 .PHONY: all clean fclean re
 
-all: $(NAME) #credit <- INSERT LATER
+all: $(NAME)
 
 # creates subdirectory /obj and subdirectories
 $(OBJ): $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@mkdir -p $(dir $@)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # compiles all object files and builds executable file 'cub3d'

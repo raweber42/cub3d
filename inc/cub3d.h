@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/29 07:57:01 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/29 09:55:48 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,10 @@ typedef struct s_cub {
 	t_vector	perp_dir;
 	int			map_x;
 	int			map_y;
+	t_vector	map_check;
+	// HERE
+	int			mapX;
+	int			mapY;
 	t_vector	side_dist;
 	t_vector	delta_dist;
 	int			line_height;
@@ -142,6 +146,7 @@ typedef struct s_cub {
 }				t_cub;
 
 // main.c
+void	set_view_direction(t_cub *data);
 int		init_data(t_cub *data);
 void	init_mlx(t_mlx *mlx_data);
 

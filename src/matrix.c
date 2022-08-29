@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 19:37:54 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/29 09:19:27 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/29 10:25:05 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,13 @@ static int	elem_cnt(char *path)
 			condition = 1;
 			elements++;
 		}
-		
 	}
 	close(fd);
 	if (elements != 3)
 		error_msg("Wrong number of elements");
 	// check_textures(elem_pos[0], path);
 	// check_colors(elem_pos[1], path);
-	return (elem_pos[2] - 1);
+	return (elem_pos[2]);
 }
 
 char	**create_matrix(int x, int y)

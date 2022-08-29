@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/28 15:29:10 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/29 10:18:56 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ int	init_walls(t_cub *data)
 // initializes all ray data and sets floor/ceiling color
 void	init_ray_data(t_cub *data)
 {
+	printf("Position: %f, %f\n", data->pos.x, data->pos.y);
+
+	set_view_direction(data);
 	data->perp_dir.x = data->dir.y;
 	data->perp_dir.y = data->dir.x * -1;
 	data->plane.x = data->perp_dir.x;
@@ -94,9 +97,6 @@ void	init_ray_data(t_cub *data)
 // initializes main struct, player position, view, ray data and textures
 int	init_data(t_cub *data)
 {
-	data->pos.x = 3;
-	data->pos.y = 7; // -->> LINUS SETS THIS!
-	data->orientation = 'S'; // -->> LINUS SETS THIS!
 	set_view_direction(data);
 	init_ray_data(data);
 	data->mlx_data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
@@ -142,7 +142,6 @@ int	main(int ac, char **av)
 	// LINUS########################
 	(void)ac;
 	(void)av;
-	// valid_map(av[1]);
 	
 	// if (ac == 2)
 	// 	valid_map(av[1]);
@@ -153,11 +152,15 @@ int	main(int ac, char **av)
 	t_cub	*data;
 
 	data = (t_cub *)ft_calloc(1, sizeof(t_cub));
-	if (!data || init_data(data))
+	if (!data)
 	{
 		ft_printf("Error: Could not allocate cub3d struct");
 		return (1);
-	}
+	} // error message here?
+	valid_map(av[1], data);
+	
+	if (init_data(data))
+		return (1); // error message here?
 	// PARSING/READING GOES HERE
 	raycasting(data);
 	mlx_hook(data->mlx_data->win_ptr, 2, (1L << 0), &deal_key, data);
