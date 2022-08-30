@@ -6,89 +6,62 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 19:37:54 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/29 18:58:28 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/30 21:33:27 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	free_all(char **splitters)
-{
-	int	i;
-
-	i = 0;
-	while (splitters[i])
-	{
-		free(splitters[i]);
-		i++;
-	}
-	free(splitters);
-}
-
+/**
+ * @brief gives the line number, at whicht the map starts
+ * 
+ * @param path the file, that contains the map
+ * @return int (line number)
+ */
 int	elem_cnt(char *path)
 {
-	int		condition;
-	char	c[1];
+	char	*line;
 	int		fd;
-	int		digits_per_elem;
-	int		digits;
-	int		elements;
+	int		result;
+	int		chunck;
+	int		condition;
 
-	elements = 0;
 	fd = open(path, O_RDONLY);
-	if (fd == -1)
-	{
-		perror("open");
-		exit (1);
-	}
+	result = 0;
 	condition = 0;
-	digits = 0;
-	digits_per_elem = 0;
-	if (read(fd, c, 1))//Can be simplified
+	chunck = 0;
+	line = get_next_line(fd);
+	while (line)
 	{
-		digits_per_elem++;
-		if (c[0] != '\n')
-		{
-			elements = 1;
+		if (!ft_strncmp(line, "\n", 2))
 			condition = 1;
+		else if (condition && ft_strncmp(line, "\n", 1))
+		{
+			condition = 0;
+			result = chunck;
 		}
+		chunck++;
+		free(line);
+		line = get_next_line(fd);
 	}
-	while (read(fd, c, 1))
-	{
-		digits_per_elem++;
-		if (condition == 0 && c[0] != '\n')
-		{
-			elements = 1;
-			condition = 1;
-		}
-		else if (c[0] == '\n' && condition == 1)
-			condition = 2;
-		else if (c[0] != '\n' && condition == 2)
-			condition = 1;
-		else if (c[0] == '\n' && condition == 2)
-			condition = 3;
-		else if (c[0] == '\n' && condition == 3)
-			continue ;
-		else if (c[0] != '\n' && condition == 3)
-		{
-			digits += digits_per_elem;
-			digits_per_elem = 0;
-			condition = 1;
-			elements++;
-		}
-	}
+	free(line);
 	close(fd);
-	// check_textures(elem_pos[0], path);
-	// check_colors(elem_pos[1], path);
-	return (digits);
+	return (result);
 }
 
+/**
+ * @brief Create a matrix object (malloced)
+ * 
+ * @param x the number of columns (including the null)
+ * @param y the number of lines (including the NULL)
+ * @return char** matrix (malloced!)
+ */
 char	**create_matrix(int x, int y)
 {
 	char	**ret;
 	int		i;
 
-	ret = malloc(sizeof(char *) * y);
+	ret = malloc(sizeof(char *) * (y + 1));
 	i = 0;
 	while (i < y)
 	{
@@ -98,98 +71,99 @@ char	**create_matrix(int x, int y)
 	return (ret);
 }
 
+/**
+ * @brief Misst die Maße für die Matrix | Linenumber, bei der die matrix anfängt
+ * 
+ * @param elem Linenumber
+ * @param path File, in der die Matrix steht
+ * @return char** Returns (recursivley) a matrix object
+ */
 char	**get_elem(int elem, char *path)
 {
 	int		fd;
 	int		i;
-	char	c[1];
-	char	*drag;
 	char	*line;
 	int		max_l;
 
 	fd = open(path, O_RDONLY);
 	i = 0;
-	drag = NULL;
 	while (i < elem)
 	{
-		read(fd, c, 1);
+		free(get_next_line(fd));
 		i++;
 	}
 	line = get_next_line(fd);
 	max_l = 0;
-	i = 1;
+	i = 0;
 	while (line)
 	{
-		if (!ft_strncmp(drag, "", 1) && !ft_strncmp(line, "", 1))
+		if (!ft_strncmp(line, "", 1) || !ft_strncmp(line, "\n", 2))
 			break ;
 		i++;
 		if (ft_strlen(line) > max_l)
 			max_l = ft_strlen(line);
-		if (drag)
-			free(drag);
-		drag = line;
+		free(line);
 		line = get_next_line(fd);
 	}
-	free(drag);
 	free(line);
 	return (create_matrix(max_l, i));
 }
 
+/**
+ * @brief Fills the matrix object with content
+ * 
+ * @param matrix 
+ * @param path 
+ * @param elem Linenumber, bei der die Matrix steht
+ * @return char** Filled matrix
+ */
 char	**fill_matrix(char **matrix, char *path, int elem)
 {
 	int		fd;
 	int		i;
 	int		j;
-	char	c[1];
-	char	drag;
+	char	*line;
 
 	fd = open(path, O_RDONLY);
 	i = 0;
-	drag = '\0';
-	while (i < elem)
+	while (i < elem - 1)
 	{
-		read(fd, c, 1);
+		free(get_next_line(fd));
 		i++;
 	}
 	i = 0;
 	j = 0;
-	while (read(fd, c, 1))
+	line = get_next_line(fd);
+	while (line)
 	{
-		if (c[0] == '\n' && drag == '\n')
+		if (!ft_strncmp(line, "", 1) || !ft_strncmp(line, "\n", 2))
 			break ;
-		if (c[0] == '\n')
-		{
-			matrix[i][j] = 0;
-			i++;
-			j = 0;
-			drag = 0;
-		}
-		else
-		{
-			matrix[i][j] = c[0];
-			j++;
-			drag = c[0];
-		}
+		line = ft_strtrim(line, "\n");
+		ft_strlcpy(matrix[i], line, ft_strlen(line) + 1);
+		i++;
+		free(line);
+		line = get_next_line(fd);
 	}
+	free(line);
 	close(fd);
-	matrix[i + 1] = NULL;
+	matrix[i] = NULL;
 	return (matrix);
 }
 
+
+/**
+ * @brief Gibt dir einfach die gefüllte Matrix
+ * 
+ * @param path 
+ * @return char** 
+ */
 char	**get_matrix(char *path)
 {
 	char	**matrix;
-	int	j;
 
 	matrix = (fill_matrix(get_elem\
 	(elem_cnt(path), path), path, \
 	elem_cnt(path)));
 
-	j = 0;
-	while(matrix[j])
-	{
-		printf("%s\n", matrix[j]);
-		j++;
-	}
 	return (matrix);
 }

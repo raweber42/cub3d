@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/29 18:56:23 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/30 21:57:43 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,5 +194,23 @@ int		surounded(char **matrix, int i, int j, int callback);
 char	**get_matrix(char *path);
 int		elem_cnt(char *path);
 void	free_all(char **splitters);
+
+// linus_utils.c
+void	free_all(char **splitters);
+char	*leaktrim(char *s1, char *set);
+int		ft_strstrlen(char **strstr);
+void	free_all(char **splitters);
+void	error_msg(char *msg);
+
+// recursive_madness.c
+int		surounded(char **matrix, int i, int j, int callback);
+
+int	valid_left(char **matrix, int i, int j);
+int	valid_right(char **matrix, int i, int j);
+int		allowed_char(char c);
+
+// tests.c
+void	tests(char **matrix, t_cub *data);
+void	closed_map(char **matrix, t_cub *data);
 
 #endif
