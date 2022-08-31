@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/29 17:15:13 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/31 07:31:26 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ void	my_mlx_pixel_put(t_mlx *mlx_data, int x, int y, int color);
 // events.c
 int		deal_key(int key, t_cub *data);
 void	deal_key_2(int key, t_cub *data);
-void	ft_mouse_tracker(t_cub *data);
 
 // destroy.c
 int		destroy(t_cub *data, char *str);

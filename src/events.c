@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/29 18:09:38 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/31 07:31:14 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,28 +86,4 @@ void	deal_key_2(int key, t_cub *data)
 		data->pos.y -= data->perp_dir.y;
 		raycasting(data);
 	}
-	ft_mouse_tracker(data); //remove? not working...
-}
-
-
-void	ft_mouse_tracker(t_cub *data) //remove? not working... also in .h file!
-{
-	int	x;
-	int	y;
-
-	mlx_mouse_hide(data->mlx_data->mlx_ptr, data->mlx_data->win_ptr);
-	mlx_mouse_get_pos(data->mlx_data->win_ptr, &x, &y);
-	printf("x is: %d\n", x);
-	if (x > screenWidth / 2)
-	{
-		rotating_view(data, -0.05);
-		raycasting(data);
-	}
-	if (x < screenWidth / 2)
-	{
-		rotating_view(data, 0.05);
-		raycasting(data);
-	}
-	mlx_mouse_move(data->mlx_data->win_ptr, screenWidth / 2, screenHeight / 2);
-	return ;
 }
