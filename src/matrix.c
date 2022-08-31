@@ -6,66 +6,25 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 19:37:54 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/24 19:42:26 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/31 16:56:08 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-static int	elem_cnt(char *path)
-{
-	int		condition;
-	char	c[1];
-	int		fd;
-	int		digits_per_elem;
-	int		digits;
-
-	fd = open(path, O_RDONLY);
-	if (fd == -1)
-	{
-		perror("open");
-		exit (1);
-	}
-	condition = 0;
-	digits = 0;
-	digits_per_elem = 0;
-	if (read(fd, c, 1))
-	{
-		digits_per_elem++;
-		if (c[0] != '\n')
-			condition = 1;
-	}
-	while (read(fd, c, 1))
-	{
-		digits_per_elem++;
-		if (condition == 0 && c[0] != '\n')
-			condition = 1;
-		else if (c[0] == '\n' && condition == 1)
-			condition = 2;
-		else if (c[0] != '\n' && condition == 2)
-			condition = 1;
-		else if (c[0] == '\n' && condition == 2)
-			condition = 3;
-		else if (c[0] == '\n' && condition == 3)
-			continue ;
-		else if (c[0] != '\n' && condition == 3)
-		{
-			digits += digits_per_elem;
-			digits_per_elem = 0;
-			condition = 1;
-		}
-		
-	}
-	close(fd);
-	return (digits - 1);
-}
-
+/**
+ * @brief Create a matrix object (malloced)
+ * 
+ * @param x the number of columns (including the null)
+ * @param y the number of lines (including the NULL)
+ * @return char** matrix (malloced!)
+ */
 char	**create_matrix(int x, int y)
 {
 	char	**ret;
 	int		i;
 
-	ret = malloc(sizeof(char *) * y);
+	ret = malloc(sizeof(char *) * (y + 1));
 	i = 0;
 	while (i < y)
 	{
@@ -75,91 +34,85 @@ char	**create_matrix(int x, int y)
 	return (ret);
 }
 
-char	**get_elem(int num, char *path)
+void	ending_routine(t_gelem *gelem)
 {
-	int		fd;
-	int		i;
-	char	c[1];
-	char	*drag;
-	char	*line;
-	int		max_l;
-
-	fd = open(path, O_RDONLY);
-	i = 0;
-	drag = NULL;
-	while (i < num)
+	while (gelem->line)
 	{
-		read(fd, c, 1);
-		i++;
+		free(gelem->line);
+		gelem->line = get_next_line(gelem->fd);
 	}
-	line = get_next_line(fd);
-	max_l = 0;
-	i = 1;
-	while (line)
-	{
-		if (!ft_strncmp(drag, "", 1) && !ft_strncmp(line, "", 1))
-			break ;
-		i++;
-		if (ft_strlen(line) > max_l)
-			max_l = ft_strlen(line);
-		if (drag)
-			free(drag);
-		drag = line;
-		line = get_next_line(fd);
-	}
-	free(drag);
-	free(line);
-	return (create_matrix(max_l, i));
+	free(gelem->line);
+	close(gelem->fd);
 }
 
-char	**fill_matrix(char **matrix, char *path, int num)
+/**
+ * @brief Misst die Maße für die Matrix | Linenumber, bei der die matrix anfängt
+ * 
+ * @param elem Linenumber
+ * @param path File, in der die Matrix steht
+ * @return char** Returns (recursivley) a matrix object
+ */
+char	**get_elem(int elem, char *path)
 {
-	int		fd;
-	int		i;
-	int		j;
-	char	c[1];
-	char	drag;
+	t_gelem	gelem;
 
-	fd = open(path, O_RDONLY);
-	i = 0;
-	drag = '\0';
-	while (i < num)
+	init_go_map(&gelem, path, elem);
+	while (gelem.line)
 	{
-		read(fd, c, 1);
-		i++;
-	}
-	i = 0;
-	j = 0;
-	while (read(fd, c, 1))
-	{
-		if (c[0] == '\n' && drag == '\n')
+		if (!ft_strncmp(gelem.line, "", 1) \
+		|| !ft_strncmp(gelem.line, "\n", 2))
 			break ;
-		if (c[0] == '\n')
-		{
-			matrix[i][j] = 0;
-			i++;
-			j = 0;
-			drag = 0;
-		}
-		else
-		{
-			matrix[i][j] = c[0];
-			j++;
-			drag = c[0];
-		}
+		gelem.i++;
+		if (ft_strlen(gelem.line) > gelem.max_l)
+			gelem.max_l = ft_strlen(gelem.line);
+		free(gelem.line);
+		gelem.line = get_next_line(gelem.fd);
 	}
-	close(fd);
-	matrix[i + 1] = NULL;
+	ending_routine(&gelem);
+	return (create_matrix(gelem.max_l, gelem.i));
+}
+
+/**
+ * @brief Fills the matrix object with content
+ * 
+ * @param matrix 
+ * @param path 
+ * @param elem Linenumber, bei der die Matrix steht
+ * @return char** Filled matrix
+ */
+char	**fill_matrix(char **matrix, char *path, int elem)
+{
+	t_fm	fm;
+
+	init_fm(&fm, path, elem);
+	while (fm.line)
+	{
+		if (!ft_strncmp(fm.line, "", 1) || !ft_strncmp(fm.line, "\n", 2))
+			break ;
+		fm.line = ft_strtrim(fm.line, "\n");
+		ft_strlcpy(matrix[fm.i], fm.line, ft_strlen(fm.line) + 1);
+		fm.i++;
+		free(fm.line);
+		fm.line = get_next_line(fm.fd);
+	}
+	free(fm.line);
+	close(fm.fd);
+	matrix[fm.i] = NULL;
 	return (matrix);
 }
 
-char	**get_matrix(char *path)
+/**
+ * @brief Gibt dir einfach die gefüllte Matrix
+ * 
+ * @param path 
+ * @return char** 
+ */
+char	**get_matrix(char *path, int lines)
 {
 	char	**matrix;
 
-	matrix = (fill_matrix(get_elem\
-	(elem_cnt(path), path), path, \
-	elem_cnt(path)));
-
+	matrix = (fill_matrix(get_elem(lines, \
+	path), path, \
+	lines));
 	return (matrix);
 }

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2022/08/31 17:20:33 by ljahn            ###   ########.fr       */
+=======
 /*   Updated: 2022/08/31 07:31:26 by raweber          ###   ########.fr       */
+>>>>>>> d269906357f2ba6e8522292d02d84e1184deca5d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +77,8 @@ enum
 extern int worldMap[24][24];
 // delete!
 
+typedef int	(*rec_fun)(char **, int, int);
+
 typedef struct s_mlx {
 	char	*argv;
 	void	*mlx_ptr;
@@ -119,6 +125,10 @@ typedef struct s_cub {
 	t_vector	perp_dir;
 	int			map_x;
 	int			map_y;
+	t_vector	map_check;
+	// HERE
+	int			mapX;
+	int			mapY;
 	t_vector	side_dist;
 	t_vector	delta_dist;
 	int			line_height;
@@ -138,9 +148,46 @@ typedef struct s_cub {
 	t_texture	*s_wall;
 	t_texture	*e_wall;
 	t_texture	*w_wall;
+	char		**world_map;
 }				t_cub;
 
+typedef struct s_attr
+{
+	int		fd;
+	char	*line;
+	char	**splitters;
+	char	**splitters2;
+	int		counter;
+	int		i;
+}	t_attr;
+
+typedef struct s_closed
+{
+	int	i;
+	int	j;
+	int	player;
+	int	limit;
+	int	ulimit;
+}	t_closed;
+
+typedef struct s_gelem
+{
+	int	fd;
+	int	i;
+	char *line;
+	int	max_l;
+}	t_gelem;
+
+typedef struct s_fm
+{
+	int	fd;
+	int	i;
+	int	j;
+	char	*line;
+}	t_fm;
+
 // main.c
+void	set_view_direction(t_cub *data);
 int		init_data(t_cub *data);
 void	init_mlx(t_mlx *mlx_data);
 
@@ -179,9 +226,56 @@ void	mlx_image_reload(t_cub *data);
 
 // validation.c
 void	error_msg(char *msg);
-void	valid_map(char *path);
+void	valid_map(char *path, t_cub *data);
+int		surounded(char **matrix, int i, int j, int callback);
 
 // matrix.c
-char	**get_matrix(char *path);
+char	**get_matrix(char *path, int lines);
+int		elem_cnt(char *path);
+void	free_all(char **splitters);
+
+// linus_utils.c
+void	free_all(char **splitters);
+char	*leaktrim(char *s1, char *set);
+int		ft_strstrlen(char **strstr);
+void	free_all(char **splitters);
+void	error_msg(char *msg);
+
+// recursive_madness.c
+int		surounded(char **matrix, int i, int j, int callback);
+
+// recursive_madness2.c
+int	closed_left(char **matrix, int i, int j);
+int	closed_up(char **matrix, int i, int j);
+int	closed_right(char **matrix, int i, int j);
+int	closed_down(char **matrix, int i, int j);
+
+int		valid_left(char **matrix, int i, int j);
+int		valid_right(char **matrix, int i, int j);
+int		allowed_char(char c);
+
+// tests.c
+void	tests(char **matrix);
+void	closed_map(char **matrix, t_cub *data);
+
+// attributes.c
+int		set_attributes(char *path, t_cub *data);
+
+// setter_and_init.c
+void	set_counter(t_attr *attr, int inc);
+void	init_attr(t_attr *attr, char *path);
+int		attr_setter(t_attr	*attr, char *ident, char **to_set, int mag);
+int		color_setter(t_attr *attr, char *ident, int *to_set, int mag);
+
+// linus_utils2.c
+void	freeing_routine(t_attr *attr);
+void	freeing_routine_nofd(t_attr *attr);
+int		rgb_to_int(unsigned char r, unsigned char g, unsigned char b);
+void	wrong_number(t_attr	*attr);
+int		all_attributes(int	counter);
+
+// setter_and_init2.c
+void	init_fm(t_fm *fm, char *path, int elem);
+void	init_go_map(t_gelem *gelem, char *path, int elem);
 
 #endif

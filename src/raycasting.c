@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/28 15:22:36 by raweber          ###   ########.fr       */
+/*   Updated: 2022/08/29 09:35:01 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	handle_rays_and_dda(t_cub *data, int x)
 	int		hit;
 
 	set_rays(data, x);
+	
 	set_step_xy(data, &step_x, &step_y);
 	hit = 0;
 	while (hit == 0)
@@ -104,9 +105,18 @@ void	handle_rays_and_dda(t_cub *data, int x)
 			data->map_y += step_y;
 			data->side_hit = 1;
 		}
-		if (worldMap[data->map_x][data->map_y] == 1)
+		// printf("x: %d, y: %d, step_x: %d, step_y: %d, delta_dist.x: %f, delta_dist.y: %f\n", data->map_x, data->map_y, step_x, step_y, data->delta_dist.x, data->delta_dist.y);
+		// printf("world map pos: |%c|\n", data->world_map[data->map_x][data->map_y]);
+		// printf("still alive\n");
+		// printf("before map x: %d\n",x);
+
+		if (data->world_map[data->map_x][data->map_y] == 49)
 			hit = 1;
 	}
+	printf("Position: %f, %f, %f\n", data->pos.x, data->pos.y, data->perp_wall_dist);
+
+	// printf("out of loop x: %d\n",x);	
+	
 }
 
 // main function for raycasting
@@ -117,9 +127,11 @@ int	raycasting(t_cub *data)
 	x = 0;
 	mlx_image_reload(data);
 	handle_textures(data);
+	
 	while (x < screenWidth)
 	{
 		handle_rays_and_dda(data, x);
+		// printf("x: %d\n",x);
 		if (data->side_hit == 0)
 			data->perp_wall_dist = (data->side_dist.x - data->delta_dist.x);
 		else

@@ -29,10 +29,18 @@ SRC = 	$(SRC_DIR)main.c \
 		$(SRC_DIR)my_put_pixel.c \
 		$(SRC_DIR)raycasting.c \
 		$(SRC_DIR)helpers.c \
-		$(SRC_DIR)validation.c \
+		$(SRC_DIR)attributes.c \
 		$(SRC_DIR)matrix.c \
 		$(SRC_DIR)raycast_helpers.c \
 		$(SRC_DIR)raycast_helpers_2.c \
+		$(SRC_DIR)linus_utils.c \
+		$(SRC_DIR)recursive_madness.c \
+		$(SRC_DIR)tests.c \
+		$(SRC_DIR)closed_map.c \
+		$(SRC_DIR)setter_and_init.c \
+		$(SRC_DIR)linus_utils2.c \
+		$(SRC_DIR)setter_and_init2.c \
+		$(SRC_DIR)recursive_madness2.c
 
 # takes all named source files and converts them to .o files in the /obj directory
 OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
@@ -40,11 +48,11 @@ OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 # prevents rules from being considered as files
 .PHONY: all clean fclean re
 
-all: $(NAME) #credit <- INSERT LATER
+all: $(NAME)
 
 # creates subdirectory /obj and subdirectories
 $(OBJ): $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@mkdir -p $(dir $@)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # compiles all object files and builds executable file 'cub3d'
