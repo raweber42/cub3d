@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 21:52:32 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 17:06:19 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/31 19:07:56 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,15 @@ int	valid_space(char **matrix, int i, int j)
 {
 	if (matrix[i][j] == ' ')
 	{
-		if (valid_left(matrix, i, j) || valid_right(matrix, i, j))
+		if (left_border(matrix, i, j) && right_one(matrix, i, j))
 			return (1);
+		else if (right_border(matrix, i, j) && left_one(matrix, i, j))
+			return (1);
+		if (right_border(matrix, i, j) || left_border(matrix, i, j))
+		{
+			free_all(matrix);
+			error_msg("Map is not surrounded by ones");
+		}
 		if (surounded(matrix, i, j, -1))
 			return (1);
 		{

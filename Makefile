@@ -40,7 +40,8 @@ SRC = 	$(SRC_DIR)main.c \
 		$(SRC_DIR)setter_and_init.c \
 		$(SRC_DIR)linus_utils2.c \
 		$(SRC_DIR)setter_and_init2.c \
-		$(SRC_DIR)recursive_madness2.c
+		$(SRC_DIR)recursive_madness2.c \
+		$(SRC_DIR)save_libft.c
 
 # takes all named source files and converts them to .o files in the /obj directory
 OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)

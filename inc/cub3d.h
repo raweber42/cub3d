@@ -6,11 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/08/31 17:20:33 by ljahn            ###   ########.fr       */
-=======
-/*   Updated: 2022/08/31 07:31:26 by raweber          ###   ########.fr       */
->>>>>>> d269906357f2ba6e8522292d02d84e1184deca5d
+/*   Updated: 2022/08/31 19:06:24 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,8 +246,10 @@ int	closed_up(char **matrix, int i, int j);
 int	closed_right(char **matrix, int i, int j);
 int	closed_down(char **matrix, int i, int j);
 
-int		valid_left(char **matrix, int i, int j);
-int		valid_right(char **matrix, int i, int j);
+int		left_border(char **matrix, int i, int j);
+int		right_border(char **matrix, int i, int j);
+int		left_one(char **matrix, int i, int j);
+int		right_one(char **matrix, int i, int j);
 int		allowed_char(char c);
 
 // tests.c
@@ -260,6 +258,7 @@ void	closed_map(char **matrix, t_cub *data);
 
 // attributes.c
 int		set_attributes(char *path, t_cub *data);
+int		ft_nasp(char *str);
 
 // setter_and_init.c
 void	set_counter(t_attr *attr, int inc);
@@ -277,5 +276,8 @@ int		all_attributes(int	counter);
 // setter_and_init2.c
 void	init_fm(t_fm *fm, char *path, int elem);
 void	init_go_map(t_gelem *gelem, char *path, int elem);
+
+// save_libft.c
+char	**ft_save_split(char *s, char c);
 
 #endif

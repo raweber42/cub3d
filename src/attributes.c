@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 16:36:56 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/31 19:13:59 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,14 @@ int	different(t_attr *attr)
 
 void	next_iter(t_attr *attr)
 {
+	char *to_free;
+
 	freeing_routine_nofd(attr);
 	attr->i++;
 	attr->line = get_next_line(attr->fd);
-	attr->splitters = ft_split(leaktrim(attr->line, " \n"), ' ');
+	to_free = leaktrim(attr->line, " \n");
+	attr->splitters = ft_split(to_free, ' ');
+	free(to_free);
 }
 
 int	ending_case(t_attr *attr)
@@ -35,6 +39,18 @@ int	ending_case(t_attr *attr)
 	freeing_routine(attr);
 	error_msg("Not all attributes set");
 	return (0);
+}
+
+int	ft_nasp(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == ' ')
+		i++;
+	if (ft_strlen(str) - 1 == i)
+		return (0);
+	return (1);
 }
 
 /**
@@ -64,8 +80,9 @@ int	set_attributes(char *path, t_cub *data)
 			;
 		else
 		{
-			if (ft_strncmp("\n", attr.line, 1))
-				return (different(&attr));
+			if (ft_strncmp("\n", attr.line, 1) \
+			&& ft_nasp(attr.line))
+				return(different(&attr));
 		}
 		next_iter(&attr);
 	}

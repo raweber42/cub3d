@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:05:40 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 16:18:14 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/31 18:38:54 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	set_player(t_closed *closed, t_cub *data, char **matrix)
 		if (closed->player == 1)
 		{
 			free_all(matrix);
-			error_msg("This is not coop");
+			error_msg("You have to play alone");
 		}
 		closed->player = 1;
 	}
@@ -94,6 +94,6 @@ void	closed_map(char **matrix, t_cub *data)
 	if (closed.player == 0)
 	{
 		free_all(matrix);
-		error_msg("You are not that lonley");
+		error_msg("No player set in map");
 	}
 }

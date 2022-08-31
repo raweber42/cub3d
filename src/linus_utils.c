@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 21:23:40 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/30 21:50:34 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/31 17:40:34 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static size_t	ft_get_end(char const *str, char const *set)
 	return (len - i);
 }
 
-// hardened version for minishell: free()'s the string, no consts
 char	*leaktrim(char *s1, char *set)
 {
 	size_t	start;

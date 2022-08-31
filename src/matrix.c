@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 19:37:54 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 16:56:08 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/31 18:10:39 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,9 @@ char	**fill_matrix(char **matrix, char *path, int elem)
 	init_fm(&fm, path, elem);
 	while (fm.line)
 	{
-		if (!ft_strncmp(fm.line, "", 1) || !ft_strncmp(fm.line, "\n", 2))
+		if (!ft_strncmp(fm.line, "", 1) || \
+		!ft_strncmp(fm.line, "\n", 2) || \
+		!ft_nasp(fm.line))
 			break ;
 		fm.line = ft_strtrim(fm.line, "\n");
 		ft_strlcpy(matrix[fm.i], fm.line, ft_strlen(fm.line) + 1);
