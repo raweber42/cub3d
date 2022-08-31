@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 17:19:04 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 17:19:18 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/31 19:35:42 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,25 @@ int	closed_down(char **matrix, int i, int j)
 		return (0);
 	else
 		return (surounded(matrix, i + 1, j, 1));
+}
+
+int	surounded(char **matrix, int i, int j, int callback)
+{
+	int				iter;
+	const rec_fun	fun_arr[5] = \
+	{closed_left, closed_up, closed_right, closed_down};
+
+	iter = 0;
+	while (iter < 4)
+	{
+		if (callback == iter)
+		{
+			iter++;
+			continue ;
+		}
+		if (!fun_arr[iter](matrix, i, j))
+			return (0);
+		iter++;
+	}
+	return (1);
 }

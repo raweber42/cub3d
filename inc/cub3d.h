@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/31 19:06:24 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/31 19:36:49 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,27 +238,28 @@ void	free_all(char **splitters);
 void	error_msg(char *msg);
 
 // recursive_madness.c
-int		surounded(char **matrix, int i, int j, int callback);
-
-// recursive_madness2.c
-int	closed_left(char **matrix, int i, int j);
-int	closed_up(char **matrix, int i, int j);
-int	closed_right(char **matrix, int i, int j);
-int	closed_down(char **matrix, int i, int j);
-
 int		left_border(char **matrix, int i, int j);
 int		right_border(char **matrix, int i, int j);
 int		left_one(char **matrix, int i, int j);
 int		right_one(char **matrix, int i, int j);
 int		allowed_char(char c);
 
+// recursive_madness2.c
+int		closed_left(char **matrix, int i, int j);
+int		closed_up(char **matrix, int i, int j);
+int		closed_right(char **matrix, int i, int j);
+int		closed_down(char **matrix, int i, int j);
+int		surounded(char **matrix, int i, int j, int callback);
+
 // tests.c
 void	tests(char **matrix);
 void	closed_map(char **matrix, t_cub *data);
 
 // attributes.c
-int		set_attributes(char *path, t_cub *data);
 int		ft_nasp(char *str);
+int		different(t_attr *attr);
+void	next_iter(t_attr *attr);
+int		ending_case(t_attr *attr);
 
 // setter_and_init.c
 void	set_counter(t_attr *attr, int inc);
@@ -276,8 +277,9 @@ int		all_attributes(int	counter);
 // setter_and_init2.c
 void	init_fm(t_fm *fm, char *path, int elem);
 void	init_go_map(t_gelem *gelem, char *path, int elem);
+int		set_attributes(t_cub *data, t_attr attr);
 
-// save_libft.c
-char	**ft_save_split(char *s, char c);
+// muated_libft.c
+char	*leaktrim(char *s1, char *set);
 
 #endif

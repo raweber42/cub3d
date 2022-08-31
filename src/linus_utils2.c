@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:27:51 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 16:37:38 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/31 19:47:25 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	freeing_routine(t_attr *attr)
 	}
 	if (attr->splitters)
 	{
-		free(attr->splitters);
+		free_all(attr->splitters);
 		attr->splitters = NULL;
 	}
 	if (attr->splitters2)
 	{
-		free(attr->splitters2);
+		free_all(attr->splitters2);
 		attr->splitters2 = NULL;
 	}
 	close(attr->fd);

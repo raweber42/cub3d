@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 19:13:59 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/31 19:51:48 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	different(t_attr *attr)
 
 void	next_iter(t_attr *attr)
 {
-	char *to_free;
+	char	*to_free;
 
 	freeing_routine_nofd(attr);
 	attr->i++;
@@ -53,51 +53,22 @@ int	ft_nasp(char *str)
 	return (1);
 }
 
-/**
- * @brief Sets programm parameters and returns linenum where map starts
- * 
- * @param path 
- * @param data 
- */
-int	set_attributes(char *path, t_cub *data)
-{
-	t_attr	attr;
-
-	init_attr(&attr, path);
-	while (attr.line)
-	{
-		if (attr_setter(&attr, "NO", &data->n_path, 1))
-			;
-		else if (attr_setter(&attr, "SO", &data->s_path, 10))
-			;
-		else if (attr_setter(&attr, "WE", &data->w_path, 100))
-			;
-		else if (attr_setter(&attr, "EA", &data->e_path, 1000))
-			;
-		else if (color_setter(&attr, "F", &data->f_col, 10000))
-			;
-		else if (color_setter(&attr, "C", &data->c_col, 100000))
-			;
-		else
-		{
-			if (ft_strncmp("\n", attr.line, 1) \
-			&& ft_nasp(attr.line))
-				return(different(&attr));
-		}
-		next_iter(&attr);
-	}
-	return (ending_case(&attr));
-}
-
 void	valid_map(char *path, t_cub *data)
 {
 	char	**matrix;
 	int		lines;
+	t_attr	attr;
 
-	lines = set_attributes(path, data);
+	init_attr(&attr, path);
+	lines = set_attributes(data, attr);
 	matrix = get_matrix(path, lines);
 	tests(matrix);
 	closed_map(matrix, data);
 	data->world_map = matrix;
-	set_attributes(path, data);
+
+	free(data->n_path);
+	free(data->s_path);
+	free(data->e_path);
+	free(data->w_path);
+	exit (0);
 }

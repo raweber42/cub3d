@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 21:51:13 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 19:11:22 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/31 19:35:35 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,25 +60,4 @@ int	right_border(char **matrix, int i, int j)
 	else if (matrix[i][j + 1] != ' ')
 		return (0);
 	return (right_border(matrix, i, j + 1));
-}
-
-int	surounded(char **matrix, int i, int j, int callback)
-{
-	int				iter;
-	const rec_fun	fun_arr[5] = \
-	{closed_left, closed_up, closed_right, closed_down};
-
-	iter = 0;
-	while (iter < 4)
-	{
-		if (callback == iter)
-		{
-			iter++;
-			continue ;
-		}
-		if (!fun_arr[iter](matrix, i, j))
-			return (0);
-		iter++;
-	}
-	return (1);
 }
