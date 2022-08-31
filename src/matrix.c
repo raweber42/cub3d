@@ -6,48 +6,11 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 19:37:54 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/30 21:33:27 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/08/31 16:56:08 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
-
-/**
- * @brief gives the line number, at whicht the map starts
- * 
- * @param path the file, that contains the map
- * @return int (line number)
- */
-int	elem_cnt(char *path)
-{
-	char	*line;
-	int		fd;
-	int		result;
-	int		chunck;
-	int		condition;
-
-	fd = open(path, O_RDONLY);
-	result = 0;
-	condition = 0;
-	chunck = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (!ft_strncmp(line, "\n", 2))
-			condition = 1;
-		else if (condition && ft_strncmp(line, "\n", 1))
-		{
-			condition = 0;
-			result = chunck;
-		}
-		chunck++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
-	close(fd);
-	return (result);
-}
 
 /**
  * @brief Create a matrix object (malloced)
@@ -71,6 +34,17 @@ char	**create_matrix(int x, int y)
 	return (ret);
 }
 
+void	ending_routine(t_gelem *gelem)
+{
+	while (gelem->line)
+	{
+		free(gelem->line);
+		gelem->line = get_next_line(gelem->fd);
+	}
+	free(gelem->line);
+	close(gelem->fd);
+}
+
 /**
  * @brief Misst die Maße für die Matrix | Linenumber, bei der die matrix anfängt
  * 
@@ -80,33 +54,22 @@ char	**create_matrix(int x, int y)
  */
 char	**get_elem(int elem, char *path)
 {
-	int		fd;
-	int		i;
-	char	*line;
-	int		max_l;
+	t_gelem	gelem;
 
-	fd = open(path, O_RDONLY);
-	i = 0;
-	while (i < elem)
+	init_go_map(&gelem, path, elem);
+	while (gelem.line)
 	{
-		free(get_next_line(fd));
-		i++;
-	}
-	line = get_next_line(fd);
-	max_l = 0;
-	i = 0;
-	while (line)
-	{
-		if (!ft_strncmp(line, "", 1) || !ft_strncmp(line, "\n", 2))
+		if (!ft_strncmp(gelem.line, "", 1) \
+		|| !ft_strncmp(gelem.line, "\n", 2))
 			break ;
-		i++;
-		if (ft_strlen(line) > max_l)
-			max_l = ft_strlen(line);
-		free(line);
-		line = get_next_line(fd);
+		gelem.i++;
+		if (ft_strlen(gelem.line) > gelem.max_l)
+			gelem.max_l = ft_strlen(gelem.line);
+		free(gelem.line);
+		gelem.line = get_next_line(gelem.fd);
 	}
-	free(line);
-	return (create_matrix(max_l, i));
+	ending_routine(&gelem);
+	return (create_matrix(gelem.max_l, gelem.i));
 }
 
 /**
@@ -119,37 +82,24 @@ char	**get_elem(int elem, char *path)
  */
 char	**fill_matrix(char **matrix, char *path, int elem)
 {
-	int		fd;
-	int		i;
-	int		j;
-	char	*line;
+	t_fm	fm;
 
-	fd = open(path, O_RDONLY);
-	i = 0;
-	while (i < elem - 1)
+	init_fm(&fm, path, elem);
+	while (fm.line)
 	{
-		free(get_next_line(fd));
-		i++;
-	}
-	i = 0;
-	j = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (!ft_strncmp(line, "", 1) || !ft_strncmp(line, "\n", 2))
+		if (!ft_strncmp(fm.line, "", 1) || !ft_strncmp(fm.line, "\n", 2))
 			break ;
-		line = ft_strtrim(line, "\n");
-		ft_strlcpy(matrix[i], line, ft_strlen(line) + 1);
-		i++;
-		free(line);
-		line = get_next_line(fd);
+		fm.line = ft_strtrim(fm.line, "\n");
+		ft_strlcpy(matrix[fm.i], fm.line, ft_strlen(fm.line) + 1);
+		fm.i++;
+		free(fm.line);
+		fm.line = get_next_line(fm.fd);
 	}
-	free(line);
-	close(fd);
-	matrix[i] = NULL;
+	free(fm.line);
+	close(fm.fd);
+	matrix[fm.i] = NULL;
 	return (matrix);
 }
-
 
 /**
  * @brief Gibt dir einfach die gefüllte Matrix
@@ -157,13 +107,12 @@ char	**fill_matrix(char **matrix, char *path, int elem)
  * @param path 
  * @return char** 
  */
-char	**get_matrix(char *path)
+char	**get_matrix(char *path, int lines)
 {
 	char	**matrix;
 
-	matrix = (fill_matrix(get_elem\
-	(elem_cnt(path), path), path, \
-	elem_cnt(path)));
-
+	matrix = (fill_matrix(get_elem(lines, \
+	path), path, \
+	lines));
 	return (matrix);
 }

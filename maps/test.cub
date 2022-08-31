@@ -1,11 +1,9 @@
 NO textures/eagle.xpm
 EA textures/mossy.xpm
 
-F    220,   110,    0
+F    220,110,    0
 
 
-
-SO     textures/greystone.xpm
 SO     textures/greystone.xpm
 
 
@@ -13,11 +11,7 @@ SO     textures/greystone.xpm
 C 225,    30,0
 
 
-WE      textures/redbrick.xpm
-
-
-
-
+WE            textures/redbrick.xpm
            1111111111111111111111111
            1N00000000110000000000001
            1011000001110000000000001
@@ -32,5 +26,23 @@ WE      textures/redbrick.xpm
 1100000111010101111101111000111
 11110111111101011101111010001
 11111111 11111111111111111111
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
