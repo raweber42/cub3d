@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 12:25:18 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 14:15:03 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,27 +144,20 @@ for linux: mlx_key_hook(data->mlx_data->win_ptr, &deal_key, data);
 */
 int	main(int ac, char **av)
 {
-	// LINUS########################
-	(void)ac;
-	(void)av;
-	
-	if (ac != 2)
-		error_msg("Invalid number of arguments", NULL, NULL);//Leakfree, up
-	// LINUS########################
-
 	t_cub	*data;
 
+	if (ac != 2)
+		error_msg("Invalid number of arguments", NULL, NULL);//Leakfree, up
 	data = (t_cub *)ft_calloc(1, sizeof(t_cub));
 	if (!data)
 	{
 		ft_printf("Error: Could not allocate cub3d struct");
 		return (1);
-	} // error message here?
+	}
 	valid_map(av[1], data);
 	
 	if (init_data(data))
-		return (1); // error message here?
-	// PARSING/READING GOES HERE
+		return (1);
 	raycasting(data);
 	mlx_hook(data->mlx_data->win_ptr, 2, (1L << 0), &deal_key, data);
 	mlx_hook(data->mlx_data->win_ptr, 17, 0, &destroy_no_msg, data);

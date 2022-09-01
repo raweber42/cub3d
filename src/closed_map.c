@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   closed_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:05:40 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 12:21:26 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 14:12:55 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ void	set_player(t_closed *closed, t_cub *data, char **matrix)
 		data->orientation = matrix[closed->i][closed->j];
 		matrix[closed->i][closed->j] = '0';
 		if (closed->player == 1)
-		{
-			free_all(matrix);
 			error_msg("You have to play alone", data, matrix);//Leakfree, up
-		}
 		closed->player = 1;
 	}
 }
@@ -52,13 +49,11 @@ void	check_limits(t_closed *closed, char **matrix, t_cub *data)
 	if (closed->i > 0 && closed->j >= closed->limit \
 	&& matrix[closed->i][closed->j] != '1')
 	{
-		free_all(matrix);
 		error_msg("Map is not closed", data, matrix);//Leakfree, up
 	}
 	if (matrix[closed->i + 1] && closed->j \
 	>= closed->ulimit && matrix[closed->i][closed->j] != '1')
 	{
-		free_all(matrix);
 		error_msg("Map is not closed", data, matrix);//Leakfree, up
 	}
 }
@@ -79,6 +74,7 @@ void	closed_map(char **matrix, t_cub *data)
 		set_limits(matrix, &closed);
 		while (matrix[closed.i][closed.j])
 		{
+			
 			if (matrix[closed.i][closed.j] == ' ')
 			{
 				closed.j++;
@@ -91,9 +87,7 @@ void	closed_map(char **matrix, t_cub *data)
 		closed.j = 0;
 		closed.i++;
 	}
+	(void) data;
 	if (closed.player == 0)
-	{
-		free_all(matrix);
 		error_msg("No player set in map", data, matrix);//Leakfree, up
-	}
 }
