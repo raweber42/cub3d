@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:22:41 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 11:50:32 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 12:04:15 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,29 @@ int	attr_setter(t_attr	*attr, char *ident, char **to_set, int mag)
 	return (0);
 }
 
+void	not_numeric(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+		{
+			free(str);
+			error_msg("Color component is not a pure number");
+		}
+		i++;
+	}
+}
+
 unsigned char	fancy_atoi(char *str)
 {
 	char			*to_free;
 	unsigned char	c;
 
 	to_free = leaktrim(str, "\n ,");
+	not_numeric(to_free);
 	c = (unsigned char)ft_atoi(to_free);
 	free(to_free);
 	return (c);
@@ -100,7 +117,6 @@ int	color_setter(t_attr *attr, char *ident, int *to_set, int mag)
 			freeing_routine(attr);
 			error_msg("Too many color arguments");//Leafree
 		}
-		printf("THIS IS THE FANCY: %d\n", fancy_atoi(attr->splitters2[0]));
 		*to_set = rgb_to_int(fancy_atoi(attr->splitters2[0]), \
 		fancy_atoi(attr->splitters2[1]), fancy_atoi(attr->splitters2[2]));
 		set_counter(attr, mag, NULL);

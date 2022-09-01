@@ -3,7 +3,7 @@ SO textures/greystone.xpm
 EA textures/mossy.xpm
 
 WE textures/redbrick.xpm
-F       220,   110, word
+F       220,   110, 69
 C 225,30,69
 
 
