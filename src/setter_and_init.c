@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:22:41 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 14:02:05 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/01 14:24:46 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	set_counter(t_attr *attr, int inc)
 		if ((copy / i) % 10 > 1)
 		{		
 			freeing_routine(attr);
-			error_msg("An attribute is set several times", attr->data, NULL);//Leakfree, up
+			error_msg("An attribute is set several times", attr->data, NULL);
 		}
 		i *= 10;
 	}
@@ -79,7 +79,7 @@ void	not_numeric(char *str, t_attr *attr)
 		if (!ft_isdigit(str[i]))
 		{
 			free(str);
-			error_msg("Color component is not a pure number", attr->data, NULL);//Leakfree, up
+			error_msg("Color component is not a pure number", attr->data, NULL);
 		}
 		i++;
 	}
@@ -109,12 +109,13 @@ int	color_setter(t_attr *attr, char *ident, int *to_set, int mag)
 		if (ft_rstrstrlen(attr->splitters2) < 3)
 		{
 			freeing_routine(attr);
-			error_msg("You have not defined all color elements\n", attr->data, NULL);//Leakfree, up
+			error_msg("You have not defined all color elements\n", \
+				attr->data, NULL);
 		}
 		else if (ft_rstrstrlen(attr->splitters2) > 3)
 		{
 			freeing_routine(attr);
-			error_msg("Too many color arguments", attr->data, NULL);//Leafree, up
+			error_msg("Too many color arguments", attr->data, NULL);
 		}
 		*to_set = rgb_to_int(fancy_atoi(attr, 0), \
 		fancy_atoi(attr, 1), fancy_atoi(attr, 2));

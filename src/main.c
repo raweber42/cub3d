@@ -6,39 +6,11 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 14:17:24 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/01 14:23:28 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
-
-int worldMap[mapWidth][mapHeight]=
-{
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
-  {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,1,1,1,1},
-  {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,1,1,0,1,1,0,0,0,0,1,0,1,0,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
 
 // initializes the wall structs and sets all variables to zero
 int	init_walls(t_cub *data)
@@ -93,23 +65,12 @@ void	init_ray_data(t_cub *data)
 // initializes main struct, player position, view, ray data and textures
 int	init_data(t_cub *data)
 {
-	// data->pos.x = 2;
-	// data->pos.y = 7; // -->> LINUS SETS THIS!
-	// data->orientation = 'S'; // -->> LINUS SETS THIS!
 	set_view_direction(data);
 	init_ray_data(data);
 	data->mlx_data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
 	if (!data->mlx_data)
 		return (1);
 	init_mlx(data->mlx_data);
-	printf("PATH: |%s|\n", data->n_path);
-	printf("PATH: |%s|\n", data->s_path);
-	printf("PATH: |%s|\n", data->w_path);
-	printf("PATH: |%s|\n", data->e_path);
-	// data->n_path = "textures/eagle.xpm";//SET THIS
-	// data->s_path = "textures/greystone.xpm";
-	// data->e_path = "textures/mossy.xpm";
-	// data->w_path = "textures/redbrick.xpm";
 	init_walls(data);
 	return (0);
 }
@@ -145,7 +106,7 @@ int	main(int ac, char **av)
 	t_cub	*data;
 
 	if (ac != 2)
-		error_msg("Invalid number of arguments", NULL, NULL);//Leakfree, up
+		error_msg("Invalid number of arguments", NULL, NULL);
 	data = (t_cub *)ft_calloc(1, sizeof(t_cub));
 	if (!data)
 	{

@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 14:04:24 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/01 14:23:01 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	different(t_attr *attr, t_cub *data)
 	if (all_attributes(attr->counter))
 		return (attr->i);
 	else
-		error_msg("At least one attribute is not set", data, NULL);//Leakfree, up
+		error_msg("At least one attribute is not set", data, NULL);
 	return (0);
 }
 
@@ -38,7 +38,7 @@ void	next_iter(t_attr *attr)
 int	ending_case(t_attr *attr, t_cub *data)
 {
 	freeing_routine(attr);
-	error_msg("Not all attributes set", data, NULL);//Leakfree, up
+	error_msg("Not all attributes set", data, NULL);
 	return (0);
 }
 

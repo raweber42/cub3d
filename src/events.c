@@ -6,10 +6,9 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/31 17:42:31 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/01 14:25:50 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../inc/cub3d.h"
 
@@ -37,7 +36,6 @@ void	rotating_view(t_cub *data, float direction)
 // If ESC is pressed, the whole program stops.
 int	deal_key(int key, t_cub *data)
 {
-	// printf("key is: %d\n", key);
 	if (key == Key_ESC)
 		destroy(data, NULL);
 	if (key == 53)
@@ -45,7 +43,6 @@ int	deal_key(int key, t_cub *data)
 		destroy(data, NULL);
 		return (0);
 	}
-	// rotate left
 	if (key == Key_RIGHT)
 	{
 		rotating_view(data, -0.05);

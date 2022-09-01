@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 21:52:32 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 14:12:28 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/01 14:23:53 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	valid_space(char **matrix, int i, int j, t_cub *data)
 		else if (right_border(matrix, i, j) && left_one(matrix, i, j))
 			return (1);
 		if (right_border(matrix, i, j) || left_border(matrix, i, j))
-			error_msg("Map is not surrounded by ones", data, matrix);//Leakfree, up
+			error_msg("Map is not surrounded by ones", data, matrix);
 		if (surounded(matrix, i, j, -1))
 			return (1);
 		else
-			error_msg("Map contains spaces", data, matrix);//Leafree, up
+			error_msg("Map contains spaces", data, matrix);
 	}
 	return (0);
 }
@@ -33,13 +33,13 @@ int	valid_space(char **matrix, int i, int j, t_cub *data)
 void	two_tests(char **matrix, int i, int j, t_cub *data)
 {
 	if (!allowed_char(matrix[i][j]))
-		error_msg("Map contains invalid character", data, matrix);//Leakfree, up
+		error_msg("Map contains invalid character", data, matrix);
 	if ((i == 0 && matrix[i][j] != '1') \
 		|| (!matrix[i + 1] && matrix[i][j] != '1')
 		|| (j == 0 && matrix[i][j] != '1')
 		|| (!matrix[i][j + 1] && matrix[i][j] != '1'))
 	{
-		error_msg("Map not surrounded by ones", data, matrix);//Leakfree, up
+		error_msg("Map not surrounded by ones", data, matrix);
 	}
 }
 

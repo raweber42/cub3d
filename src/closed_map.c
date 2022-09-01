@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:05:40 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 14:12:55 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/01 14:25:23 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	set_player(t_closed *closed, t_cub *data, char **matrix)
 		data->orientation = matrix[closed->i][closed->j];
 		matrix[closed->i][closed->j] = '0';
 		if (closed->player == 1)
-			error_msg("You have to play alone", data, matrix);//Leakfree, up
+			error_msg("You have to play alone", data, matrix);
 		closed->player = 1;
 	}
 }
@@ -49,12 +49,12 @@ void	check_limits(t_closed *closed, char **matrix, t_cub *data)
 	if (closed->i > 0 && closed->j >= closed->limit \
 	&& matrix[closed->i][closed->j] != '1')
 	{
-		error_msg("Map is not closed", data, matrix);//Leakfree, up
+		error_msg("Map is not closed", data, matrix);
 	}
 	if (matrix[closed->i + 1] && closed->j \
 	>= closed->ulimit && matrix[closed->i][closed->j] != '1')
 	{
-		error_msg("Map is not closed", data, matrix);//Leakfree, up
+		error_msg("Map is not closed", data, matrix);
 	}
 }
 
@@ -74,7 +74,6 @@ void	closed_map(char **matrix, t_cub *data)
 		set_limits(matrix, &closed);
 		while (matrix[closed.i][closed.j])
 		{
-			
 			if (matrix[closed.i][closed.j] == ' ')
 			{
 				closed.j++;
@@ -89,5 +88,5 @@ void	closed_map(char **matrix, t_cub *data)
 	}
 	(void) data;
 	if (closed.player == 0)
-		error_msg("No player set in map", data, matrix);//Leakfree, up
+		error_msg("No player set in map", data, matrix);
 }

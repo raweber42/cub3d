@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linus_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:27:51 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 12:24:40 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 14:22:16 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	wrong_number(t_attr	*attr, t_cub *data)
 	if (ft_strstrlen(attr->splitters) != 2)
 	{
 		freeing_routine(attr);
-		error_msg("Wrong number of attribute values", data, NULL);//Leakfree, up
+		error_msg("Wrong number of attribute values", data, NULL);
 	}
 }
 
