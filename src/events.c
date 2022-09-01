@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 14:25:50 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/01 14:29:00 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ int	deal_key(int key, t_cub *data)
 	if (key == Key_ESC)
 		destroy(data, NULL);
 	if (key == 53)
-	{
 		destroy(data, NULL);
-		return (0);
-	}
 	if (key == Key_RIGHT)
 	{
 		rotating_view(data, -0.05);
