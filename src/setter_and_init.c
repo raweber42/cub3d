@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:22:41 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 10:23:33 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 10:39:25 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,24 @@ void	init_attr(t_attr *attr, char *path)
 
 int	attr_setter(t_attr	*attr, char *ident, char **to_set, int mag)
 {
-	// char	*to_free;
+	char	*to_free;
 
-	// to_free = leaktrim(attr->splitters[0], " ");
+	to_free = leaktrim(attr->splitters[0], " ");
 	if (!ft_strncmp(ident, attr->splitters[0], ft_strlen(ident) + 1))
 	{
-		// free(to_free);
+		free(to_free);
 		wrong_number(attr);
 		*to_set = ft_strtrim(ft_strdup(attr->splitters[1]), "\n");
 		set_counter(attr, mag);
 		return (1);
 	}
-	// free(to_free);
+	free(to_free);
 	return (0);
 }
 
 unsigned char	fancy_atoi(char *str)
 {
-	char	*to_free;
+	char			*to_free;
 	unsigned char	c;
 
 	to_free = leaktrim(str, "\n ,");
@@ -77,16 +77,13 @@ unsigned char	fancy_atoi(char *str)
 
 int	color_setter(t_attr *attr, char *ident, int *to_set, int mag)
 {
-	char	*to_free;
-	char	*to_free2;
-
 	if (!ft_strncmp(ident, attr->splitters[0], ft_strlen(ident) + 1))
 	{
-		to_free = ft_strjoin(ident, " ");
-		to_free2 = leaktrim(attr->line, to_free);
-		attr->splitters2 = ft_split(to_free2, ',');
-		free(to_free);
-		free(to_free2);
+		attr->to_free = ft_strjoin(ident, " ");
+		attr->to_free2 = leaktrim(attr->line, attr->to_free);
+		attr->splitters2 = ft_split(attr->to_free2, ',');
+		free(attr->to_free);
+		free(attr->to_free2);
 		if (ft_strstrlen(attr->splitters2) < 3)
 		{
 			freeing_routine(attr);
@@ -98,8 +95,7 @@ int	color_setter(t_attr *attr, char *ident, int *to_set, int mag)
 			error_msg("Too many color arguments");
 		}
 		*to_set = rgb_to_int(fancy_atoi(attr->splitters2[1]), \
-		fancy_atoi(attr->splitters2[2]), \
-		fancy_atoi(attr->splitters2[3]));
+		fancy_atoi(attr->splitters2[2]), fancy_atoi(attr->splitters2[3]));
 		set_counter(attr, mag);
 		return (1);
 	}

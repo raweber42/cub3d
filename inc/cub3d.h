@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/31 19:36:49 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 10:38:32 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,8 @@ typedef struct s_cub {
 
 typedef struct s_attr
 {
+	char	*to_free;
+	char	*to_free2;
 	int		fd;
 	char	*line;
 	char	**splitters;
