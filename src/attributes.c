@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 10:33:08 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 11:08:41 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ int	different(t_attr *attr)
 	freeing_routine(attr);
 	attr->i++;
 	if (all_attributes(attr->counter))
+	{
+		printf("This is the number: %d\n", attr->counter);
 		return (attr->i);
-	error_msg("There are some gibberish attributes");
+	}
+	else
+		error_msg("At least one attribute is not set");
 	return (0);
 }
 
@@ -37,7 +41,7 @@ void	next_iter(t_attr *attr)
 int	ending_case(t_attr *attr)
 {
 	freeing_routine(attr);
-	error_msg("Not all attributes set");
+	error_msg("Not all attributes set");//Leakfree
 	return (0);
 }
 

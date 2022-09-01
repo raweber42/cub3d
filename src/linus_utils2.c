@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:27:51 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 10:00:34 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 11:07:39 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ int	all_attributes(int counter)
 	i = 0;
 	while (i < 6)
 	{
-		if (counter << i == 0)
+		if (counter % 10 == 0)
 			return (0);
+		counter = counter / 10;
 		i++;
 	}
 	return (1);
