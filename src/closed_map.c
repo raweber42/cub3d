@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:05:40 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 11:13:24 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 12:21:26 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	set_player(t_closed *closed, t_cub *data, char **matrix)
 		if (closed->player == 1)
 		{
 			free_all(matrix);
-			error_msg("You have to play alone");//Leakfree
+			error_msg("You have to play alone", data, matrix);//Leakfree, up
 		}
 		closed->player = 1;
 	}
@@ -47,19 +47,19 @@ void	set_limits(char **matrix, t_closed *closed)
 		closed->ulimit = ft_strlen(matrix[closed->i + 1]);
 }
 
-void	check_limits(t_closed *closed, char **matrix)
+void	check_limits(t_closed *closed, char **matrix, t_cub *data)
 {
 	if (closed->i > 0 && closed->j >= closed->limit \
 	&& matrix[closed->i][closed->j] != '1')
 	{
 		free_all(matrix);
-		error_msg("Map is not closed");//Leakfree
+		error_msg("Map is not closed", data, matrix);//Leakfree, up
 	}
 	if (matrix[closed->i + 1] && closed->j \
 	>= closed->ulimit && matrix[closed->i][closed->j] != '1')
 	{
 		free_all(matrix);
-		error_msg("Map is not closed");//Leakfree
+		error_msg("Map is not closed", data, matrix);//Leakfree, up
 	}
 }
 
@@ -84,7 +84,7 @@ void	closed_map(char **matrix, t_cub *data)
 				closed.j++;
 				continue ;
 			}
-			check_limits(&closed, matrix);
+			check_limits(&closed, matrix, data);
 			set_player(&closed, data, matrix);
 			closed.j++;
 		}
@@ -94,6 +94,6 @@ void	closed_map(char **matrix, t_cub *data)
 	if (closed.player == 0)
 	{
 		free_all(matrix);
-		error_msg("No player set in map");//Leakfree
+		error_msg("No player set in map", data, matrix);//Leakfree, up
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:27:51 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 11:13:55 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 12:24:40 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ int	rgb_to_int(unsigned char r, unsigned char g, unsigned char b)
 	return (r << 16 | g << 8 | b);
 }
 
-void	wrong_number(t_attr	*attr)
+void	wrong_number(t_attr	*attr, t_cub *data)
 {
 	if (ft_strstrlen(attr->splitters) != 2)
 	{
 		freeing_routine(attr);
-		error_msg("Wrong number of attribute values");//Leakfree
+		error_msg("Wrong number of attribute values", data, NULL);//Leakfree, up
 	}
 }
 

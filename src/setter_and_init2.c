@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:57:52 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 19:28:48 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 12:19:17 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	set_attributes(t_cub *data, t_attr attr)
 		else
 		{
 			if (ft_strncmp("\n", attr.line, 1) && ft_nasp(attr.line))
-				return (different(&attr));
+				return (different(&attr, data));
 		}
 		next_iter(&attr);
 	}
-	return (ending_case(&attr));
+	return (ending_case(&attr, data));
 }

@@ -6,20 +6,20 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 12:07:32 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 12:33:48 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-int	different(t_attr *attr)
+int	different(t_attr *attr, t_cub *data)
 {
 	freeing_routine(attr);
 	attr->i++;
 	if (all_attributes(attr->counter))
 		return (attr->i);
 	else
-		error_msg("At least one attribute is not set");//Leakfree
+		error_msg("At least one attribute is not set", data, NULL);//Leakfree, up
 	return (0);
 }
 
@@ -35,10 +35,10 @@ void	next_iter(t_attr *attr)
 	free(to_free);
 }
 
-int	ending_case(t_attr *attr)
+int	ending_case(t_attr *attr, t_cub *data)
 {
 	freeing_routine(attr);
-	error_msg("Not all attributes set");//Leakfree
+	error_msg("Not all attributes set", data, NULL);//Leakfree, up
 	return (0);
 }
 
@@ -63,7 +63,7 @@ void	valid_map(char *path, t_cub *data)
 	init_attr(&attr, path, data);
 	lines = set_attributes(data, attr);
 	matrix = get_matrix(path, lines);
-	tests(matrix);
+	tests(matrix, data);
 	closed_map(matrix, data);
 	data->world_map = matrix;
 }

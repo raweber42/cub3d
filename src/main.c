@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 12:07:25 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 12:25:18 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int	main(int ac, char **av)
 	(void)av;
 	
 	if (ac != 2)
-		error_msg("Invalid number of arguments");//Leakfree
+		error_msg("Invalid number of arguments", NULL, NULL);//Leakfree, up
 	// LINUS########################
 
 	t_cub	*data;

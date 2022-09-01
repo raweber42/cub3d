@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 11:44:12 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 12:33:41 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ typedef struct s_attr
 	char	**splitters2;
 	int		counter;
 	int		i;
+	t_cub	*data;
 }	t_attr;
 
 typedef struct s_closed
@@ -223,7 +224,7 @@ int		rgba_to_int(t_color colors);
 void	mlx_image_reload(t_cub *data);
 
 // validation.c
-void	error_msg(char *msg);
+void	error_msg(char *msg, t_cub *data, char **matrix);
 void	valid_map(char *path, t_cub *data);
 int		surounded(char **matrix, int i, int j, int callback);
 
@@ -238,7 +239,6 @@ char	*leaktrim(char *s1, char *set);
 int		ft_strstrlen(char **strstr);
 int		ft_rstrstrlen(char **strstr);
 void	free_all(char **splitters);
-void	error_msg(char *msg);
 
 // recursive_madness.c
 int		left_border(char **matrix, int i, int j);
@@ -255,14 +255,14 @@ int		closed_down(char **matrix, int i, int j);
 int		surounded(char **matrix, int i, int j, int callback);
 
 // tests.c
-void	tests(char **matrix);
+void	tests(char **matrix, t_cub *data);
 void	closed_map(char **matrix, t_cub *data);
 
 // attributes.c
 int		ft_nasp(char *str);
-int		different(t_attr *attr);
+int		different(t_attr *attr, t_cub *data);
 void	next_iter(t_attr *attr);
-int		ending_case(t_attr *attr);
+int		ending_case(t_attr *attr, t_cub *data);
 
 // setter_and_init.c
 void	set_counter(t_attr *attr, int inc, char *value);
@@ -274,7 +274,7 @@ int		color_setter(t_attr *attr, char *ident, int *to_set, int mag);
 void	freeing_routine(t_attr *attr);
 void	freeing_routine_nofd(t_attr *attr);
 int		rgb_to_int(unsigned char r, unsigned char g, unsigned char b);
-void	wrong_number(t_attr	*attr);
+void	wrong_number(t_attr *attr, t_cub *data);
 int		all_attributes(int	counter);
 
 // setter_and_init2.c
