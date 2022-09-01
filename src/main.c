@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 14:23:28 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/01 14:29:24 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	valid_map(av[1], data);
-	
 	if (init_data(data))
 		return (1);
 	raycasting(data);
