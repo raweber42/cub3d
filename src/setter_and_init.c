@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   setter_and_init.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:22:41 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 12:32:17 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 13:55:58 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	set_counter(t_attr *attr, int inc, char *value)
+void	set_counter(t_attr *attr, int inc)
 {
 	int	i;
 	int	copy;
@@ -23,9 +23,7 @@ void	set_counter(t_attr *attr, int inc, char *value)
 	while (copy / i)
 	{
 		if ((copy / i) % 10 > 1)
-		{
-			if (value)
-				free(value);
+		{		
 			freeing_routine(attr);
 			error_msg("An attribute is set several times", attr->data, NULL);//Leakfree, up
 		}
@@ -63,7 +61,7 @@ int	attr_setter(t_attr	*attr, char *ident, char **to_set, int mag)
 	{
 		free(to_free);
 		wrong_number(attr, attr->data);
-		set_counter(attr, mag, *to_set);
+		set_counter(attr, mag);
 		*to_set = ft_strtrim(ft_strdup(attr->splitters[1]), "\n");
 		return (1);
 	}
@@ -120,7 +118,7 @@ int	color_setter(t_attr *attr, char *ident, int *to_set, int mag)
 		}
 		*to_set = rgb_to_int(fancy_atoi(attr, 0), \
 		fancy_atoi(attr, 1), fancy_atoi(attr, 2));
-		set_counter(attr, mag, NULL);
+		set_counter(attr, mag);
 		return (1);
 	}
 	return (0);

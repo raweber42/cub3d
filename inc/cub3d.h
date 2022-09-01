@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 12:33:41 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 13:56:02 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,7 +265,7 @@ void	next_iter(t_attr *attr);
 int		ending_case(t_attr *attr, t_cub *data);
 
 // setter_and_init.c
-void	set_counter(t_attr *attr, int inc, char *value);
+void	set_counter(t_attr *attr, int inc);
 void	init_attr(t_attr *attr, char *path, t_cub *data);
 int		attr_setter(t_attr	*attr, char *ident, char **to_set, int mag);
 int		color_setter(t_attr *attr, char *ident, int *to_set, int mag);
