@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 14:15:03 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/01 14:17:24 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ int	init_walls(t_cub *data)
 // initializes all ray data and sets floor/ceiling color
 void	init_ray_data(t_cub *data)
 {
-	printf("Position: %f, %f\n", data->pos.x, data->pos.y);
-
 	set_view_direction(data);
 	data->perp_dir.x = data->dir.y;
 	data->perp_dir.y = data->dir.x * -1;
