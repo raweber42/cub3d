@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 19:51:48 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 10:33:08 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,4 @@ void	valid_map(char *path, t_cub *data)
 	tests(matrix);
 	closed_map(matrix, data);
 	data->world_map = matrix;
-
-	free(data->n_path);
-	free(data->s_path);
-	free(data->e_path);
-	free(data->w_path);
-	exit (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:22:41 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 17:52:19 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 10:23:33 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,39 +49,44 @@ void	init_attr(t_attr *attr, char *path)
 
 int	attr_setter(t_attr	*attr, char *ident, char **to_set, int mag)
 {
-	char	*to_free;
+	// char	*to_free;
 
-	to_free = leaktrim(attr->splitters[0], " ");
-	if (!ft_strncmp(ident, to_free, ft_strlen(ident) + 1))
+	// to_free = leaktrim(attr->splitters[0], " ");
+	if (!ft_strncmp(ident, attr->splitters[0], ft_strlen(ident) + 1))
 	{
-		free(to_free);
+		// free(to_free);
 		wrong_number(attr);
 		*to_set = ft_strtrim(ft_strdup(attr->splitters[1]), "\n");
 		set_counter(attr, mag);
 		return (1);
 	}
-	free(to_free);
+	// free(to_free);
 	return (0);
 }
 
 unsigned char	fancy_atoi(char *str)
 {
 	char	*to_free;
+	unsigned char	c;
 
 	to_free = leaktrim(str, "\n ,");
-	return ((unsigned char)ft_atoi(to_free));
+	c = (unsigned char)ft_atoi(to_free);
 	free(to_free);
+	return (c);
 }
 
 int	color_setter(t_attr *attr, char *ident, int *to_set, int mag)
 {
 	char	*to_free;
+	char	*to_free2;
 
 	if (!ft_strncmp(ident, attr->splitters[0], ft_strlen(ident) + 1))
 	{
 		to_free = ft_strjoin(ident, " ");
-		attr->splitters2 = ft_split(leaktrim(attr->line, to_free), ',');
+		to_free2 = leaktrim(attr->line, to_free);
+		attr->splitters2 = ft_split(to_free2, ',');
 		free(to_free);
+		free(to_free2);
 		if (ft_strstrlen(attr->splitters2) < 3)
 		{
 			freeing_routine(attr);

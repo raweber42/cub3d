@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 19:37:54 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 18:10:39 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 10:32:34 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**create_matrix(int x, int y)
 
 	ret = malloc(sizeof(char *) * (y + 1));
 	i = 0;
-	while (i < y)
+	while (i < y - 1)
 	{
 		ret[i] = malloc(sizeof(char) * x);
 		i++;
