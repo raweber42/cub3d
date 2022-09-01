@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setter_and_init.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:22:41 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 14:24:46 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/01 14:31:52 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,6 @@ void	set_counter(t_attr *attr, int inc)
 		}
 		i *= 10;
 	}
-}
-
-void	init_attr(t_attr *attr, char *path, t_cub *data)
-{
-	char	*to_free;
-
-	attr->splitters = NULL;
-	attr->splitters2 = NULL;
-	attr->line = NULL;
-	data->n_path = NULL;
-	data->s_path = NULL;
-	data->w_path = NULL;
-	data->e_path = NULL;
-	attr->i = 0;
-	attr->fd = open(path, O_RDONLY);
-	attr->counter = 0;
-	attr->line = get_next_line(attr->fd);
-	to_free = leaktrim(attr->line, " \n");
-	attr->splitters = ft_split(to_free, ' ');
-	free(to_free);
-	attr->data = data;
 }
 
 int	attr_setter(t_attr	*attr, char *ident, char **to_set, int mag)

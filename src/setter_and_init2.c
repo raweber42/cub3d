@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:57:52 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 12:19:17 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 14:31:59 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,25 @@ int	set_attributes(t_cub *data, t_attr attr)
 		next_iter(&attr);
 	}
 	return (ending_case(&attr, data));
+}
+
+void	init_attr(t_attr *attr, char *path, t_cub *data)
+{
+	char	*to_free;
+
+	attr->splitters = NULL;
+	attr->splitters2 = NULL;
+	attr->line = NULL;
+	data->n_path = NULL;
+	data->s_path = NULL;
+	data->w_path = NULL;
+	data->e_path = NULL;
+	attr->i = 0;
+	attr->fd = open(path, O_RDONLY);
+	attr->counter = 0;
+	attr->line = get_next_line(attr->fd);
+	to_free = leaktrim(attr->line, " \n");
+	attr->splitters = ft_split(to_free, ' ');
+	free(to_free);
+	attr->data = data;
 }
