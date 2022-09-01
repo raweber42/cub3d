@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 21:52:32 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 19:07:56 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 10:44:49 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	valid_space(char **matrix, int i, int j)
 		}
 		if (surounded(matrix, i, j, -1))
 			return (1);
+		else
 		{
 			free_all(matrix);
 			error_msg("Map contains spaces");
