@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:05:40 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 18:38:54 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 11:13:24 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	set_player(t_closed *closed, t_cub *data, char **matrix)
 		if (closed->player == 1)
 		{
 			free_all(matrix);
-			error_msg("You have to play alone");
+			error_msg("You have to play alone");//Leakfree
 		}
 		closed->player = 1;
 	}
@@ -53,13 +53,13 @@ void	check_limits(t_closed *closed, char **matrix)
 	&& matrix[closed->i][closed->j] != '1')
 	{
 		free_all(matrix);
-		error_msg("Map is not closed");
+		error_msg("Map is not closed");//Leakfree
 	}
 	if (matrix[closed->i + 1] && closed->j \
 	>= closed->ulimit && matrix[closed->i][closed->j] != '1')
 	{
 		free_all(matrix);
-		error_msg("Map is not closed");
+		error_msg("Map is not closed");//Leakfree
 	}
 }
 
@@ -94,6 +94,6 @@ void	closed_map(char **matrix, t_cub *data)
 	if (closed.player == 0)
 	{
 		free_all(matrix);
-		error_msg("No player set in map");
+		error_msg("No player set in map");//Leakfree
 	}
 }

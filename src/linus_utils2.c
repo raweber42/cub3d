@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:27:51 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 11:07:39 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 11:13:55 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	wrong_number(t_attr	*attr)
 	if (ft_strstrlen(attr->splitters) != 2)
 	{
 		freeing_routine(attr);
-		error_msg("Wrong number of attribute values");
+		error_msg("Wrong number of attribute values");//Leakfree
 	}
 }
 

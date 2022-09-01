@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 21:23:40 by ljahn             #+#    #+#             */
-/*   Updated: 2022/08/31 19:33:26 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 11:54:47 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,28 @@ int	ft_strstrlen(char **strstr)
 	return (i);
 }
 
+int	ft_rstrstrlen(char **strstr)
+{
+	int	i;
+
+	i = 0;
+	while (strstr[i] && strstr[i][0] != '\n')
+		i++;
+	return (i);
+}
+
 void	free_all(char **splitters)
 {
 	int	i;
 
 	i = 0;
-	while (splitters[i])
+	while (splitters && splitters[i])
 	{
 		free(splitters[i]);
 		i++;
 	}
-	free(splitters);
+	if (splitters)
+		free(splitters);
 }
 
 void	error_msg(char *msg)

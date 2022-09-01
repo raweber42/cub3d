@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 10:27:29 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 11:15:12 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,8 @@ int	main(int ac, char **av)
 	(void)ac;
 	(void)av;
 	
-	// if (ac == 2)
-	// 	valid_map(av[1]);
-	// else
-	// 	error_msg("Invalid number of arguments");
+	if (ac != 2)
+		error_msg("Invalid number of arguments");//Leakfree
 	// LINUS########################
 
 	t_cub	*data;

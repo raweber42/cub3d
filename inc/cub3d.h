@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 10:38:32 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 11:44:12 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ void	free_all(char **splitters);
 void	free_all(char **splitters);
 char	*leaktrim(char *s1, char *set);
 int		ft_strstrlen(char **strstr);
+int		ft_rstrstrlen(char **strstr);
 void	free_all(char **splitters);
 void	error_msg(char *msg);
 
@@ -264,8 +265,8 @@ void	next_iter(t_attr *attr);
 int		ending_case(t_attr *attr);
 
 // setter_and_init.c
-void	set_counter(t_attr *attr, int inc);
-void	init_attr(t_attr *attr, char *path);
+void	set_counter(t_attr *attr, int inc, char *value);
+void	init_attr(t_attr *attr, char *path, t_cub *data);
 int		attr_setter(t_attr	*attr, char *ident, char **to_set, int mag);
 int		color_setter(t_attr *attr, char *ident, int *to_set, int mag);
 

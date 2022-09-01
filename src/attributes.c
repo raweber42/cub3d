@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 11:08:41 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/09/01 11:49:12 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,9 @@ int	different(t_attr *attr)
 	freeing_routine(attr);
 	attr->i++;
 	if (all_attributes(attr->counter))
-	{
-		printf("This is the number: %d\n", attr->counter);
 		return (attr->i);
-	}
 	else
-		error_msg("At least one attribute is not set");
+		error_msg("At least one attribute is not set");//Leakfree
 	return (0);
 }
 
@@ -63,7 +60,7 @@ void	valid_map(char *path, t_cub *data)
 	int		lines;
 	t_attr	attr;
 
-	init_attr(&attr, path);
+	init_attr(&attr, path, data);
 	lines = set_attributes(data, attr);
 	matrix = get_matrix(path, lines);
 	tests(matrix);
