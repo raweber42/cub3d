@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 14:29:24 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/19 11:48:53 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void	init_mlx(t_mlx *mlx)
 	mlx->mlx_img = NULL;
 	mlx->win_ptr = NULL;
 	mlx->mlx_img_addr = NULL;
-	mlx->win_width = screenWidth;
-	mlx->win_height = screenHeight;
+	mlx->win_width = SCREENWIDTH;
+	mlx->win_height = SCREENHEIGHT;
 	mlx->bits_per_pxl = 0;
 	mlx->line_len = 0;
 	mlx->endian = 0;

@@ -6,60 +6,58 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:20:10 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 13:56:02 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/19 11:52:46 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#if defined(__linux__)
-    # include "../minilibx_linux/mlx.h"
-#else
-    # include "../minilibx_macos/mlx.h"
-#endif
+# if defined(__linux__)
+#  include "../minilibx_linux/mlx.h"
+# else
+#  include "../minilibx_macos/mlx.h"
+# endif
 # include <math.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <unistd.h>
 
-
-# define mapWidth 24
-# define mapHeight 24
 # define TEXWIDTH 64
 # define TEXHEIGHT 64
-# define screenWidth 1000
-# define screenHeight 1000
+# define SCREENWIDTH 1000
+# define SCREENHEIGHT 1000
 
-#if defined(__linux__)
-	enum
-	{
-		Key_A = 97,
-		Key_S = 115,
-		Key_D = 100,
-		Key_W = 119,
-		Key_ESC = 65307,
-		Key_LEFT = 65361,
-		Key_RIGHT = 65363,
-		Key_DOWN = 125,
-		Key_UP = 126
-	};
-#else
-	enum
-	{
-		Key_A = 0,
-		Key_S = 1,
-		Key_D = 2,
-		Key_W = 13,
-		Key_ESC = 53,
-		Key_LEFT = 123,
-		Key_RIGHT = 124,
-		Key_DOWN = 125,
-		Key_UP = 126
-	};
-#endif
+# if defined(__linux__)
 
+enum
+{
+	Key_A = 97,
+	Key_S = 115,
+	Key_D = 100,
+	Key_W = 119,
+	Key_ESC = 65307,
+	Key_LEFT = 65361,
+	Key_RIGHT = 65363,
+	Key_DOWN = 125,
+	Key_UP = 126
+};
+# else
+
+enum
+{
+	Key_A = 0,
+	Key_S = 1,
+	Key_D = 2,
+	Key_W = 13,
+	Key_ESC = 53,
+	Key_LEFT = 123,
+	Key_RIGHT = 124,
+	Key_DOWN = 125,
+	Key_UP = 126
+};
+# endif
 
 enum
 {
@@ -69,11 +67,7 @@ enum
 	LEFT
 };
 
-// delete
-extern int worldMap[24][24];
-// delete!
-
-typedef int	(*rec_fun)(char **, int, int);
+typedef int	(*t_rec_fun)(char **, int, int);
 
 typedef struct s_mlx {
 	char	*argv;
@@ -122,9 +116,6 @@ typedef struct s_cub {
 	int			map_x;
 	int			map_y;
 	t_vector	map_check;
-	// HERE
-	int			mapX;
-	int			mapY;
 	t_vector	side_dist;
 	t_vector	delta_dist;
 	int			line_height;
@@ -171,17 +162,17 @@ typedef struct s_closed
 
 typedef struct s_gelem
 {
-	int	fd;
-	int	i;
-	char *line;
-	int	max_l;
+	int		fd;
+	int		i;
+	char	*line;
+	int		max_l;
 }	t_gelem;
 
 typedef struct s_fm
 {
-	int	fd;
-	int	i;
-	int	j;
+	int		fd;
+	int		i;
+	int		j;
 	char	*line;
 }	t_fm;
 
@@ -275,7 +266,7 @@ void	freeing_routine(t_attr *attr);
 void	freeing_routine_nofd(t_attr *attr);
 int		rgb_to_int(unsigned char r, unsigned char g, unsigned char b);
 void	wrong_number(t_attr *attr, t_cub *data);
-int		all_attributes(int	counter);
+int		all_attributes(int counter);
 
 // setter_and_init2.c
 void	init_fm(t_fm *fm, char *path, int elem);

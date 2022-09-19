@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 14:30:08 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/19 11:48:30 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	set_rays(t_cub *data, int x)
 {
 	double	camera_x;
 
-	camera_x = 2 * x / (double)screenWidth - 1;
+	camera_x = 2 * x / (double)SCREENWIDTH - 1;
 	data->ray_dir.x = data->dir.x + data->plane.x * camera_x;
 	data->ray_dir.y = data->dir.y + data->plane.y * camera_x;
 	data->map_x = (int)data->pos.x;
@@ -117,7 +117,7 @@ int	raycasting(t_cub *data)
 	x = 0;
 	mlx_image_reload(data);
 	handle_textures(data);
-	while (x < screenWidth)
+	while (x < SCREENWIDTH)
 	{
 		handle_rays_and_dda(data, x);
 		if (data->side_hit == 0)

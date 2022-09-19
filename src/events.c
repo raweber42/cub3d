@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/01 14:29:00 by raweber          ###   ########.fr       */
+/*   Updated: 2022/09/19 11:48:50 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	deal_key_2(int key, t_cub *data)
 		data->pos.y -= data->dir.y;
 		raycasting(data);
 	}
-	if (key == Key_D && (int)(data->pos.y + data->dir.y) < screenHeight \
+	if (key == Key_D && (int)(data->pos.y + data->dir.y) < SCREENHEIGHT \
 		&& (int)(data->pos.y + data->dir.y) > 0 && \
 		data->world_map[(int)(data->pos.x + data->perp_dir.x)] \
 		[(int)(data->pos.y + data->perp_dir.y)] == 48)
