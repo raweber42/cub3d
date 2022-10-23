@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 12:05:16 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/26 09:52:57 by raweber          ###   ########.fr       */
+/*   Updated: 2022/10/21 17:43:22 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,36 @@ void	set_view_direction(t_cub *data)
 {
 	if (data->orientation == 'W')
 	{
-		data->dir.x = 0;
 		data->dir.y = -1;
+		data->dir.x = 0;
+		data->plane.y = 0;
+		data->plane.x = -0.66;
 	}
 	else if (data->orientation == 'S')
 	{
+		data->dir.y = 0;
 		data->dir.x = 1;
-		data->dir.y = 0;
+		data->plane.y = -0.66;
+		data->plane.x = 0;
 	}
-	else if (data->orientation == 'E')
+	set_view_direction2(data);
+}
+
+void	set_view_direction2(t_cub *data)
+{
+	if (data->orientation == 'E')
 	{
-		data->dir.x = 0;
 		data->dir.y = 1;
+		data->dir.x = 0;
+		data->plane.y = 0;
+		data->plane.x = 0.66;
 	}
-	else
+	else if (data->orientation == 'N')
 	{
-		data->dir.x = -1;
 		data->dir.y = 0;
+		data->dir.x = -1;
+		data->plane.y = 0.66;
+		data->plane.x = 0;
 	}
 }
 

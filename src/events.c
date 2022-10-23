@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:55:27 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/19 11:48:50 by raweber          ###   ########.fr       */
+/*   Updated: 2022/10/21 16:47:58 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ int	deal_key(int key, t_cub *data)
 		rotating_view(data, 0.05);
 		raycasting(data);
 	}
-	if (key == Key_W && data->world_map[(int)(data->pos.x + data->dir.x)] \
-		[(int)(data->pos.y + data->dir.y)] == 48)
+	if (key == Key_W && data->world_map[(int)(data->pos.x + data->dir.x * \
+		MOVESPEED)][(int)(data->pos.y + data->dir.y * MOVESPEED)] == 48)
 	{
-		data->pos.x += data->dir.x;
-		data->pos.y += data->dir.y;
+		data->pos.x += data->dir.x * MOVESPEED;
+		data->pos.y += data->dir.y * MOVESPEED;
 		raycasting(data);
 	}
 	deal_key_2(key, data);
@@ -63,28 +63,33 @@ int	deal_key(int key, t_cub *data)
 
 void	deal_key_2(int key, t_cub *data)
 {
-	if (key == Key_S && data->world_map[(int)(data->pos.x - data->dir.x)] \
-		[(int)(data->pos.y - data->dir.y)] == 48)
+	if (key == Key_S && data->world_map[(int)(data->pos.x - data->dir.x * \
+		MOVESPEED)][(int)(data->pos.y - data->dir.y * MOVESPEED)] == 48)
 	{
-		data->pos.x -= data->dir.x;
-		data->pos.y -= data->dir.y;
+		data->pos.x -= data->dir.x * MOVESPEED;
+		data->pos.y -= data->dir.y * MOVESPEED;
 		raycasting(data);
 	}
 	if (key == Key_D && (int)(data->pos.y + data->dir.y) < SCREENHEIGHT \
 		&& (int)(data->pos.y + data->dir.y) > 0 && \
-		data->world_map[(int)(data->pos.x + data->perp_dir.x)] \
-		[(int)(data->pos.y + data->perp_dir.y)] == 48)
+		data->world_map[(int)(data->pos.x + data->plane.x * MOVESPEED)] \
+		[(int)(data->pos.y + data->plane.y * MOVESPEED)] == 48)
 	{
-		data->pos.x += data->perp_dir.x;
-		data->pos.y += data->perp_dir.y;
+		data->pos.x += data->plane.x * MOVESPEED;
+		data->pos.y += data->plane.y * MOVESPEED;
 		raycasting(data);
 	}
+	deal_key_3(key, data);
+}
+
+void	deal_key_3(int key, t_cub *data)
+{
 	if (key == Key_A && (int)(data->pos.y - data->dir.y) > 0 && \
-		data->world_map[(int)(data->pos.x + data->perp_dir.x)] \
-		[(int)(data->pos.y - data->perp_dir.y)] == 48)
+		data->world_map[(int)(data->pos.x - data->plane.x * MOVESPEED)] \
+		[(int)(data->pos.y - data->plane.y * MOVESPEED)] == 48)
 	{
-		data->pos.x -= data->perp_dir.x;
-		data->pos.y -= data->perp_dir.y;
+		data->pos.x -= data->plane.x * MOVESPEED;
+		data->pos.y -= data->plane.y * MOVESPEED;
 		raycasting(data);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 11:19:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/19 11:48:53 by raweber          ###   ########.fr       */
+/*   Updated: 2022/10/21 17:45:32 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,10 @@ void	init_ray_data(t_cub *data)
 	set_view_direction(data);
 	data->perp_dir.x = data->dir.y;
 	data->perp_dir.y = data->dir.x * -1;
-	data->plane.x = data->perp_dir.x;
-	data->plane.y = data->perp_dir.y;
 	data->perp_wall_dist = 0;
 	data->ray_dir.x = 0;
 	data->ray_dir.y = 0;
 	data->side_hit = 0;
-	data->f_col = 0x413030;
-	data->c_col = 0x000066;
 	data->map_x = 0;
 	data->map_y = 0;
 	data->side_dist.x = 0;
@@ -106,14 +102,12 @@ int	main(int ac, char **av)
 	t_cub	*data;
 
 	if (ac != 2)
-		error_msg("Invalid number of arguments", NULL, NULL);
+		error_msg("Invalid number of arguments", NULL);
 	data = (t_cub *)ft_calloc(1, sizeof(t_cub));
 	if (!data)
-	{
-		ft_printf("Error: Could not allocate cub3d struct");
-		return (1);
-	}
-	valid_map(av[1], data);
+		error_msg("Could not allocate cub3d struct", NULL);
+	ft_lstadd_back(&data->free_list, ft_lstnew(data));
+	parsing(data, av);
 	if (init_data(data))
 		return (1);
 	raycasting(data);

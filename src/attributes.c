@@ -5,65 +5,85 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/22 09:02:21 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 14:23:01 by raweber          ###   ########.fr       */
+/*   Created: 2022/10/20 17:08:24 by ljahn             #+#    #+#             */
+/*   Updated: 2022/10/21 17:30:09 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-int	different(t_attr *attr, t_cub *data)
+void	init_attr(t_cub	*data)
 {
-	freeing_routine(attr);
-	attr->i++;
-	if (all_attributes(attr->counter))
-		return (attr->i);
-	else
-		error_msg("At least one attribute is not set", data, NULL);
-	return (0);
+	data->n_path = NULL;
+	data->e_path = NULL;
+	data->s_path = NULL;
+	data->w_path = NULL;
+	data->f_col = -1;
+	data->c_col = -1;
+	data->i = 0;
 }
 
-void	next_iter(t_attr *attr)
+void	set_textures(char **lines, t_cub *data)
 {
-	char	*to_free;
+	const char		directions[4][3] = {"NO", "EA", "SO", "WE"};
+	char **const	dir_attr[4] = {&data->n_path, &data->e_path, \
+	&data->s_path, &data->w_path};
+	int				dir;
 
-	freeing_routine_nofd(attr);
-	attr->i++;
-	attr->line = get_next_line(attr->fd);
-	to_free = leaktrim(attr->line, " \n");
-	attr->splitters = ft_split(to_free, ' ');
-	free(to_free);
+	while (lines[data->i])
+	{
+		data->splitters = ft_split(lines[data->i], ' ');
+		add_all(data->splitters, data);
+		dir = 0;
+		while (dir < 4)
+		{
+			if (!ft_strncmp(directions[dir], data->splitters[0], 3))
+			{
+				*dir_attr[dir] = ft_strdup(data->splitters[1]);
+				ft_lstadd_back(&data->free_list, ft_lstnew(*dir_attr[dir]));
+			}
+			dir++;
+		}
+		data->i++;
+	}
 }
 
-int	ending_case(t_attr *attr, t_cub *data)
+void	set_colors(char **lines, t_cub *data)
 {
-	freeing_routine(attr);
-	error_msg("Not all attributes set", data, NULL);
-	return (0);
+	const char	to_color[2][2] = {"F", "C"};
+	int *const	color_attr[4] = {&data->f_col, &data->c_col};
+	int			col;
+
+	data->i = 0;
+	while (lines[data->i])
+	{
+		data->splitters = ft_split(lines[data->i], ' ');
+		add_all(data->splitters, data);
+		col = 0;
+		while (col < 2)
+		{
+			if (!ft_strncmp(to_color[col], data->splitters[0], 2))
+				set_couleur(color_attr[col], \
+				ft_strchr(lines[data->i], ' '), data);
+			col++;
+		}
+		data->i++;
+	}
 }
 
-int	ft_nasp(char *str)
+void	check_attributes(t_cub *data)
 {
-	int	i;
+	int			i;
+	const char	*directions[4] = {data->n_path, data->e_path, \
+	data->s_path, data->w_path};
 
 	i = 0;
-	while (str[i] == ' ')
-		i++;
-	if (ft_strlen(str) - 1 == i)
-		return (0);
-	return (1);
-}
-
-void	valid_map(char *path, t_cub *data)
-{
-	char	**matrix;
-	int		lines;
-	t_attr	attr;
-
-	init_attr(&attr, path, data);
-	lines = set_attributes(data, attr);
-	matrix = get_matrix(path, lines);
-	tests(matrix, data);
-	closed_map(matrix, data);
-	data->world_map = matrix;
+	while (i < 4)
+	{
+		if (!directions[i++])
+			error_msg("At least one attribute is not set", data->free_list);
+	}
+	if (data->f_col == -1 || data->c_col == -1)
+		error_msg("Either the 'F' or 'C' attribute is not set", \
+		data->free_list);
 }

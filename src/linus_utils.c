@@ -3,14 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   linus_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 21:23:40 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 13:52:28 by raweber          ###   ########.fr       */
+/*   Updated: 2022/10/20 18:12:34 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+char	**reverse_map(t_cub *data)
+{
+	char	**reversed_map;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	reversed_map = calloc(ft_strstrlen(data->world_map) + 1, sizeof(char *));
+	while (data->world_map[i])
+		i++;
+	reversed_map[i--] = NULL;
+	while (i >= 0)
+		reversed_map[j++] = data->world_map[i--];
+	return (reversed_map);
+}
+
+void	all_chars(char **strstr, t_charfun toApply, t_cub *data)
+{
+	int	i;
+	int	j;
+
+	if (!strstr)
+		return ;
+	i = 0;
+	while (strstr[i])
+	{
+		j = 0;
+		while (strstr[i][j])
+		{
+			toApply(strstr[i][j], data);
+			j++;
+		}
+		i++;
+	}
+}
+
+// Overload with coordinate functions
+void	all_chars2(char **strstr, t_coorfun toApply, t_cub *data)
+{
+	int	i;
+	int	j;
+
+	if (!strstr)
+		return ;
+	i = 0;
+	while (strstr[i])
+	{
+		j = 0;
+		while (strstr[i][j])
+		{
+			toApply(strstr, i, j, data);
+			j++;
+		}
+		i++;
+	}
+}
 
 int	ft_strstrlen(char **strstr)
 {
@@ -18,16 +76,6 @@ int	ft_strstrlen(char **strstr)
 
 	i = 0;
 	while (strstr[i])
-		i++;
-	return (i);
-}
-
-int	ft_rstrstrlen(char **strstr)
-{
-	int	i;
-
-	i = 0;
-	while (strstr[i] && strstr[i][0] != '\n')
 		i++;
 	return (i);
 }
@@ -44,29 +92,4 @@ void	free_all(char **splitters)
 	}
 	if (splitters)
 		free(splitters);
-}
-
-void	error_msg(char *msg, t_cub *data, char **matrix)
-{
-	(void)data;
-	if (data)
-	{
-		if (data->n_path)
-			free(data->n_path);
-		if (data->w_path)
-			free(data->w_path);
-		if (data->s_path)
-			free(data->s_path);
-		if (data->e_path)
-			free(data->e_path);
-		free(data);
-	}
-	if (matrix)
-	{
-		free_all(matrix);
-	}
-	ft_putstr_fd("Error: ", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putchar_fd('\n', 2);
-	exit(1);
 }

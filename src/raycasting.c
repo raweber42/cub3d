@@ -6,7 +6,7 @@
 /*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:26:34 by raweber           #+#    #+#             */
-/*   Updated: 2022/09/19 11:48:30 by raweber          ###   ########.fr       */
+/*   Updated: 2022/10/21 16:28:59 by raweber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ void	set_rays(t_cub *data, int x)
 	data->map_x = (int)data->pos.x;
 	data->map_y = (int)data->pos.y;
 	if (data->ray_dir.x == 0)
-		data->delta_dist.x = 1e30;
+		data->delta_dist.x = INFINITY;
 	else
 		data->delta_dist.x = fabs(1 / data->ray_dir.x);
 	if (data->ray_dir.y == 0)
-		data->delta_dist.y = 1e30;
+		data->delta_dist.y = INFINITY;
 	else
 		data->delta_dist.y = fabs(1 / data->ray_dir.y);
 }

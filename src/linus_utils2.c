@@ -3,78 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   linus_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raweber <raweber@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/31 16:27:51 by ljahn             #+#    #+#             */
-/*   Updated: 2022/09/01 14:22:16 by raweber          ###   ########.fr       */
+/*   Created: 2022/10/20 17:38:29 by ljahn             #+#    #+#             */
+/*   Updated: 2022/10/21 17:25:08 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	freeing_routine(t_attr *attr)
+int	free_and_return(char *trimmed_line)
 {
-	if (attr->line)
-	{
-		free(attr->line);
-		attr->line = NULL;
-	}
-	if (attr->splitters)
-	{
-		free_all(attr->splitters);
-		attr->splitters = NULL;
-	}
-	if (attr->splitters2)
-	{
-		free_all(attr->splitters2);
-		attr->splitters2 = NULL;
-	}
-	close(attr->fd);
+	free_(trimmed_line);
+	return (1);
 }
 
-void	freeing_routine_nofd(t_attr *attr)
+void	error_msg(char *msg, t_list *allocated)
 {
-	if (attr->line)
-	{
-		free(attr->line);
-		attr->line = NULL;
-	}
-	if (attr->splitters)
-	{
-		free_all(attr->splitters);
-		attr->splitters = NULL;
-	}
-	if (attr->splitters2)
-	{
-		free_all(attr->splitters2);
-		attr->splitters2 = NULL;
-	}
+	if (allocated)
+		ft_lstclear(&allocated, free_);
+	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putchar_fd('\n', 2);
+	exit(1);
 }
 
-int	rgb_to_int(unsigned char r, unsigned char g, unsigned char b)
+int	to_rgb(char *r, char *g, char *b, t_cub *for_free)
 {
-	return (r << 16 | g << 8 | b);
-}
+	int			rgb;
+	int			converted;
+	const char	*colors[4] = {b, g, r};
+	char		*sucess;
+	int			i;
 
-void	wrong_number(t_attr	*attr, t_cub *data)
-{
-	if (ft_strstrlen(attr->splitters) != 2)
+	rgb = 0;
+	i = 0;
+	while (colors[i])
 	{
-		freeing_routine(attr);
-		error_msg("Wrong number of attribute values", data, NULL);
+		converted = strtol(colors[i], &sucess, 10);
+		if (*sucess || (converted > 255 \
+		|| converted < 0))
+			error_msg("'F' and/or 'C' attribute value invalid", \
+			for_free->free_list);
+		rgb += converted << (i * 8);
+		i++;
 	}
+	return (rgb);
 }
 
-int	all_attributes(int counter)
+void	set_couleur(int *attr, char *value, t_cub *for_free)
+{
+	char	**splitters;
+	char	*tmp;
+	int		i;
+
+	if (!value)
+		error_msg("No value to 'F' and/or 'C' attribute", for_free->free_list);
+	splitters = ft_split(value, ',');
+	if (ft_strstrlen(splitters) != 3)
+		error_msg("Invalid number of values to 'F' and/or 'C' attribute", \
+		for_free->free_list);
+	i = 0;
+	while (splitters[i])
+	{
+		tmp = ft_strtrim(splitters[i], " ");
+		splitters[i] = tmp;
+		i++;
+	}
+	*attr = to_rgb(splitters[0], splitters[1], splitters[2], for_free);
+	free_all(splitters);
+}
+
+int	space_str(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (i < 6)
+	if (!str || ft_strlen(str) == 0)
+		return (0);
+	while (str[i])
 	{
-		if (counter % 10 == 0)
+		if (str[i] != ' ')
 			return (0);
-		counter = counter / 10;
 		i++;
 	}
 	return (1);

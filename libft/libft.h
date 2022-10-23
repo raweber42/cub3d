@@ -6,7 +6,7 @@
 /*   By: ljahn <ljahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 11:46:47 by raweber           #+#    #+#             */
-/*   Updated: 2022/08/22 10:47:31 by ljahn            ###   ########.fr       */
+/*   Updated: 2022/10/18 10:46:50 by ljahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+void	free_(void *toFree);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
